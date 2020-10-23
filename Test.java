@@ -1,13 +1,12 @@
 public class Test {
 
 	public static String Sotiris() {
-    return "Στέφανος Χίος";
-  }
+		return "Στέφανος Χίος";
+	}
   
   
-  
-  public static void main(String[] args) {
-    System.out.print(Sotiris());
-  }
+  	public static void main(String[] args) {
+	  	System.out.print(Sotiris());
+  	}
   
 }
