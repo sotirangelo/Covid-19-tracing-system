@@ -1,7 +1,7 @@
 public class Test {
 
 	public static String Sotiris() {
-		return "Στέφανος Χίος";
+		return "Coronavirus";
 	}
   
   
