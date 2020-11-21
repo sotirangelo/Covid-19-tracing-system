@@ -1,4 +1,6 @@
 .gitignore
+.project
+.classpath
 
 # Compiled class file
 *.class

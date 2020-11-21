@@ -5,7 +5,7 @@
  *
  * @version 0.1 21 Nov 2020
  * @author Sotiris
- * /
+ */
 public enum Mask {
 	/** No mask used*/
 	NONE (0,"None"),

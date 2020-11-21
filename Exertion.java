@@ -17,7 +17,7 @@ public enum Exertion {
 	private final double breathingFlowRate ;
 	private final String type;
 
-	private Mask(double breathingFlowRate, String type) {
+	private Exertion(double breathingFlowRate, String type) {
 		this.breathingFlowRate = breathingFlowRate;
 		this.type = type;
 	}

@@ -94,16 +94,16 @@ public class Interface {
 		int custmask = SCNR.nextLine();
 		switch (custmask) {
 			case 0:
-				return NONE;
+				return Mask.NONE;
 				break;
 			case 1:
-				return FABRIC;
+				return Mask.FABRIC;
 				break;
 			case 2:
-				return MEDICAL;
+				return Mask.MEDICAL;
 				break;
 			case 3:
-				return RESPIRATOR;
+				return Mask.RESPIRATOR;
 				break;
 		}
 	}
