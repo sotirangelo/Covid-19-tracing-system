@@ -22,7 +22,6 @@ public class Interface {
 	/** 
 	 * Business total floor area input.
 	 * Static method, that prompts the user to specify their business' total floor area in square metres. Returns double value.
-	 * @return  double  total floor area in square metres
 	 */
 	public static double setShopSqm() {
 		System.out.println("Πόσα τετραγωνικά μέτρα είναι το κατάστημά σας;");
@@ -57,10 +56,63 @@ public class Interface {
 	  	return intID;
   	}
 	
-	public static String custName() {
+	public static String firstName() {
 		System.out.println("Δώστε το όνομα του πελάτη: ");
-		String cName = Scnr.nextLine();
-		System.out.println("Το όνομα του πελάτη είναι: " + cName);
+		String custfirst= SCNR.nextLine();
+		return custfirst;
 	}
+	
+	public static String lastName() {
+		System.out.println("Δώστε το επίθετο του πελάτη: ");
+		String custlast = SCNR.nextLine();
+		return custlast;
+	}
+	
+	public static String custEmail() {
+		System.out.println("Δώστε το email του πελάτη: ");
+		String emailadr = SCNR.nextLine();
+		return emailadr;
+	}
+	
+	public static String custPhoneNum() {
+		System.out.println("Δώστε το τηλέφωνο του πελάτη (εξαιρουμένου του κωδικού χώρας: +..): ");
+		String phonenum = SCNR.nextLine();
+		if (phonenum.length() != 10) {
+			System.out.println("Λανθασμένη εισαγωγή, παρακαλώ προσπαθήστε ξανά.")
+		}else {
+			break;
+		}
+			
+	}
+	
+	public static Mask maskType() {
+		System.out.println("Εισάγετε το είδος μάσκας του πελάτη: ");
+		System.out.println("Αν δεν φοράει μάσκα, εισάγετε 0.");
+		System.out.println("Αν φοράει μάσκα τύπου Fabric, εισάγετε 1.");
+		System.out.println("Αν φοράει μάσκα τύπου Medical, εισάγετε 2.");
+		System.out.println("Αν φοράει μάσκα τύπου Respirator, εισάγετε 3.");
+		int custmask = SCNR.nextLine();
+		switch (custmask) {
+			case 0:
+				return NONE;
+				break;
+			case 1:
+				return FABRIC;
+				break;
+			case 2:
+				return MEDICAL;
+				break;
+			case 3:
+				return RESPIRATOR;
+				break;
+		}
+	}
+	
+	
+		
+	
+	
+	
+	
 }
 
