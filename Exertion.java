@@ -12,9 +12,7 @@ public enum Exertion {
 	/** Resting */
 	RESTING(0.49,"Resting"),
 	/** Standing, as a low-level activity*/
-	STANDING(0.54,"Standing"),
-	/** Walking, as a medium-level activity*/
-	WALKING(1.38,"Walking");
+	STANDING(0.54,"Standing");
 	
 	private final double breathingFlowRate ;
 	private final String type;
