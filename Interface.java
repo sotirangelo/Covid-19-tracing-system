@@ -56,42 +56,83 @@ public class Interface {
 	  	return intID;
   	}
 	
-	public static String firstName() {
+	public static String firstName() { //input of customer's first name//
 		System.out.println("Δώστε το όνομα του πελάτη: ");
 		String custfirst= SCNR.nextLine();
+		while (true) {
+			try {
+            			return SCNR.nextString();
+			}catch (java.util.InputMismatchException e) {
+				System.out.println("Το όνομα πελάτη που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
+            			SCNR.nextLine();
+			}
+		}
 		return custfirst;
 	}
 	
-	public static String lastName() {
+	public static String lastName() { //input of customer's last name//
 		System.out.println("Δώστε το επίθετο του πελάτη: ");
 		String custlast = SCNR.nextLine();
+		while (true) {
+			try {
+            			return SCNR.nextString();
+			}catch (java.util.InputMismatchException e) {
+				System.out.println("Το επίθετο πελάτη που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
+            			SCNR.nextLine();
+			}
+		}
+		
 		return custlast;
 	}
 	
-	public static String custEmail() {
+	public static String custEmail() { //input of customer's e-mail//
 		System.out.println("Δώστε το email του πελάτη: ");
 		String emailadr = SCNR.nextLine();
+		while (true) {
+			try {
+            			return SCNR.nextString();
+			}catch (java.util.InputMismatchException e) {
+				System.out.println("Το e-mail πελάτη που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
+            			SCNR.nextLine();
+			}
+		}
 		return emailadr;
 	}
 	
-	public static String custPhoneNum() {
+	public static String custPhoneNum() { //input of customer's phone number, return type may need changes//
 		System.out.println("Δώστε το τηλέφωνο του πελάτη (εξαιρουμένου του κωδικού χώρας: +..): ");
 		String phonenum = SCNR.nextLine();
+		while (true) {
+			try {
+            			return SCNR.nextString();
+			}catch (java.util.InputMismatchException e) {
+				System.out.println("Το τηλέφωνο πελάτη που εισήχθη ήταν λανθασμένο.Πρέπει να είναι ένας 10ψήφιος αριθμός.Παρακαλώ προσπαθήστε ξανά: ");
+            			SCNR.nextLine();
+			}
+		}		
 		if (phonenum.length() != 10) {
 			System.out.println("Λανθασμένη εισαγωγή, παρακαλώ προσπαθήστε ξανά.")
 		}else {
 			break;
 		}
-			
+		return custPhoneNum;	
 	}
 	
-	public static Mask maskType() {
+	public static Mask maskType() { //input of customer's mask type//
 		System.out.println("Εισάγετε το είδος μάσκας του πελάτη: ");
 		System.out.println("Αν δεν φοράει μάσκα, εισάγετε 0.");
 		System.out.println("Αν φοράει μάσκα τύπου Fabric, εισάγετε 1.");
 		System.out.println("Αν φοράει μάσκα τύπου Medical, εισάγετε 2.");
 		System.out.println("Αν φοράει μάσκα τύπου Respirator, εισάγετε 3.");
 		int custmask = SCNR.nextLine();
+		while (true) {
+			try {
+            			return SCNR.nextMask();
+			}catch (java.util.InputMismatchException e) {
+				System.out.println("Το είδος μάσκας που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
+            			SCNR.nextLine();
+			}
+		}
 		switch (custmask) {
 			case 0:
 				return Mask.NONE;
@@ -106,13 +147,7 @@ public class Interface {
 				return Mask.RESPIRATOR;
 				break;
 		}
+
 	}
-	
-	
-		
-	
-	
-	
-	
 }
 
