@@ -2,7 +2,10 @@
  * Mask types used.
  * This enumeration represents the types of mask that can be used.
  * Each type of mask is defined by an efficiency percentage.
- */
+ *
+ * @version 0.1 21 Nov 2020
+ * @author Sotiris
+ * /
 public enum Mask {
 	/** No mask used*/
 	NONE (0,"None"),

@@ -4,6 +4,9 @@
  * The level of exertion and consequently the breathing flow rate of each person,
  * varies, depending on their activity. Thus, each level of exertion/activity is defined
  * by a volumetric breathing flow rate, expressed in cubic metres per hour.
+ *
+ * @version 0.1 21 Nov 2020
+ * @author Sotiris
  */
 public enum Exertion {
 	/** Resting */
