@@ -22,6 +22,7 @@ public class Interface {
 	/** 
 	 * Business total floor area input.
 	 * Static method, that prompts the user to specify their business' total floor area in square metres. Returns double value.
+	 * @return  double  total floor area in square metres
 	 */
 	public static double setShopSqm() {
 		System.out.println("Πόσα τετραγωνικά μέτρα είναι το κατάστημά σας;");
