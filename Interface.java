@@ -16,9 +16,14 @@ import java.util.Scanner;
  * @author Serafeim
  */
 public class Interface {
+	/** Scanner Field */
 	static Scanner SCNR = new Scanner(System.in); 
   	
-	public static double setShopSqm() { //check the value for the square meters of the shop
+	/** 
+	 * Business total floor area input.
+	 * Static method, that prompts the user to specify their business' total floor area in square metres. Returns double value.
+	 */
+	public static double setShopSqm() {
 		System.out.println("Πόσα τετραγωνικά μέτρα είναι το κατάστημά σας;");
 	  	double sqm = 0;
 	  	while (sqm <= 0) {
