@@ -5,6 +5,8 @@
  */
 
 import java.util.Scanner;
+import java.time.LocalDateTime; // Import the LocalDateTime class
+import java.time.format.DateTimeFormatter; // Import the DateTimeFormatter class
 
 /**
  * Temporary command-line Input and Output.
@@ -61,7 +63,7 @@ public class Interface {
 		String custfirst= SCNR.nextLine();
 		while (true) {
 			try {
-            			return SCNR.nextString();
+            			return SCNR.nextLine();
 			}catch (java.util.InputMismatchException e) {
 				System.out.println("Το όνομα πελάτη που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
             			SCNR.nextLine();
@@ -75,7 +77,7 @@ public class Interface {
 		String custlast = SCNR.nextLine();
 		while (true) {
 			try {
-            			return SCNR.nextString();
+            			return SCNR.nextLine();
 			}catch (java.util.InputMismatchException e) {
 				System.out.println("Το επίθετο πελάτη που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
             			SCNR.nextLine();
@@ -90,7 +92,7 @@ public class Interface {
 		String emailadr = SCNR.nextLine();
 		while (true) {
 			try {
-            			return SCNR.nextString();
+            			return SCNR.nextLine();
 			}catch (java.util.InputMismatchException e) {
 				System.out.println("Το e-mail πελάτη που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
             			SCNR.nextLine();
@@ -104,18 +106,18 @@ public class Interface {
 		String phonenum = SCNR.nextLine();
 		while (true) {
 			try {
-            			return SCNR.nextString();
+            			return SCNR.nextLine();
 			}catch (java.util.InputMismatchException e) {
 				System.out.println("Το τηλέφωνο πελάτη που εισήχθη ήταν λανθασμένο.Πρέπει να είναι ένας 10ψήφιος αριθμός.Παρακαλώ προσπαθήστε ξανά: ");
             			SCNR.nextLine();
 			}
 		}		
 		if (phonenum.length() != 10) {
-			System.out.println("Λανθασμένη εισαγωγή, παρακαλώ προσπαθήστε ξανά.")
+			System.out.println("Λανθασμένη εισαγωγή, παρακαλώ προσπαθήστε ξανά.");
 		}else {
 			break;
 		}
-		return custPhoneNum;	
+			
 	}
 	
 	public static Mask maskType() { //input of customer's mask type//
@@ -124,7 +126,7 @@ public class Interface {
 		System.out.println("Αν φοράει μάσκα τύπου Fabric, εισάγετε 1.");
 		System.out.println("Αν φοράει μάσκα τύπου Medical, εισάγετε 2.");
 		System.out.println("Αν φοράει μάσκα τύπου Respirator, εισάγετε 3.");
-		int custmask = SCNR.nextLine();
+		int custmask = SCNR.nextInt();
 		while (true) {
 			try {
             			return SCNR.nextMask();
@@ -147,7 +149,44 @@ public class Interface {
 				return Mask.RESPIRATOR;
 				break;
 		}
+	}
+	
+	// can be used to format an existing Date object into a String with "yyyy-MM-dd-HH-mm-ss" format
+	static DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+	// returns current time in a "yyyy-MM-dd-HH-mm-ss-ns" format
+	public static LocalDateTime getDateAndTime() {
+		LocalDateTime myDateObj = LocalDateTime.now();
+		return myDateObj;
+	}
+	
 
+	
+	
+	public static Exertion exertionType() { //input of customer's exertion type//
+		System.out.println("Εισάγετε το είδος δραστηριότητας του πελάτη: ");
+		System.out.println("Αν κάθεται σε τραπέζι ή σε πάγκο, εισάγετε 0.");
+		System.out.println("Αν είναι όρθιος ή περπατάει, εισάγετε 1.");
+		int custExertion = 0;
+		boolean aa = false;
+		while (aa == false) {
+			try {
+            	 custExertion = SCNR.nextInt();
+            	 if (custExertion == 0 || custExertion == 1) {
+            		 aa = true;	 
+            	 }
+			}catch (java.util.InputMismatchException e) {
+				System.out.println("Το είδος δραστηριότητας που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
+            	SCNR.nextLine();
+			}
+			
+		}
+		switch (custExertion) {
+			case 0:
+				return Exertion.RESTING;
+			case 1:
+				return Exertion.STANDING;
+			default :
+				return Exertion.RESTING; // This will not actually be used (custExertion will either be 0 or 1)
+		}
 	}
 }
-
