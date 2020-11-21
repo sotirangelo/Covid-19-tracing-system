@@ -55,5 +55,11 @@ public class Interface {
 	  	}
 	  	return intID;
   	}
+	
+	public static String custName() {
+		System.out.println("Δώστε το όνομα του πελάτη: ");
+		String cName = Scnr.nextLine();
+		System.out.println("Το όνομα του πελάτη είναι: " + cName);
+	}
 }
 
