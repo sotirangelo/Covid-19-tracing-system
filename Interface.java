@@ -115,7 +115,7 @@ public class Interface {
 		}else {
 			break;
 		}
-			
+		return custPhoneNum;	
 	}
 	
 	public static Mask maskType() { //input of customer's mask type//
@@ -147,13 +147,7 @@ public class Interface {
 				return RESPIRATOR;
 				break;
 		}
+
 	}
-	
-	
-		
-	
-	
-	
-	
 }
 
