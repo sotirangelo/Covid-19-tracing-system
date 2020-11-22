@@ -170,15 +170,15 @@ public class Interface {
 		boolean aa = false;
 		while (aa == false) {
 			try {
-            	 custExertion = SCNR.nextInt();
-            	 if (custExertion == 0 || custExertion == 1) {
-            		 aa = true;	 
-            	 }
+            	            custExertion = SCNR.nextInt();
+            	            if (custExertion == 0 || custExertion == 1) {
+            		        aa = true;	 
+            	            } else {
+			        System.out.println("Το είδος δραστηριότητας που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
+		            }
 			}catch (java.util.InputMismatchException e) {
 				System.out.println("Το είδος δραστηριότητας που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
-            	SCNR.nextLine();
 			}
-			
 		}
 		switch (custExertion) {
 			case 0:
