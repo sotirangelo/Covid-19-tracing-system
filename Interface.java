@@ -18,21 +18,27 @@ import java.time.format.DateTimeFormatter; // Import the DateTimeFormatter class
  * @author Serafeim
  */
 public class Interface {
-	/** Scanner Field */
+
+	/** Temporary scanner Field */
 	static Scanner SCNR = new Scanner(System.in); 
-  	
+
+	/** Temporary field that formats Date objects in String "dd-MM-yyyy HH:mm:ss" format */
+	static DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
 	/** 
-	 * Business total floor area input.
-	 * Static method, that prompts the user to specify their business' total floor area in square metres. Returns double value.
+	 * Business' total floor area input.
+	 * Static method, that prompts the user to specify their business' total floor area in square metres.
+	 *
+	 * @return double Floor area in square metres.
 	 */
-	public static double setShopSqm() {
+	public static double floorAreaInput() {
 		System.out.println("Πόσα τετραγωνικά μέτρα είναι το κατάστημά σας;");
 	  	double sqm = 0;
 	  	while (sqm <= 0) {
 			if (SCNR.hasNextDouble())
 				sqm = SCNR.nextDouble();
 	        	else {
-	        		System.out.println("Πρέπει να δώσετε τον αριθό τετραγωνικών μέτρων του καταστήματός σας. Προσπαθείστε ξανά.");
+	        		System.out.println("Πρέπει να δώσετε τον αριθμό τετραγωνικών μέτρων του καταστήματός σας. Προσπαθείστε ξανά.");
 	            		SCNR.nextLine();
 	            		continue;
 	        	}
@@ -40,7 +46,9 @@ public class Interface {
 	  	return sqm;
   	}
   
-  	public static int checkIn() { //check the USER ID (11111111-99999999) - not working 100%
+	/* WORK IN PROGRESS
+	 * check the USER ID (11111111-99999999) - not working 100%
+  	public static int checkIn() {
 		System.out.println("Δώστε το USER ID του πελάτη (12345678): ");
 	  	String id = SCNR.next();
 	  	int intID =-1;
@@ -57,8 +65,15 @@ public class Interface {
 	  	}
 	  	return intID;
   	}
+	*/
 	
-	public static String firstName() { //input of customer's first name//
+	/**
+	 * Customer first name input.
+	 * Static method, that prompts the user to input the customer's first name.
+	 * 
+	 * @return String Customer's first name.
+	 */
+	public static String firstNameInput() {
 		System.out.println("Δώστε το όνομα του πελάτη: ");
 		String custfirst= SCNR.nextLine();
 		while (true) {
@@ -72,7 +87,13 @@ public class Interface {
 		return custfirst;
 	}
 	
-	public static String lastName() { //input of customer's last name//
+	/**
+         * Customer last name input.
+         * Static method, that prompts the user to input the customer's last name.
+         *
+         * @return String Customer's last name.
+         */
+	public static String lastNameInput() {
 		System.out.println("Δώστε το επίθετο του πελάτη: ");
 		String custlast = SCNR.nextLine();
 		while (true) {
@@ -86,8 +107,14 @@ public class Interface {
 		
 		return custlast;
 	}
-	
-	public static String custEmail() { //input of customer's e-mail//
+
+	 /**
+         * Customer email input.
+         * Static method, that prompts the user to input the customer's email address.
+         *
+         * @return String Customer's email address.
+         */
+	public static String emailInput() {
 		System.out.println("Δώστε το email του πελάτη: ");
 		String emailadr = SCNR.nextLine();
 		while (true) {
@@ -100,8 +127,14 @@ public class Interface {
 		}
 		return emailadr;
 	}
-	
-	public static String custPhoneNum() { //input of customer's phone number, return type may need changes//
+
+	/**
+         * Customer phone number input.
+         * Static method, that prompts the user to input the customer's phone number.
+         *
+         * @return String Customer's phone number.
+         */
+	public static String custPhoneNum() {
 		System.out.println("Δώστε το τηλέφωνο του πελάτη (εξαιρουμένου του κωδικού χώρας: +..): ");
 		String phonenum = SCNR.nextLine();
 		while (true) {
@@ -119,8 +152,14 @@ public class Interface {
 		}
 			
 	}
-	
-	public static Mask maskType() { //input of customer's mask type//
+
+	/**
+         * Customer mask type input.
+         * Static method, that prompts the user to input the customer's mask type.
+         *
+         * @return Mask Customer's mask type.
+         */
+	public static Mask maskType() {
 		System.out.println("Εισάγετε το είδος μάσκας του πελάτη: ");
 		System.out.println("Αν δεν φοράει μάσκα, εισάγετε 0.");
 		System.out.println("Αν φοράει μάσκα τύπου Fabric, εισάγετε 1.");
@@ -150,18 +189,22 @@ public class Interface {
 				break;
 		}
 	}
-	
-	// can be used to format an existing Date object into a String with "yyyy-MM-dd-HH-mm-ss" format
-	static DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-	// returns current time in a "yyyy-MM-dd-HH-mm-ss-ns" format
+
+	/** Customer's entry date and time.
+	 * Static method, representing the customer's date and time of entry.
+	 *
+	 * @return LocalDateTime Current Date and Time.
+	 */
 	public static LocalDateTime getDateAndTime() {
 		LocalDateTime myDateObj = LocalDateTime.now();
 		return myDateObj;
 	}
 	
-
-	
-	
+	/** Customer's type of activity.
+         * Static method, that prompts the user to input the customer's exertion level.
+         *
+         * @return Exertion Customer's exertion level.
+         */
 	public static Exertion exertionType() { //input of customer's exertion type//
 		System.out.println("Εισάγετε το είδος δραστηριότητας του πελάτη: ");
 		System.out.println("Αν κάθεται σε τραπέζι ή σε πάγκο, εισάγετε 0.");
@@ -185,8 +228,6 @@ public class Interface {
 				return Exertion.RESTING;
 			case 1:
 				return Exertion.STANDING;
-			default :
-				return Exertion.RESTING; // This will not actually be used (custExertion will either be 0 or 1)
 		}
 	}
 }
