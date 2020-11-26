@@ -271,7 +271,7 @@ public class Interface {
          *
          * @return Customer's age group.
          */
-	public static Age custAge() {
+	public static Age ageGroup() {
 		System.out.println("Εισάγετε την ηλικιακή ομάδα στην οποία ανήκει ο πελάτης: ");
 		System.out.println("Αν ανήκει στην ηλικιακή ομάδα 1-18, εισάγετε 0.");
 		System.out.println("Αν ανήκει στην ηλικιακή ομάδα 19-30, εισάγετε 1.");
