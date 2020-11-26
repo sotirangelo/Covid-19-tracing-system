@@ -3,8 +3,8 @@
  *
  * Copyright (not) 2020 Javavirus
  */
-import java.time.LocalDateTime; // Import the LocalDateTime class
-import java.time.format.DateTimeFormatter; // Import the DateTimeFormatter class
+
+import java.util.Date;
 
 /**
  * This class consists exclusively of static methods and fields.
@@ -17,8 +17,6 @@ import java.time.format.DateTimeFormatter; // Import the DateTimeFormatter class
  */
 
 public class Person {
-	/** Temporary field that formats Date objects in String "dd-MM-yyyy HH:mm:ss" format . Has not been used yet*/
-	static DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 	
 	private String firstName;
 	private String lastName;
@@ -27,8 +25,8 @@ public class Person {
 	private int phoneNumber;
 	private Mask maskType;
 	private Exertion exertionType;
-	private LocalDateTime entryTime;
-	private LocalDateTime exitTime;
+	private Date entryTime;
+	private Date exitTime;
 
 	public String getFirstName() {
 		return firstName;
@@ -72,19 +70,16 @@ public class Person {
 	public void setExertion(Exertion exertion) {
 		this.exertionType = exertion;
 	}
-	public LocalDateTime getEntryTime() {
+	public Date getEntryTime() {
 		return entryTime;
 	}
-	public void setEntryTime(LocalDateTime time) {
+	public void setEntryTime(Date time) {
 		this.entryTime = time;
 	}
-	public LocalDateTime getExitTime() {
+	public Date getExitTime() {
 		return exitTime;
 	}
-	public void setExitTime(LocalDateTime time) {
+	public void setExitTime(Date time) {
 		this.exitTime = time;
 	}
-
-
 }
-
