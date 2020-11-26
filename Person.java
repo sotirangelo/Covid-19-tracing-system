@@ -7,8 +7,8 @@ import java.time.LocalDateTime; // Import the LocalDateTime class
 import java.time.format.DateTimeFormatter; // Import the DateTimeFormatter class
 
 /**
- * This class consists exclusively of static methods and fields.
- * Its purpose is to get or set values for a "person" object.
+ * Person class.
+ * This class represents a person.
  *
  * @version 0.1 26 Nov 2020
  * @author Sotiris
