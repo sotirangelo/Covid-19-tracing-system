@@ -14,13 +14,13 @@ public enum Age {
 	UNDERAGE (0,"Underage"),
 
 	/** Age 19-30*/
-	EIGHTEEN (1, "Above 18"),
+	EIGHTEEN (1, "Above eighteen"),
 	
 	/** Age 31-50*/
-	THIRTY (2,"Above Thirty"),
+	THIRTY (2,"Above thirty"),
 	
 	/** Age 51-100*/
-	FIFTY (3, "Above Fifty");
+	FIFTY (3, "Above fifty");
 
 	private final int vulnerability;
 	private final int age;
