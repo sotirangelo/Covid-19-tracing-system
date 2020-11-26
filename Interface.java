@@ -5,10 +5,14 @@
  */
 
 import java.util.Scanner;
-import java.time.LocalDateTime; // Import the LocalDateTime class
-import java.time.format.DateTimeFormatter; // Import the DateTimeFormatter class
+
+import java.util.Date;
+import java.util.Calendar;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import java.util.regex.Pattern;
-import java.util.regex.Matcher;
+import java.util.regex.Matcher;  
 
 /**
  * Temporary command-line Input and Output.
@@ -23,9 +27,9 @@ public class Interface {
 
 	/** Temporary scanner Field */
 	static Scanner SCNR = new Scanner(System.in); 
-
-	/** Temporary field that formats Date objects in String "dd-MM-yyyy HH:mm:ss" format */
-	static DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+	
+	/** Temporary field that formats String objects to Date "dd-MM-yyyy HH:mm:ss" format */
+	static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
 	/** 
 	 * Business' total floor area input.
@@ -104,7 +108,7 @@ public class Interface {
 	public static String emailInput() {
 		System.out.println("Δώστε το email του πελάτη: ");
 		String emailadr = null; 
-		while (emailadr == null) { //checks if the given String is an email
+		while (emailadr == null) { //checks if the String is valid
 			emailadr = SCNR.nextLine();
 			Pattern pattern = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
 	        Matcher mat = pattern.matcher(emailadr);
@@ -191,20 +195,44 @@ public class Interface {
 	/** Customer's entry date and time.
 	 * Static method, representing the customer's date and time of entry.
 	 *
-	 * @return LocalDateTime Current Date and Time.
+	 * @return Date Current Date and Time.
 	 */
-	public static LocalDateTime getEntryDate() {
-		LocalDateTime myDateObj = LocalDateTime.now();
-		return myDateObj;
+	public static Date getEntryDate() {
+		Date dateNow = new Date();
+		// System.out.println(dateNow + "    Success"); (to check how it works with JUnit)
+		return dateNow;
 	}
+	
 	/** Customer's exit date and time.
 	 * Static method, representing the customer's date and time of exit.
 	 *
-	 * @return LocalDateTime Entry Date and Time + Minutes in Store.
+	 * @return Date Entry Date and Time + Minutes in Store.
 	 */
-	public static LocalDateTime getExitDate(LocalDateTime entryDate, int minutesInStore) {
-		LocalDateTime exitDate = entryDate.plusMinutes(minutesInStore); 
-		return exitDate;
+	public static Date getExitDate(Date entryDate, int minutesInStore) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(entryDate);
+		cal.add(Calendar.MINUTE, minutesInStore);
+		Date newDate = cal.getTime();
+		// System.out.println("Entry Date: " + entryDate + "Exit Date : " +  newDate);  (to check how it works with JUnit)
+		return newDate;
+	}
+	
+	// Converts Date to String. Could be used to create a String type 'Date and Time' that can be sent to the database.
+	public static String dateToString(Date date) {
+		// System.out.println(dateFormat.format(date)); (to check how it works with JUnit)
+		return dateFormat.format(date);
+	}
+	
+	// Converts String to Date
+	public static Date stringToDate(String strDate) {
+		Date fdate = null;
+		try {
+			fdate = dateFormat.parse(strDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		// System.out.println(fdate); (to check how it works with JUnit)
+		return fdate;
 	}
 	
 	/** Customer's type of activity.
