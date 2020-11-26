@@ -38,7 +38,8 @@ public enum Age {
 		return vulnerability;
 	}
 	
-	public int getAge() {
+	@Override
+	public String toString() {
 		return age;
 	}
 }
