@@ -7,6 +7,8 @@
 import java.util.Scanner;
 import java.time.LocalDateTime; // Import the LocalDateTime class
 import java.time.format.DateTimeFormatter; // Import the DateTimeFormatter class
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 /**
  * Temporary command-line Input and Output.
@@ -29,7 +31,7 @@ public class Interface {
 	 * Business' total floor area input.
 	 * Static method, that prompts the user to specify their business' total floor area in square metres.
 	 *
-	 * @return double Floor area in square metres.
+	 * @return double Floor area in square meters.
 	 */
 	public static double floorAreaInput() {
 		System.out.println("Πόσα τετραγωνικά μέτρα είναι το κατάστημά σας;");
@@ -46,26 +48,28 @@ public class Interface {
 	  	return sqm;
   	}
   
-	/* WORK IN PROGRESS
-	 * check the USER ID (11111111-99999999) - not working 100%
+	/**
+	 * Customer USER ID input.
+	 * Static method, that prompts the user to input the customer's USER ID.
+	 * 
+	 * @return Integer Customer's USER ID.
+	 */
   	public static int checkIn() {
-		System.out.println("Δώστε το USER ID του πελάτη (12345678): ");
-	  	String id = SCNR.next();
-	  	int intID =-1;
-	  	while (intID < 11111111 || intID > 99999999) {
-			try {
-				intID = Integer.parseInt(id);
-		  	}
-		  	catch (Exception y) {
-				System.out.println("Το USER ID του πελάτη που δώσατε ήταν λάθος. Πρέπει να έχει μορφή 12345678. Προσπαθήστε ξανά: ");
-		  	}
-		  	if (intID < 11111111 || intID >99999999) {
-			  	id = SCNR.nextLine();
-		  	}
-	  	}
+		System.out.println("Δώστε το USER ID του πελάτη (πχ. 12345678): ");
+	  	int intID =0;
+		while (intID < 11111111 || intID > 99999999) { // checks if the given value is an Integer and a valid USER ID (11111111-99999999)
+			while (!SCNR.hasNextInt()) {
+		        System.out.println("Το USER ID του πελάτη που εισήχθει ήταν λανθασμένο. Προσπαθήστε ξανά (πχ. 12345678) : ");
+		        SCNR.next(); 
+		    }
+		    intID = SCNR.nextInt();
+		    if (intID < 11111111 || intID > 99999999) {
+		    	System.out.println("Το USER ID του πελάτη που εισήχθει ήταν λανθασμένο. Προσπαθήστε ξανά (πχ. 12345678) : ");
+		    }
+		}
 	  	return intID;
   	}
-	*/
+	
 	
 	/**
 	 * Customer first name input.
@@ -75,15 +79,7 @@ public class Interface {
 	 */
 	public static String firstNameInput() {
 		System.out.println("Δώστε το όνομα του πελάτη: ");
-		String custfirst= SCNR.nextLine();
-		while (true) {
-			try {
-            			return SCNR.nextLine();
-			}catch (java.util.InputMismatchException e) {
-				System.out.println("Το όνομα πελάτη που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
-            			SCNR.nextLine();
-			}
-		}
+		String custfirst = SCNR.next();
 		return custfirst;
 	}
 	
@@ -95,16 +91,7 @@ public class Interface {
          */
 	public static String lastNameInput() {
 		System.out.println("Δώστε το επίθετο του πελάτη: ");
-		String custlast = SCNR.nextLine();
-		while (true) {
-			try {
-            			return SCNR.nextLine();
-			}catch (java.util.InputMismatchException e) {
-				System.out.println("Το επίθετο πελάτη που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
-            			SCNR.nextLine();
-			}
-		}
-		
+		String custlast = SCNR.next();
 		return custlast;
 	}
 
@@ -116,14 +103,17 @@ public class Interface {
          */
 	public static String emailInput() {
 		System.out.println("Δώστε το email του πελάτη: ");
-		String emailadr = SCNR.nextLine();
-		while (true) {
-			try {
-            			return SCNR.nextLine();
-			}catch (java.util.InputMismatchException e) {
-				System.out.println("Το e-mail πελάτη που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
-            			SCNR.nextLine();
-			}
+		String emailadr = null; 
+		while (emailadr == null) { //checks if the given String is an email
+			emailadr = SCNR.nextLine();
+			Pattern pattern = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
+	        Matcher mat = pattern.matcher(emailadr);
+	        if(mat.matches()){
+	            System.out.println("Valid email address");
+	        }else{
+	        	System.out.println("Το e-mail πελάτη που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
+	        	emailadr = null;
+	        }
 		}
 		return emailadr;
 	}
@@ -132,25 +122,22 @@ public class Interface {
          * Customer phone number input.
          * Static method, that prompts the user to input the customer's phone number.
          *
-         * @return String Customer's phone number.
+         * @return Int Customer's 10-Digit phone number.
          */
-	public static String custPhoneNum() {
+	public static int custPhoneNum() {
 		System.out.println("Δώστε το τηλέφωνο του πελάτη (εξαιρουμένου του κωδικού χώρας: +..): ");
-		String phonenum = SCNR.nextLine();
-		while (true) {
-			try {
-            			return SCNR.nextLine();
-			}catch (java.util.InputMismatchException e) {
+		String phonenum = null;
+		while (phonenum == null) {
+			phonenum = SCNR.next();
+			String regexStr = "^[0-9]{10}$"; // 10 digit number
+			if (phonenum.matches(regexStr)) { // checks if the given string is a 10 digit number
+				System.out.println("Valid phone number");
+			} else {
 				System.out.println("Το τηλέφωνο πελάτη που εισήχθη ήταν λανθασμένο.Πρέπει να είναι ένας 10ψήφιος αριθμός.Παρακαλώ προσπαθήστε ξανά: ");
-            			SCNR.nextLine();
+				phonenum = null;
 			}
 		}		
-		if (phonenum.length() != 10) {
-			System.out.println("Λανθασμένη εισαγωγή, παρακαλώ προσπαθήστε ξανά.");
-		}else {
-			break;
-		}
-			
+		return Integer.parseInt(phonenum);		
 	}
 
 	/**
@@ -165,28 +152,39 @@ public class Interface {
 		System.out.println("Αν φοράει μάσκα τύπου Fabric, εισάγετε 1.");
 		System.out.println("Αν φοράει μάσκα τύπου Medical, εισάγετε 2.");
 		System.out.println("Αν φοράει μάσκα τύπου Respirator, εισάγετε 3.");
-		int custmask = SCNR.nextInt();
-		while (true) {
-			try {
-            			return SCNR.nextMask();
-			}catch (java.util.InputMismatchException e) {
-				System.out.println("Το είδος μάσκας που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
-            			SCNR.nextLine();
-			}
+		int custmask = 0;
+		boolean checker = false;
+		while (checker == false) {
+			if (SCNR.hasNextInt()) { // checks if the given value is an integer (0-3)
+				custmask = SCNR.nextInt();
+				if (custmask >= 0 && custmask <= 3) {
+					checker = true;
+				} else {
+					System.out.println("Το είδος μάσκας του πελάτη που εισήχθει ήταν λανθασμένο. Προσπαθήστε ξανά : ");
+					System.out.println("Αν δεν φοράει μάσκα, εισάγετε 0.");
+					System.out.println("Αν φοράει μάσκα τύπου Fabric, εισάγετε 1.");
+					System.out.println("Αν φοράει μάσκα τύπου Medical, εισάγετε 2.");
+					System.out.println("Αν φοράει μάσκα τύπου Respirator, εισάγετε 3.");
+				}
+			} else {
+				System.out.println("Το είδος μάσκας του πελάτη που εισήχθει ήταν λανθασμένο. Προσπαθήστε ξανά : ");
+				System.out.println("Αν δεν φοράει μάσκα, εισάγετε 0.");
+				System.out.println("Αν φοράει μάσκα τύπου Fabric, εισάγετε 1.");
+				System.out.println("Αν φοράει μάσκα τύπου Medical, εισάγετε 2.");
+				System.out.println("Αν φοράει μάσκα τύπου Respirator, εισάγετε 3.");
+	           	SCNR.nextLine();
+	            continue;
+	        }
 		}
 		switch (custmask) {
 			case 0:
 				return Mask.NONE;
-				break;
 			case 1:
 				return Mask.FABRIC;
-				break;
 			case 2:
 				return Mask.MEDICAL;
-				break;
-			case 3:
+			default:
 				return Mask.RESPIRATOR;
-				break;
 		}
 	}
 
@@ -195,9 +193,18 @@ public class Interface {
 	 *
 	 * @return LocalDateTime Current Date and Time.
 	 */
-	public static LocalDateTime getDateAndTime() {
+	public static LocalDateTime getEntryDate() {
 		LocalDateTime myDateObj = LocalDateTime.now();
 		return myDateObj;
+	}
+	/** Customer's exit date and time.
+	 * Static method, representing the customer's date and time of exit.
+	 *
+	 * @return LocalDateTime Entry Date and Time + Minutes in Store.
+	 */
+	public static LocalDateTime getExitDate(LocalDateTime entryDate, int minutesInStore) {
+		LocalDateTime exitDate = entryDate.plusMinutes(minutesInStore); 
+		return exitDate;
 	}
 	
 	/** Customer's type of activity.
@@ -223,11 +230,10 @@ public class Interface {
 				System.out.println("Το είδος δραστηριότητας που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
 			}
 		}
-		switch (custExertion) {
-			case 0:
-				return Exertion.RESTING;
-			case 1:
-				return Exertion.STANDING;
+		if (custExertion == 0) {
+            return Exertion.RESTING;
+		} else {
+            return Exertion.STANDING;
 		}
 	}
 }
