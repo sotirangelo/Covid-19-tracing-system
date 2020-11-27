@@ -13,11 +13,26 @@ import java.util.ArrayList;
  *
  * @version 0.1 23 Nov 2020
  * @author Sotiris
- * @author
+ * @author Christos
  * @author
  * @author
  */
 public class DataAccess {
+public static ArrayList<Business> allBusinesses = new ArrayList<>();
+	public ArrayList<String> covidlist = new ArrayList<String>();
 
+	public static ArrayList<Business> searchBusiness (Person user) {
+		ArrayList<Business> covidStores = new ArrayList<>();
+		for (Business element : allBusinesses ) {
+			for(Person e : element.customers) {
+				if(e.contains(user)) {
+					covidStores.add(element) ;
+					break;
+				}
+		    }
+
+	    }
+		return covidStores;
+	}
 }
 
