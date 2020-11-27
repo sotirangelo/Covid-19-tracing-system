@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class Business {
 	private double space;
 	private BusinessType businessType;
-	//TODO getWorkSchedule
+	public ArrayList<Person> customers = new ArrayList<Person>();
 
 	public Business(double space, BusinessType businessType) {
 		this.space = space;
