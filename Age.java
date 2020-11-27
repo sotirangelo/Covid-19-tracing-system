@@ -23,9 +23,9 @@ public enum Age {
 	SIXTY (3, "Above sixty");
 
 	private final int vulnerability;
-	private final int age;
+	private final String age;
 
-	private (int vulnerability, int age) {
+	private Age(int vulnerability, String age) {
 		this.vulnerability = vulnerability;
 		this.age = age;
 	}
