@@ -18,9 +18,15 @@ import java.util.ArrayList;
  * @author
  */
 public class DataAccess {
-public static ArrayList<Business> allBusinesses = new ArrayList<>();
-	public ArrayList<String> covidlist = new ArrayList<String>();
+	/** ArrayList of all Businesses */
+	public static ArrayList<Business> allBusinesses = new ArrayList<>();
 
+	/** Search businesses visited by person.
+	 * Static class that looks for the businesses that a person visited.
+	 *
+	 * @param user Person object
+	 * @return ArrayList<Business> List with all businesses visited
+	 */
 	public static ArrayList<Business> searchBusiness (Person user) {
 		ArrayList<Business> covidStores = new ArrayList<>();
 		for (Business element : allBusinesses ) {
