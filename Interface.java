@@ -56,23 +56,28 @@ public class Interface {
 	 * Customer USER ID input.
 	 * Static method, that prompts the user to input the customer's USER ID.
 	 * 
-	 * @return Integer Customer's USER ID.
+	 * @return String Customer's USER ID.
 	 */
-  	public static int checkIn() {
+	public static String userIdInput() {
 		System.out.println("Δώστε το USER ID του πελάτη (πχ. 12345678): ");
-	  	int intID =0;
-		while (intID < 11111111 || intID > 99999999) { // checks if the given value is an Integer and a valid USER ID (11111111-99999999)
-			while (!SCNR.hasNextInt()) {
-		        System.out.println("Το USER ID του πελάτη που εισήχθει ήταν λανθασμένο. Προσπαθήστε ξανά (πχ. 12345678) : ");
-		        SCNR.next(); 
-		    }
-		    intID = SCNR.nextInt();
-		    if (intID < 11111111 || intID > 99999999) {
-		    	System.out.println("Το USER ID του πελάτη που εισήχθει ήταν λανθασμένο. Προσπαθήστε ξανά (πχ. 12345678) : ");
-		    }
+		String custID = null;
+		while (custID == null) {
+			custID = SCNR.next();
+			if (custID.length() == 8) {
+				try {
+					Integer.parseInt(custID);
+				} catch (NumberFormatException e) {
+					System.out.println("Το USER ID του πελάτη που εισήχθει ήταν λανθασμένο. Προσπαθήστε ξανά (πχ. 12345678) : ");
+					custID = null;
+				}
+			} else {
+				System.out.println("Το USER ID του πελάτη που εισήχθει ήταν λανθασμένο. Προσπαθήστε ξανά (πχ. 12345678) : ");
+				custID = null;
+			}
 		}
-	  	return intID;
-  	}
+		//System.out.println(custID + " Successful"); (to check how it works with JUnit)
+		return custID;
+	}
 	
 	
 	/**
@@ -264,7 +269,8 @@ public class Interface {
             return Exertion.STANDING;
 		}
 	}
-	
+
+
 	/**
          * Customer age group input.
          * Static method, that prompts the user to input the customer's age group.
