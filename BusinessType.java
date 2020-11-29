@@ -13,7 +13,7 @@ public enum BusinessType {
 	BAR(-1, "Bar"),
 	OFFICE(10, "Office"),
 	STORE(8, "Store"),
-	MARKET("15, Market");
+	MARKET(15, "Market");
 
 	private final String type;
 

@@ -14,7 +14,7 @@ public enum Exertion {
 	/** Standing, as a low-level activity*/
 	STANDING(0,"Standing");
 	
-	private final int exertionFactor ;
+	private final double exertionFactor ;
 	private final String type;
 
 	private Exertion(double exertionFactor, String type) {
@@ -26,7 +26,7 @@ public enum Exertion {
 	 * Returns the exertion factor in transmission.
 	 * @return int  COVID-19 transmission metre based on activity/exertion. 
 	 */
-	public int getExertionFactor() {
+	public double getExertionFactor() {
 		return exertionFactor;
 	}
 	

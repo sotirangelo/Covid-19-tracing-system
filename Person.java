@@ -27,6 +27,7 @@ public class Person {
 	private Exertion exertionType;
 	private Date entryTime;
 	private Date exitTime;
+	private Age ageCategory;
 
 	public String getFirstName() {
 		return firstName;
@@ -81,5 +82,11 @@ public class Person {
 	}
 	public void setExitTime(Date time) {
 		this.exitTime = time;
+	}
+	public Age getAgeCategory() {
+		return ageCategory;
+	}
+	public void setAgeCAtegory(Age ageCategory) {
+		this.ageCategory = ageCategory;
 	}
 }

@@ -38,6 +38,20 @@ public enum Age {
 		return vulnerability;
 	}
 	
+	public int findYourVulnerability(String age) {
+		int x = 0;
+		if (Integer.parseInt(age) >= 1 && Integer.parseInt(age) <= 18) {
+			x =0;
+		}else if (Integer.parseInt(age) <= 30) {
+			x = 1;
+		}else if (Integer.parseInt(age) <= 60) {
+			x = 2;
+		}else if (Integer.parseInt(age) <=100) {
+			x = 3;
+		}
+		return x;
+	}
+	
 	@Override
 	public String toString() {
 		return age;
