@@ -283,7 +283,7 @@ public class Interface {
 			if (SCNR.hasNextInt()) { // checks if the given value is an integer (0-3)
 				custage = SCNR.nextInt();
 				if (custage >= 0 && custage <= 3) {
-					checker = true;
+					sechecker = true;
 				} else {
 					System.out.println("Η ηλικιακή ομάδα που εισήχθη ήταν λανθασμένη . Προσπαθήστε ξανά : ");
 					System.out.println("Αν ανήκει στην ηλικιακή ομάδα 1-18, εισάγετε 0.");
