@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class DataAccess {
 	/** ArrayList of all Businesses */
 	public static ArrayList<Business> allBusinesses = new ArrayList<>();
-
+        public ArrayList<Person> covidlist = new ArrayList<>();	
 	/** Search businesses visited by person.
 	 * Static class that looks for the businesses that a person visited.
 	 *
