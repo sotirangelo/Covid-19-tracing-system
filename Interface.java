@@ -202,7 +202,7 @@ public class Interface {
 	 *
 	 * @return Date Current Date and Time.
 	 */
-	public static Date getEntryDate() {
+	public static Date getDate() {
 		Date dateNow = new Date();
 		// System.out.println(dateNow + "    Success"); (to check how it works with JUnit)
 		return dateNow;
@@ -213,14 +213,14 @@ public class Interface {
 	 *
 	 * @return Date Entry Date and Time + Minutes in Store.
 	 */
-	public static Date getExitDate(Date entryDate, int minutesInStore) {
+	/*public static Date getExitDate(Date entryDate, int minutesInStore) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(entryDate);
 		cal.add(Calendar.MINUTE, minutesInStore);
 		Date newDate = cal.getTime();
 		// System.out.println("Entry Date: " + entryDate + "Exit Date : " +  newDate);  (to check how it works with JUnit)
 		return newDate;
-	}
+	}*/
 	
 	// Converts Date to String. Could be used to create a String type 'Date and Time' that can be sent to the database.
 	public static String dateToString(Date date) {
@@ -253,14 +253,16 @@ public class Interface {
 		boolean aa = false;
 		while (aa == false) {
 			try {
-            	            custExertion = SCNR.nextInt();
-            	            if (custExertion == 0 || custExertion == 1) {
-            		        aa = true;	 
-            	            } else {
-			        System.out.println("Το είδος δραστηριότητας που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
-		            }
+            	custExertion = SCNR.nextInt();
+                if (custExertion == 0 || custExertion == 1) {
+                    aa = true;	 
+                } else {
+                   	System.out.println("Το είδος δραστηριότητας που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
+		        }
 			}catch (java.util.InputMismatchException e) {
 				System.out.println("Το είδος δραστηριότητας που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
+				SCNR.nextLine();
+	            continue;
 			}
 		}
 		if (custExertion == 0) {
@@ -316,6 +318,38 @@ public class Interface {
 				return Age.THIRTY;
 			default:
 				return Age.SIXTY;
+		}
+	}
+	
+	/** Customer's check type (Check in/Check out).
+     * Static method, that prompts the user to input the customer's check type.
+     *
+     * @return Check Customer's Check type (Check in/Check out).
+     */
+	public static Check checkType() {
+		System.out.println("Επιλέξτε αν ο πελάτης μπαίνει στο κατάστημα ή αν βγαίνει απο το κατάστημα : ");
+		System.out.println("Αν ο πελάτης μπαίνει στο κατάστημα, εισάγετε 0.");
+		System.out.println("Αν ο πελάτης βγαίνει απο το κατάστημα, εισάγετε 1.");
+		int custCheckType = 0;
+		boolean aa = false;
+		while (aa == false) {
+			try {
+				    custCheckType = SCNR.nextInt();
+                    if (custCheckType == 0 || custCheckType == 1) {
+         	        aa = true;	 
+                    	} else {
+			        System.out.println("Η επιλογή ήταν λανθασμένη. Παρακαλώ προσπαθήστε ξανά: ");
+		            }
+			}catch (java.util.InputMismatchException e) {
+				System.out.println("Η επιλογή ήταν λανθασμένη. Παρακαλώ προσπαθήστε ξανά: ");
+				SCNR.nextLine();
+	            continue;
+			}
+		}
+		if (custCheckType == 0) {
+            return Check.In;
+		} else {
+            return Check.Out;
 		}
 	}
 }
