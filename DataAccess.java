@@ -20,19 +20,37 @@ import java.util.ArrayList;
 public class DataAccess {
 	/** ArrayList of all Businesses */
 	public static ArrayList<Business> allBusinesses = new ArrayList<>();
+	/** ArrayList of all Persons */
+	public static ArrayList<Person> allPersons = new ArrayList<> ();
+
+	/** Search Person object
+	 * Static method that looks for, and returns, a Person object.
+	 *
+	 * @param firstName String representing person's first name
+	 * @param lastName String representing person's last name
+	 * @return Person A Person type object
+	 */
+	public static Person searchPerson(String firstName, String lastName) throws NullPointerException {
+		for (Person p : allPersons) {
+			if (p.getFirstName == firstName && p.getLastName == lastName) {
+				return p;
+			}
+			return null;
+		}
+	}
 
 	/** Search businesses visited by person.
-	 * Static class that looks for the businesses that a person visited.
+	 * Static method that looks for the businesses that a person visited.
 	 *
 	 * @param user Person object
 	 * @return ArrayList<Business> List with all businesses visited
 	 */
 	public static ArrayList<Business> searchBusiness (Person user) {
 		ArrayList<Business> covidStores = new ArrayList<>(); 
-		for (Business element : allBusinesses ) {
-			for(Person e : element.customers) {
-				if(e.contains(user)) {
-					covidStores.add(element) ;
+		for (Business b : allBusinesses ) {
+			for(Person p : b.customers) {
+				if(p.contains(user)) {
+					covidStores.add(b) ;
 					break;
 				}
 		    }

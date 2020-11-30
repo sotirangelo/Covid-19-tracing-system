@@ -1,5 +1,5 @@
 /*
- * Recordings
+ * Recording
  *
  * Copyright (not) 2020 Javavirus
  */
@@ -7,7 +7,7 @@
 import java.util.Date;
 
 /**
- * Recordings class.
+ * Recording class.
  * This class represents a recording, which is defined by its Check type (Check in/Check out),
  * its UserID,
  * its Date and Time,
@@ -17,13 +17,13 @@ import java.util.Date;
  * @author Ioannis
  */
 
-public class Recordings {
+public class Recording {
 	private Check checkType;
 	private String userID;
 	private Date date; 
 	private Mask maskType;
 	
-	public  Recordings(Check checkType, String userID, Date date, Mask maskType) {
+	public Recording(Check checkType, String userID, Date date, Mask maskType) {
 		this.checkType = checkType;
 		this.userID = userID;
 		this.date = date;
@@ -31,7 +31,7 @@ public class Recordings {
 		//System.out.println("Check Type,User ID,Date and Time,Mask Type"); (check how it works with JUnit)
 		//System.out.println(checkType + "," + userID + "," + date + "," + maskType); 
 	}
-	
+
 	public String getUserID() {
 		return userID;
 	}
