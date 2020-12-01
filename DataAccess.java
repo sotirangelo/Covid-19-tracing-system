@@ -21,7 +21,7 @@ public class DataAccess {
 	/** ArrayList of all Businesses */
 	public static ArrayList<Business> allBusinesses = new ArrayList<>();
 	/** ArrayList of all Persons */
-	public static ArrayList<Person> allPersons = new ArrayList<> ();
+	public static ArrayList<Recording> allPersons = new ArrayList<> ();
 
 	/** Search Person object
 	 * Static method that looks for, and returns, a Person object.
@@ -48,7 +48,7 @@ public class DataAccess {
 	public static ArrayList<Business> searchBusiness (Person user) {
 		ArrayList<Business> covidStores = new ArrayList<>(); 
 		for (Business b : allBusinesses ) {
-			for(Person p : b.customers) {
+			for(Recording p : b.customers) {
 				if(p.contains(user)) {
 					covidStores.add(b) ;
 					break;
