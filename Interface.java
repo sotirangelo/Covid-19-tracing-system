@@ -131,9 +131,9 @@ public class Interface {
          * Customer phone number input.
          * Static method, that prompts the user to input the customer's phone number.
          *
-         * @return Int Customer's 10-Digit phone number.
+         * @return String Customer's 10-Digit phone number.
          */
-	public static int custPhoneNum() {
+	public static String custPhoneNum() {
 		System.out.println("Δώστε το τηλέφωνο του πελάτη (εξαιρουμένου του κωδικού χώρας: +..): ");
 		String phonenum = null;
 		while (phonenum == null) {
@@ -146,7 +146,7 @@ public class Interface {
 				phonenum = null;
 			}
 		}		
-		return Integer.parseInt(phonenum);		
+		return phonenum;		
 	}
 
 	/**

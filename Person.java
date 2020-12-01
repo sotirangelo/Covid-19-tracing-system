@@ -5,7 +5,6 @@
  */
 
 /**
- * Person class
  * This class consists exclusively of static methods and fields.
  * Its purpose is to get or set values for a "person" object.
  *
@@ -17,20 +16,28 @@
 
 public class Person {
 	
+	private String UserID;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private int phoneNumber;
 	private Age ageCategory;
 	
-	public Person(String firstName, String lastName, String email, int phoneNumber, Age ageCategory) {
+	public Person(String UserID, String firstName, String lastName, String email, int phoneNumber, Age ageCategory) {
+		this.UserID = UserID;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
 		this.ageCategory = ageCategory;
 	}
-
+	
+	public String getUserID() {
+		return firstName;
+	}
+	public void setUserID(String UserID) {
+		this.UserID = UserID;
+	}
 	public String getFirstName() {
 		return firstName;
 	}
@@ -60,5 +67,13 @@ public class Person {
 	}
 	public void setAgeCAtegory(Age ageCategory) {
 		this.ageCategory = ageCategory;
+	}
+	@Override
+	public String toString() {
+		return "User ID : " + UserID +
+				", First & Last Name :" + firstName + " " + lastName +
+				", Email : " + email +
+				", Phone number : " + phoneNumber +
+				", Age Category : " + ageCategory;
 	}
 }
