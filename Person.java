@@ -71,7 +71,7 @@ public class Person {
 	@Override
 	public String toString() {
 		return "User ID : " + UserID +
-				", First & Last Name :" + firstName + "" + lastName +
+				", First & Last Name :" + firstName + " " + lastName +
 				", Email : " + email +
 				", Phone number : " + phoneNumber +
 				", Age Category : " + ageCategory;
