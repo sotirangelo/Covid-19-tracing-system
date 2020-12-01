@@ -45,11 +45,11 @@ public class DataAccess {
 	 * @param user Person object
 	 * @return ArrayList<Business> List with all businesses visited
 	 */
-	public static ArrayList<Business> searchBusiness (Person user) {
+	public static ArrayList<Business> searchBusiness (Person userId) {
 		ArrayList<Business> covidStores = new ArrayList<>(); 
 		for (Business b : allBusinesses ) {
-			for(Recording r : b.customers) {
-				if(r.contains(recordings)) {
+			for(Recording r : b.recordings) {
+				if(r.contains(userId)) {
 					covidStores.add(b) ;
 					break;
 				}
