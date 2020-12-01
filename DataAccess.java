@@ -55,7 +55,6 @@ public class DataAccess {
 		}
 	}
 	
-}
 	public static ArrayList<Arraylist<Person>> searchPossiblyInfected (String UserID) {
 		ArrayList<ArrayList<Person>> output = new ArrayList<ArrayList<Person>>();
 		ArrayList<Business> infectedBusinesses = searchBusiness(UserID);
@@ -69,3 +68,4 @@ public class DataAccess {
 			}
 		}
 	}
+}
