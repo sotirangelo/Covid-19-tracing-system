@@ -54,4 +54,18 @@ public class DataAccess {
 			}
 		}
 	}
+	
 }
+	public static ArrayList<Arraylist<Person>> searchPossiblyInfected (String UserID) {
+		ArrayList<ArrayList<Person>> output = new ArrayList<ArrayList<Person>>();
+		ArrayList<Business> infectedBusinesses = searchBusiness(UserID);
+		for (Business b : infectedBusinesses ) {
+			for (Person p1 : searchPerson(UserID, b)) {
+				for (Person p2 : b.customers) {
+					if (p2.getEntryTime() >= p1.getEntryTime() && p2.getEntryTime < p1.getExitTime || p2.getExitTime > p1.getEntryTime) {
+						output.add(p2);
+					}
+				}
+			}
+		}
+	}
