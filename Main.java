@@ -17,7 +17,7 @@ import java.util.Random;
  */
 public class Main {
 	/** Temporary Scanner Field */
-	static Scanner sc = new Scanner(System.in);
+	static Scanner input = new Scanner(System.in);
 	/** Name array */
 	private static String[] names = {"Nishat Tyson","Warren Blankenship","Lennox Fraser","Sahra Stubbs","Robson Kidd","Sebastian Patton","Lilly-Mae Boyce","Luca Lin","Eva Firth","Liyah Dean","Qasim Mckinney","Jago Sexton","Marvin Ashley","Dan Snider","Dylan Witt","Walter Barr","Abiha Cline","Bruce Bloom","Kierran Marin","Leja Webb","Rufus Holt","Kelly Hale","Jac Pratt","Maia Hobbs","Tamera Novak","Christopher Duran","Timur Cunningham","Marguerite Lester","Norman Frost","Jesus Milner","Isobelle Farrell","Bessie Hammond","Emelie Mueller","Sania Mckay","Mahek Shelton","Codey Martins","Garin Mccarthy","Mustafa James","Bobby Richard","Colm Richardson"};
 	/** Age array */
@@ -103,15 +103,45 @@ public class Main {
 
 	}
 
+	/**
+	 * Create Person Object.
+	 * Static method that creates a Person object, using Interface.java to prompt
+	 * the user to enter the required information.
+	 */
 	private static void createNewPerson() {
 		String firstName = Interface.firstNameInput();
 		String lastName = Interface.lastNameInput();
 		String email = Interface.emailInput();
 		long phoneNumber = Inteface.custPhoneNum();
-		Age age = Interface.ageGroup();
+		Age ageCategory = Interface.ageGroup();
+		Person p = new Person(firstName, lastName, email, phoneNumber, ageCategory);
+		DataAccess.allPersons.add(p);	
 		
 	}
+	/**
+	 * Create Business Object.
+	 * Static method that creates a Business Object, using Interface.java to prompt
+	 * the user to enter the required information.
+	 */
+	private static void createNewBusiness() {
+		System.out.println("\nΌνομα επιχείρησης:");
+		String businessName = input.nextLine();
+		system.out.println();
+		double floorArea = Interface.floorAreaInput();
+		//TODO getBusinessType -> Interface.java
 
+	}
+	
+	/** Create Record Object.
+	 *
+	 */
+	private static void createNewRecord() {
+
+	}
+
+	/** Choice 1 method.
+	 * Static method to be executed, if user selects the first menu option.
+	 */
 	private static void choice1() {
 		System.out.println("\n1. Δημιουργία λογαριασμού");
                 System.out.println("2. Καταγραφή Επίσκεψης");
