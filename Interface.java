@@ -131,9 +131,9 @@ public class Interface {
          * Customer phone number input.
          * Static method, that prompts the user to input the customer's phone number.
          *
-         * @return String Customer's 10-Digit phone number.
+         * @return Long Customer's 10-Digit phone number.
          */
-	public static String custPhoneNum() {
+	public static long custPhoneNum() {
 		System.out.println("Δώστε το τηλέφωνο του πελάτη (εξαιρουμένου του κωδικού χώρας: +..): ");
 		String phonenum = null;
 		while (phonenum == null) {
@@ -146,7 +146,7 @@ public class Interface {
 				phonenum = null;
 			}
 		}		
-		return phonenum;		
+		return Long.parseLong(phonenum);		
 	}
 
 	/**
@@ -213,14 +213,14 @@ public class Interface {
 	 *
 	 * @return Date Entry Date and Time + Minutes in Store.
 	 */
-	/*public static Date getExitDate(Date entryDate, int minutesInStore) {
+	public static Date getExitDate(Date entryDate, int minutesInStore) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(entryDate);
 		cal.add(Calendar.MINUTE, minutesInStore);
 		Date newDate = cal.getTime();
 		// System.out.println("Entry Date: " + entryDate + "Exit Date : " +  newDate);  (to check how it works with JUnit)
 		return newDate;
-	}*/
+	}
 	
 	// Converts Date to String. Could be used to create a String type 'Date and Time' that can be sent to the database.
 	public static String dateToString(Date date) {
@@ -352,7 +352,6 @@ public class Interface {
             return Check.Out;
 		}
 	}
-}
 
 /**
          * Business type input.
@@ -380,6 +379,7 @@ public class Interface {
 					System.out.println("Αν είναι γραφείο, εισάγετε 2.");
 					System.out.println("Αν είναι κατάστημα λιανικής, εισάγετε 3.");
 					System.out.println("Αν είναι market, εισάγετε 4.");
+				}
 			} else {
 				System.out.println("Εισάγετε το είδος δραστηριότητας της επιχείρησης: ");
 				System.out.println("Αν είναι εστιατόριο, εισάγετε 0.");
@@ -404,3 +404,4 @@ public class Interface {
 				return BusinessType.MARKET;
 		}
 	}
+}
