@@ -20,19 +20,37 @@ import java.util.ArrayList;
 public class DataAccess {
 	/** ArrayList of all Businesses */
 	public static ArrayList<Business> allBusinesses = new ArrayList<>();
+	/** ArrayList of all Persons */
+	public static ArrayList<Person> allPersons = new ArrayList<> ();
+
+	/** Search Person object
+	 * Static method that looks for, and returns, a Person object.
+	 *
+	 * @param firstName String representing person's first name
+	 * @param lastName String representing person's last name
+	 * @return Person A Person type object
+	 */
+	public static Person searchPerson(String firstName, String lastName) throws NullPointerException {
+		for (Person p : allPersons) {
+			if (p.getFirstName == firstName && p.getLastName == lastName) {
+				return p;
+			}
+			return null;
+		}
+	}
 
 	/** Search businesses visited by person.
-	 * Static class that looks for the businesses that a person visited.
+	 * Static method that looks for the businesses that a person visited.
 	 *
 	 * @param user Person object
 	 * @return ArrayList<Business> List with all businesses visited
 	 */
-	public static ArrayList<Business> searchBusiness (Person user) {
+	public static ArrayList<Business> searchBusiness (Person userId) {
 		ArrayList<Business> covidStores = new ArrayList<>(); 
-		for (Business element : allBusinesses ) {
-			for(Person e : element.customers) {
-				if(e.contains(user)) {
-					covidStores.add(element) ;
+		for (Business b : allBusinesses ) {
+			for(Recording r : b.recordings) {
+				if(Recording.userId==Person.userId) {
+					covidStores.add(b) ;
 					break;
 				}
 		    }
@@ -41,14 +59,14 @@ public class DataAccess {
 		return covidStores;
 	}
 
-	public static ArrayList<Arraylist<Person>> searchPossiblyInfected (String firstName, String lastName) {
-		ArrayList<ArrayList<Person>> output = new ArrayList<ArrayList<Person>>();
+	public static ArrayList<Arraylist<Record>> searchPossiblyInfected (String firstName, String lastName) {
+		ArrayList<ArrayList<Record>> output = new ArrayList<ArrayList<Record>>();
 		ArrayList<Business> infectedBusinesses = searchBusiness(firstName, lastName);
 		for (Business b : infectedBusinesses ) {
-			for (Person p1 : searchPerson(firstName, lastName, b)) {
-				for (Person p2 : b.customers) {
-					if (p2.getEntryTime() >= p1.getEntryTime() && p2.getEntryTime < p1.getExitTime || p2.getExitTime > p1.getEntryTime) {
-						output.add(p2);
+			for (Record r1 : searchPerson(firstName, lastName, b)) {
+				for (Record r2 : b.customers) {
+					if (r2.getEntryDate() >= r1.getEntryDate() && r2.getEntryDate < r1.getExitDate || r2.getExitDate > r1.getEntryDate) {
+						output.add(r2);
 					}
 				}
 			}

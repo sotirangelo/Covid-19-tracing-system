@@ -131,9 +131,9 @@ public class Interface {
          * Customer phone number input.
          * Static method, that prompts the user to input the customer's phone number.
          *
-         * @return Int Customer's 10-Digit phone number.
+         * @return Long Customer's 10-Digit phone number.
          */
-	public static int custPhoneNum() {
+	public static long custPhoneNum() {
 		System.out.println("Δώστε το τηλέφωνο του πελάτη (εξαιρουμένου του κωδικού χώρας: +..): ");
 		String phonenum = null;
 		while (phonenum == null) {
@@ -146,7 +146,7 @@ public class Interface {
 				phonenum = null;
 			}
 		}		
-		return Integer.parseInt(phonenum);		
+		return Long.parseLong(phonenum);		
 	}
 
 	/**
@@ -213,14 +213,14 @@ public class Interface {
 	 *
 	 * @return Date Entry Date and Time + Minutes in Store.
 	 */
-	/*public static Date getExitDate(Date entryDate, int minutesInStore) {
+	public static Date getExitDate(Date entryDate, int minutesInStore) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(entryDate);
 		cal.add(Calendar.MINUTE, minutesInStore);
 		Date newDate = cal.getTime();
 		// System.out.println("Entry Date: " + entryDate + "Exit Date : " +  newDate);  (to check how it works with JUnit)
 		return newDate;
-	}*/
+	}
 	
 	// Converts Date to String. Could be used to create a String type 'Date and Time' that can be sent to the database.
 	public static String dateToString(Date date) {
@@ -350,6 +350,58 @@ public class Interface {
             return Check.In;
 		} else {
             return Check.Out;
+		}
+	}
+
+/**
+         * Business type input.
+         * Static method, that prompts the user to input the business' type.
+         *
+         * @return BusinessType Business' type.
+         */
+	public static BusinessType businessType() {
+		System.out.println("Εισάγετε το είδος δραστηριότητας της επιχείρησης: ");
+		System.out.println("Αν είναι εστιατόριο, εισάγετε 0.");
+		System.out.println("Αν είναι bar, εισάγετε 1.");
+		System.out.println("Αν είναι γραφείο, εισάγετε 2.");
+		System.out.println("Αν είναι κατάστημα λιανικής, εισάγετε 3.");
+		System.out.println("Αν είναι market, εισάγετε 4.");
+		int custbusinesstype = 0;
+		boolean thichecker = false;
+		while (thichecker == false) {
+			if (SCNR.hasNextInt()) { // checks if the given value is an integer (0-4)
+				custbusinesstype = SCNR.nextInt();
+				if (custbusinesstype >= 0 && custbusinesstype <= 4) {
+					thichecker = true;
+				} else {System.out.println("Εισάγετε το είδος δραστηριότητας της επιχείρησης: ");
+					System.out.println("Αν είναι εστιατόριο, εισάγετε 0.");
+					System.out.println("Αν είναι bar, εισάγετε 1.");
+					System.out.println("Αν είναι γραφείο, εισάγετε 2.");
+					System.out.println("Αν είναι κατάστημα λιανικής, εισάγετε 3.");
+					System.out.println("Αν είναι market, εισάγετε 4.");
+				}
+			} else {
+				System.out.println("Εισάγετε το είδος δραστηριότητας της επιχείρησης: ");
+				System.out.println("Αν είναι εστιατόριο, εισάγετε 0.");
+				System.out.println("Αν είναι bar, εισάγετε 1.");
+				System.out.println("Αν είναι γραφείο, εισάγετε 2.");
+				System.out.println("Αν είναι κατάστημα λιανικής, εισάγετε 3.");
+				System.out.println("Αν είναι market, εισάγετε 4.");
+	           	SCNR.nextLine();
+	            continue;
+	        }
+		}
+		switch (custbusinesstype) {
+			case 0:
+				return BusinessType.RESTAURANT;
+			case 1:
+				return BusinessType.BAR;
+			case 2:
+				return BusinessType.OFFICE;
+			case 3: 
+				return BusinessType.STORE;
+			default:
+				return BusinessType.MARKET;
 		}
 	}
 }

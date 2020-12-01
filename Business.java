@@ -15,13 +15,24 @@ import java.util.ArrayList;
  * @author Sotiris
  */
 public class Business {
+	private String name;
 	private double space;
 	private BusinessType businessType;
-	public ArrayList<Person> customers = new ArrayList<Person>();
+	public ArrayList<Recording> recordings = new ArrayList<Recording>();
 
-	public Business(double space, BusinessType businessType) {
+	public Business(String name, double space, BusinessType businessType) {
+		this.name = name;
 		this.space = space;
 		this.businessType = businessType;
+		
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public double getSpace() {

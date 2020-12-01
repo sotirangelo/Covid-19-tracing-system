@@ -1,5 +1,5 @@
 /*
- * Recordings
+ * Record
  *
  * Copyright (not) 2020 Javavirus
  */
@@ -7,7 +7,7 @@
 import java.util.Date;
 
 /**
- * Recordings class.
+ * Record class.
  * This class represents a recording, which is defined by its Check type (Check in/Check out),
  * its UserID,
  * its Date and Time,
@@ -17,21 +17,19 @@ import java.util.Date;
  * @author Ioannis
  */
 
-public class Recordings {
-	private Check checkType;
+public class Record {
 	private String userID;
-	private Date date; 
+	private Date entryDate;
+	private Date exitDate;
 	private Mask maskType;
 	
-	public  Recordings(Check checkType, String userID, Date date, Mask maskType) {
-		this.checkType = checkType;
+	public Record(String userID, Mask maskType, Date entryDate, Date exitDate) {
 		this.userID = userID;
-		this.date = date;
 		this.maskType = maskType;
-		//System.out.println("Check Type,User ID,Date and Time,Mask Type"); (check how it works with JUnit)
-		//System.out.println(checkType + "," + userID + "," + date + "," + maskType); 
+		this.entryDate = entryDate;
+		this.exitDate = exitDate;
 	}
-	
+
 	public String getUserID() {
 		return userID;
 	}
@@ -40,12 +38,20 @@ public class Recordings {
 		this.userID = userID;
 	}
 	
-	public Date getDate() {
-		return date;
+	public Date getEntryDate() {
+		return entryDate;
 	}
 	
-	public void setDate(Date date) {
-		this.date = date;
+	public void setEntryDate(Date entryDate) {
+    	this.entryDate = entryDate;
+	}
+	
+	public Date getExitDate() {
+		return exitDate;
+	}
+	
+	public void setExitDate(Date exitDate) {
+		this.exitDate = exitDate;
 	}
 	
 	public Mask getMaskType() {
@@ -56,11 +62,4 @@ public class Recordings {
 		this.maskType = maskType;
 	}
 	
-	public Check getCheckType() {
-		return checkType;
-	}
-	
-	public void setCheckType(Check checkType) {
-		this.checkType = checkType;
-	}
 }
