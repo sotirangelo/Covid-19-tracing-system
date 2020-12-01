@@ -39,6 +39,14 @@ public class DataAccess {
 		}
 	}
 
+	public static ArrayList<Record> searchRecord(Person p, Business b) {
+		ArrayList<Record> outputOfSameRecords = new ArrayList<Record>() ;
+		for (Record r : allRecords) {
+			if (r.getUserID == UserID) {
+				outputOfSameRecords.add(r);
+			}
+		}
+	
 	/** Search businesses visited by person.
 	 * Static method that looks for the businesses that a person visited.
 	 *
@@ -63,8 +71,8 @@ public class DataAccess {
 		ArrayList<ArrayList<Record>> output = new ArrayList<ArrayList<Record>>();
 		ArrayList<Business> infectedBusinesses = searchBusiness(firstName, lastName);
 		for (Business b : infectedBusinesses ) {
-			for (Record r1 : searchPerson(firstName, lastName, b)) {
-				for (Record r2 : b.customers) {
+			for (Record r1 : searchRecord(searchPerson(firstName, lastName), b)) {
+				for (Record r2 : b.records) {
 					if (r2.getEntryDate() >= r1.getEntryDate() && r2.getEntryDate < r1.getExitDate || r2.getExitDate > r1.getEntryDate) {
 						output.add(r2);
 					}
@@ -72,14 +80,4 @@ public class DataAccess {
 			}
 		}
 	}
-	/** Matches the userID from a Record with a Person's userID **/
-	public static Person recordMatching(String UserID) throws NullPointerException {
-		for (Person p : allPersons) {
-			if (p.getUserID == UserID) {
-				return p;
-			}
-			return null;
-		}
-	}
 }
-	
