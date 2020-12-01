@@ -25,17 +25,31 @@ public class Main {
 	/** Email array */
 	private static String[] emailTypes = {"@gmail.com", "@yahoo.com", "@yahoo.gr", "aueb.gr"} 
 
-
+	/** Generate Email String.
+	 * Static method that uses name String to generate an email.
+	 *
+	 * @param name String representing Person's name
+	 * @return email String representing Person's email
+	 */
 	private static String createEmail(String name) {
 		int n = new Random().nextInt(names.length);
 		String[] emailName = name.split(" ", 2);
 		return 	(emailName[0].toLowerCase() + emailType[n]);
 	}
 
+	/** Generate Phone Number.
+	 * Static method that generates a 10-digit number.
+	 *
+	 * @return phoneNumber Long representing 10-digit phone number
+	 */
 	private static long createPhoneNumber(){
 		return ((long) Math.floor(Math.random() * 9_000_000_000L) + 1_000_000_000L);
 	}
 
+	/** Fill Person ArrayList.
+	 * Static method that creates Person objects and adds them to the static arraylist in DataAccess.java.
+	 * This method needs pregenerated data to create Person objects. Pregenerated data is provided by existing arrays and methods.
+	 */
 	private static void createPersons() {
 		//TODO Fix Age.java
 		for (String s : names) {
@@ -46,26 +60,109 @@ public class Main {
 		}	
 	}
 
-	public static void createBusinesses() {
+	/** Fill Business ArrayList.
+	 * Static method that creates Business objects and adds them to the static arraylist in DataAccess.java.
+	 */
+	private static void createBusinesses() {
 		//TODO Fix Business.java
 		DataAccess.allBusinesses.add(new Business("Average Music Shop", 92.9, BusinessType.STORE));
 		DataAccess.allBusinesses.add(new Business("Average Pharmacy", 139.4, BusinessType.STORE));
 		DataAccess.allBusinesses.add(new Business("Average Office", 69.6, BusinessType.OFFICE));
 	}
 
-		public static void message() {
+	/** Menu message.
+	 * Static method, printing the menu each time it is called upon.
+	 */
+	private static void menu() {
 		System.out.println("\n~~~~~~~~~~ Μενού Επιλογών ~~~~~~~~~~\n");
-		System.out.println("1. Προσθήκη\n");
-		System.out.println("2. Προβολή\n");
-		System.out.println("3. Έξοδος\n");
-		System.out.print("Εισάγετε επιλογή [1-3] : ");
+		System.out.println("1. Πελάτης\n");
+		System.out.println("2. Επιχείρηση\n");
+		System.out.println("3. ΕΟΔΥ\n");
+		System.out.println("4. Έξοδος\n");
+		System.out.print("Εισάγετε επιλογή [1-4] : ");
 	}
+
+	/** Exit Promt.
+	 * Static method that prompts the user to decide whether to exit the program or continue using it.
+	 */
+	private static void exitOrNot() {
+		System.out.println("\n1. Έξοδος");
+		System.out.println("2. Συνέχεια");
+		System.out.print("Εισάγετε επιλογή [1-2] : ");
+		int answer;
+		do {
+			answer = input.nextInt();
+			if (answer != 1 && answer != 2)
+				System.out.println("Παρακαλώ, εισάγετε μια έγκυρη επιλογή...");
+		} while (answer != 1 && answer != 2);
+		if ( answer == 1)
+			System.exit(0);
+		else {
+			return;
+		}
+
+	}
+
+	private static void createNewPerson() {
+		String firstName = Interface.firstNameInput();
+		String lastName = Interface.lastNameInput();
+		String email = Interface.emailInput();
+		long phoneNumber = Inteface.custPhoneNum();
+		Age age = Interface.ageGroup();
+		
+	}
+
+	private static void choice1() {
+		System.out.println("\n1. Δημιουργία λογαριασμού");
+                System.out.println("2. Καταγραφή Επίσκεψης");
+		System.out.println("3. Επιστροφή στο αρχικό μενού");
+                System.out.print("Εισάγετε επιλογή [1-3] : ");
+                int answer;
+                do {
+                        answer = input.nextInt();
+                        if (answer != 1 && answer != 3)
+                                System.out.println("Παρακαλώ, εισάγετε μια έγκυρη επιλογή...");
+                } while (answer != 1 && answer != 3);
+		switch(answer) {
+			case 1:
+				createNewPerson();
+				break;
+			case 2:
+				createNewRecord();
+				break;
+			case 3:
+				return;
+		}
+
+	}	
 
 	public static void main(String[] args) {
 		//Pregenerated stuff
 		createPersons();
 		createBusinesses();
-
+		while (true) {
+			menu();
+			int answer;
+			do {
+				answer = input.nextInt();
+				if (answer < 1 || answer > 4)
+					System.out.println("Παρακαλώ, εισάγετε μια έγκυρη επιλογή...");
+			} while (answer < 1 || answer > 4);
+			switch(answer) {
+				case 1:
+					choice1();
+					break;
+				case 2:
+					choice2();
+					break;
+				case 3:
+					choice3();
+					break;
+				case 4:
+					exitOrNot();
+					break;
+			}
+		}
 
 	}
 }
