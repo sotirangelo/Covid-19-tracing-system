@@ -59,14 +59,14 @@ public class DataAccess {
 		return covidStores;
 	}
 
-	public static ArrayList<Arraylist<Person>> searchPossiblyInfected (String firstName, String lastName) {
-		ArrayList<ArrayList<Person>> output = new ArrayList<ArrayList<Person>>();
+	public static ArrayList<Arraylist<Record>> searchPossiblyInfected (String firstName, String lastName) {
+		ArrayList<ArrayList<Record>> output = new ArrayList<ArrayList<Record>>();
 		ArrayList<Business> infectedBusinesses = searchBusiness(firstName, lastName);
 		for (Business b : infectedBusinesses ) {
 			for (Record r1 : searchPerson(firstName, lastName, b)) {
 				for (Record r2 : b.customers) {
-					if (r2.getEntryTime() >= r1.getEntryTime() && r2.getEntryTime < r1.getExitTime || r2.getExitTime > r1.getEntryTime) {
-						output.add(p2);
+					if (r2.getEntryDate() >= r1.getEntryDate() && r2.getEntryDate < r1.getExitDate || r2.getExitDate > r1.getEntryDate) {
+						output.add(r2);
 					}
 				}
 			}
