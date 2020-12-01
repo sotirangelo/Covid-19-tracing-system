@@ -401,6 +401,6 @@ public class Interface {
 			case 3: 
 				return BusinessType.STORE;
 			default:
-				return BusinessType.Market;
+				return BusinessType.MARKET;
 		}
 	}
