@@ -353,3 +353,54 @@ public class Interface {
 		}
 	}
 }
+
+/**
+         * Business type input.
+         * Static method, that prompts the user to input the business' type.
+         *
+         * @return BusinessType Business' type.
+         */
+	public static BusinessType businessType() {
+		System.out.println("Εισάγετε το είδος δραστηριότητας της επιχείρησης: ");
+		System.out.println("Αν είναι εστιατόριο, εισάγετε 0.");
+		System.out.println("Αν είναι bar, εισάγετε 1.");
+		System.out.println("Αν είναι γραφείο, εισάγετε 2.");
+		System.out.println("Αν είναι κατάστημα λιανικής, εισάγετε 3.");
+		System.out.println("Αν είναι market, εισάγετε 4.");
+		int custbusinesstype = 0;
+		boolean thichecker = false;
+		while (thichecker == false) {
+			if (SCNR.hasNextInt()) { // checks if the given value is an integer (0-4)
+				custbusinesstype = SCNR.nextInt();
+				if (custbusinesstype >= 0 && custbusinesstype <= 4) {
+					checker = true;
+				} else {System.out.println("Εισάγετε το είδος δραστηριότητας της επιχείρησης: ");
+					System.out.println("Αν είναι εστιατόριο, εισάγετε 0.");
+					System.out.println("Αν είναι bar, εισάγετε 1.");
+					System.out.println("Αν είναι γραφείο, εισάγετε 2.");
+					System.out.println("Αν είναι κατάστημα λιανικής, εισάγετε 3.");
+					System.out.println("Αν είναι market, εισάγετε 4.");
+			} else {
+				System.out.println("Εισάγετε το είδος δραστηριότητας της επιχείρησης: ");
+				System.out.println("Αν είναι εστιατόριο, εισάγετε 0.");
+				System.out.println("Αν είναι bar, εισάγετε 1.");
+				System.out.println("Αν είναι γραφείο, εισάγετε 2.");
+				System.out.println("Αν είναι κατάστημα λιανικής, εισάγετε 3.");
+				System.out.println("Αν είναι market, εισάγετε 4.");
+	           	SCNR.nextLine();
+	            continue;
+	        }
+		}
+		switch (custbusinesstype) {
+			case 0:
+				return BusinessType.RESTAURANT;
+			case 1:
+				return BusinessType.BAR;
+			case 2:
+				return BusinessType.OFFICE;
+			case 3: 
+				return BusinessType.STORE;
+			default:
+				return BusinessType.Market;
+		}
+	}
