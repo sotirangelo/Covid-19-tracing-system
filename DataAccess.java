@@ -73,3 +73,11 @@ public class DataAccess {
 		}
 	}
 }
+	public static Person recordMatching(String UserID) throws NullPointerException {
+		for (Person p : allPersons) {
+			if (p.getUserID == UserID) {
+				return p;
+			}
+			return null;
+		}
+	}
