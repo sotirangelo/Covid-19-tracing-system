@@ -49,7 +49,7 @@ public class DataAccess {
 		ArrayList<Business> covidStores = new ArrayList<>(); 
 		for (Business b : allBusinesses ) {
 			for(Recording r : b.customers) {
-				if(r.contains(user)) {
+				if(r.contains(recordings)) {
 					covidStores.add(b) ;
 					break;
 				}
