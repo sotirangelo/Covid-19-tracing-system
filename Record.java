@@ -23,7 +23,7 @@ public class Record {
 	private Date exitDate;
 	private Mask maskType;
 	
-	public void Record(String userID, Mask maskType, Date entryDate, Date exitDate) {
+	public Record(String userID, Mask maskType, Date entryDate, Date exitDate) {
 		this.userID = userID;
 		this.maskType = maskType;
 		this.entryDate = entryDate;
