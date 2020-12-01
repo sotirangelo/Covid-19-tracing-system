@@ -63,9 +63,9 @@ public class DataAccess {
 		ArrayList<ArrayList<Person>> output = new ArrayList<ArrayList<Person>>();
 		ArrayList<Business> infectedBusinesses = searchBusiness(firstName, lastName);
 		for (Business b : infectedBusinesses ) {
-			for (Person p1 : searchPerson(firstName, lastName, b)) {
-				for (Person p2 : b.customers) {
-					if (p2.getEntryTime() >= p1.getEntryTime() && p2.getEntryTime < p1.getExitTime || p2.getExitTime > p1.getEntryTime) {
+			for (Record r1 : searchPerson(firstName, lastName, b)) {
+				for (Record r2 : b.customers) {
+					if (r2.getEntryTime() >= r1.getEntryTime() && r2.getEntryTime < r1.getExitTime || r2.getExitTime > r1.getEntryTime) {
 						output.add(p2);
 					}
 				}
