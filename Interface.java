@@ -373,7 +373,7 @@ public class Interface {
 			if (SCNR.hasNextInt()) { // checks if the given value is an integer (0-4)
 				custbusinesstype = SCNR.nextInt();
 				if (custbusinesstype >= 0 && custbusinesstype <= 4) {
-					checker = true;
+					thichecker = true;
 				} else {System.out.println("Εισάγετε το είδος δραστηριότητας της επιχείρησης: ");
 					System.out.println("Αν είναι εστιατόριο, εισάγετε 0.");
 					System.out.println("Αν είναι bar, εισάγετε 1.");
