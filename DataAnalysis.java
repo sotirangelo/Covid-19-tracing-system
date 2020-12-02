@@ -6,8 +6,6 @@
 
 import java.util.ArrayList;
 
-import com.sun.org.apache.regexp.internal.recompile;
-
 /**
  * Analysis of data (temporarily from arraylists).
  * This class consists exclusively of static methods and fields.
@@ -20,7 +18,7 @@ import com.sun.org.apache.regexp.internal.recompile;
  * @author
  */
 public class DataAnalysis {
-	
+/*	
 	private Person p = new Person();
 	private double maskScore = scoreFromMask(p); 
 	private double exertionScore = scoreFromExertion(p);
@@ -61,6 +59,26 @@ public class DataAnalysis {
 			score +=3;
 		}
 		return score;
+	}
+*/
+	public static ArrayList<InfectedPerson> infectionScores(String userID) {
+		ArrayList<InfectedPerson> ip = new ArrayList<InfectedPerson>();
+		ArrayList<ArrayList<Record>> tasosList = DataAccess.searchPossiblyInfected(userID);
+		for (ArrayList<Record> a_r : tasosList) {
+			for (Record r : a_r) {
+				double score = 0;
+				score += r.getMaskType().getEfficiency();
+				Person p = DataAccess.recordMatching(r.getUserID());
+				score += p.getAgeCategory().getVulnerability();
+				InfectedPerson temp = new InfectedPerson(p.getUserID(), p.getFirstName(), p.getLastName(), p.getEmail(), p.getPhoneNumber(), p.getAgeCategory()); 
+				temp.setScore(score);
+				ip.add(temp);
+
+			}
+
+		}
+		//Collections.sort(ip);
+		return ip;
 	}
 
 }

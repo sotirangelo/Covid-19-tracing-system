@@ -49,6 +49,7 @@ public class Interface {
 	            		continue;
 	        	}
 	  	}
+	  	SCNR.nextLine();
 	  	return sqm;
   	}
   
@@ -58,7 +59,7 @@ public class Interface {
 	 * 
 	 * @return String Customer's USER ID.
 	 */
-	public static String userIdInput() {
+	public static String userIDInput() {
 		System.out.println("Δώστε το USER ID του πελάτη (πχ. 12345678): ");
 		String custID = null;
 		while (custID == null) {
@@ -78,8 +79,7 @@ public class Interface {
 		//System.out.println(custID + " Successful"); (to check how it works with JUnit)
 		return custID;
 	}
-	
-	
+
 	/**
 	 * Customer first name input.
 	 * Static method, that prompts the user to input the customer's first name.
@@ -146,6 +146,7 @@ public class Interface {
 				phonenum = null;
 			}
 		}		
+		SCNR.nextLine();
 		return Long.parseLong(phonenum);		
 	}
 
@@ -185,6 +186,7 @@ public class Interface {
 	            continue;
 	        }
 		}
+		SCNR.nextLine();
 		switch (custmask) {
 			case 0:
 				return Mask.NONE;
@@ -195,6 +197,7 @@ public class Interface {
 			default:
 				return Mask.RESPIRATOR;
 		}
+		
 	}
 
 	/** Customer's entry date and time.
@@ -265,11 +268,13 @@ public class Interface {
 	            continue;
 			}
 		}
+		SCNR.nextLine();
 		if (custExertion == 0) {
             return Exertion.RESTING;
 		} else {
             return Exertion.STANDING;
 		}
+		
 	}
 
 
@@ -299,16 +304,10 @@ public class Interface {
 					System.out.println("Αν ανήκει στην ηλικιακή ομάδα 31-60, εισάγετε 2.");
 					System.out.println("Αν ανήκει στην ηλικιακή ομάδα 61-100, εισάγετε 3.");
 				}
-			} else {
-				System.out.println("Η ηλικιακή ομάδα που εισήχθη ήταν λανθασμένη . Προσπαθήστε ξανά : ");
-					System.out.println("Αν ανήκει στην ηλικιακή ομάδα 1-18, εισάγετε 0.");
-					System.out.println("Αν ανήκει στην ηλικιακή ομάδα 19-30, εισάγετε 1.");
-					System.out.println("Αν ανήκει στην ηλικιακή ομάδα 31-60, εισάγετε 2.");
-					System.out.println("Αν ανήκει στην ηλικιακή ομάδα 61-100, εισάγετε 3.");
-	           	SCNR.nextLine();
-	            continue;
-	        }
-		}
+			}
+	      }
+		
+		SCNR.nextLine();
 		switch (custage) {
 			case 0:
 				return Age.UNDERAGE;
@@ -319,6 +318,7 @@ public class Interface {
 			default:
 				return Age.SIXTY;
 		}
+		
 	}
 	
 	/** Customer's check type (Check in/Check out).
@@ -359,7 +359,7 @@ public class Interface {
          *
          * @return BusinessType Business' type.
          */
-	public static BusinessType businessType() {
+	public static BusinessType inputBusinessType() {
 		System.out.println("Εισάγετε το είδος δραστηριότητας της επιχείρησης: ");
 		System.out.println("Αν είναι εστιατόριο, εισάγετε 0.");
 		System.out.println("Αν είναι bar, εισάγετε 1.");
