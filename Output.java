@@ -25,15 +25,9 @@ public class Output {
 	 * 
 	 * Does not return a value - prints Person objects of the ArrayList.
 	 */
-	public static void getOutput(ArrayList<ArrayList<Person>> aList) {
-		int length = aList.size();
-		for (int i = 0; i < length; i++) {
-			ArrayList<Person> iList = new ArrayList();
-			iList = aList.get(i);
-			int iListSize = iList.size();
-			for (int x = 0; x < iListSize; x++) {
-				System.out.println(iList.get(x).toString());
+	public static void getOutput(ArrayList<InfectedPerson> infected) {
+			for (InfectedPerson ip : infected) {
+				System.out.println(ip.toString());
 			}
-		}
 	}
 }

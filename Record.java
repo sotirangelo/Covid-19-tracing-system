@@ -18,16 +18,26 @@ import java.util.Date;
  */
 
 public class Record {
+	private String businessID;
 	private String userID;
 	private Date entryDate;
 	private Date exitDate;
 	private Mask maskType;
-	
-	public Record(String userID, Mask maskType, Date entryDate, Date exitDate) {
+
+	public Record(String businessID, String userID, Mask maskType, Date entryDate, Date exitDate) {
+		this.businessID = businessID;
 		this.userID = userID;
 		this.maskType = maskType;
 		this.entryDate = entryDate;
 		this.exitDate = exitDate;
+	}
+
+	public String getBusinessID() {
+		return businessID;
+	}
+
+	public void setBusinessID(String businessID) {
+		this.businessID = businessID;
 	}
 
 	public String getUserID() {

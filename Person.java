@@ -16,15 +16,15 @@
 
 public class Person {
 	
-	private String UserID;
+	private String userID;
 	private String firstName;
 	private String lastName;
 	private String email;
-	private int phoneNumber;
+	private long phoneNumber;
 	private Age ageCategory;
 	
-	public Person(String UserID, String firstName, String lastName, String email, int phoneNumber, Age ageCategory) {
-		this.UserID = UserID;
+	public Person(String userID, String firstName, String lastName, String email, long phoneNumber, Age ageCategory) {
+		this.userID = userID;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -33,10 +33,10 @@ public class Person {
 	}
 	
 	public String getUserID() {
-		return firstName;
+		return userID;
 	}
-	public void setUserID(String UserID) {
-		this.UserID = UserID;
+	public void setUserID(String userID) {
+		this.userID = userID;
 	}
 	public String getFirstName() {
 		return firstName;
@@ -56,10 +56,10 @@ public class Person {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getPhoneNumber() {
+	public long getPhoneNumber() {
 		return phoneNumber;
 	}
-	public void setPhoneNumber(int phoneNumber) {
+	public void setPhoneNumber(long phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 	public Age getAgeCategory() {
@@ -70,7 +70,7 @@ public class Person {
 	}
 	@Override
 	public String toString() {
-		return "User ID : " + UserID +
+		return "User ID : " + userID +
 				", First & Last Name :" + firstName + " " + lastName +
 				", Email : " + email +
 				", Phone number : " + phoneNumber +
