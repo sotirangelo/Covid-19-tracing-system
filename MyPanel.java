@@ -5,9 +5,11 @@ import javax.swing.JPanel;
 public class MyPanel extends JPanel {
 	//a, b and c refer to the RGB numbers that describe Colors in Java
 	//x, y refer to the coordinates of the right top corner of the Panel
-	public MyPanel(int a, int b, int c, int x, int y, int width, int height ) {
+	public MyPanel(int a, int b, int c, int x, int y, int width, int height, MyLabel label, MyButton button ) {
 		this.setBackground(new Color (a, b, c));
 		this.setBounds(x, y, width, height);
+		this.add(button);
+		this.add(label);
 	}
 
 }
