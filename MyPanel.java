@@ -14,6 +14,7 @@ public class MyPanel extends JPanel {
 		if (label!=null) {
 			this.add(label);
 		}
+		this.setLayout(null);
 	}
 
 }
