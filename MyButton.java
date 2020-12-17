@@ -26,6 +26,7 @@ public class MyButton extends JButton {
 		this.setBackground(new Color (m, l, n));
 		this.setForeground(new Color (d , e, f));
 		this.setBorder(BorderFactory.createEtchedBorder());//Added a border to make the button look nicer.
+		if ( icon != null )
 		this.setIcon(icon); // Puts an icon on the button
 		
 	}
