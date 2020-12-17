@@ -8,8 +8,12 @@ public class MyPanel extends JPanel {
 	public MyPanel(int a, int b, int c, int x, int y, int width, int height, MyLabel label, MyButton button ) {
 		this.setBackground(new Color (a, b, c));
 		this.setBounds(x, y, width, height);
-		this.add(button);
-		this.add(label);
+		if (button!= null) {
+			this.add(button);
+		}
+		if (label!=null) {
+			this.add(label);
+		}
 	}
 
 }
