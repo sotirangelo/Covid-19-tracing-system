@@ -2,10 +2,11 @@
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent; // The method that will run when the button is pressed
-import java.awt.event.ActionListener; // The ActionListener that will be used to "listen the button" 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
@@ -15,7 +16,7 @@ public class MyButton extends JButton {
 	// a, b, c, d, e, f, l, m and n refer to the RGB numbers that describe Colors in Java
 	// The method setForeground sets the text's color
 	
-	public MyButton(int x, int y, int width, int lenght, String text, String txtFont, int txtSize, int m, int l , int n, int d, int e, int f) {
+	public MyButton(int x, int y, int width, int lenght, String text, String txtFont, int txtSize, int m, int l , int n, int d, int e, int f,ImageIcon icon) {
 		this.setBounds(x, y, width, lenght);
 		this.setText(text);
 		this.setFocusable (false);
@@ -24,7 +25,9 @@ public class MyButton extends JButton {
 		this.setFont(new Font(txtFont, Font.PLAIN, txtSize));
 		this.setBackground(new Color (m, l, n));
 		this.setForeground(new Color (d , e, f));
-		this.setBorder(BorderFactory.createEtchedBorder()); //Added a border to make the button look nicer.
+		this.setBorder(BorderFactory.createEtchedBorder());//Added a border to make the button look nicer.
+		this.setIcon(icon); // Puts an icon on the button
+		
 	}
 
 }
