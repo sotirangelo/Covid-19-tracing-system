@@ -1,4 +1,4 @@
-iimport javax.swing.*;
+import javax.swing.*;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -18,6 +18,7 @@ public class MyLabel extends JLabel {
 		this.setHorizontalAlignment(JLabel.CENTER);
 		this.setBounds(p1, p2, x, y);
 		this.setFont(new Font(txtfont , Font.PLAIN, txtSize ));
+		if (icon != null)
 		this.setIcon(icon);
 	}
 
