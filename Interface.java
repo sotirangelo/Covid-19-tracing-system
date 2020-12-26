@@ -39,18 +39,22 @@ public class Interface {
 	 */
 	public static double floorAreaInput() {
 		System.out.println("Πόσα τετραγωνικά μέτρα είναι το κατάστημά σας;");
-	  	double sqm = 0;
-	  	while (sqm <= 0) {
-			if (SCNR.hasNextDouble())
-				sqm = SCNR.nextDouble();
-	        	else {
-	        		System.out.println("Πρέπει να δώσετε τον αριθμό τετραγωνικών μέτρων του καταστήματός σας. Προσπαθείστε ξανά.");
-	            		SCNR.nextLine();
-	            		continue;
-	        	}
+	  	String sqm = null;
+	  	double m2 = 0;
+	  	while (sqm == null) {
+	  		sqm = SCNR.nextLine();
+			try {
+				m2 = Double.parseDouble(sqm);
+				if (m2 <= 0) {
+					System.out.println("Πρέπει να δώσετε τον αριθμό τετραγωνικών μέτρων του καταστήματός σας. Προσπαθείστε ξανά.");
+					sqm = null;
+				}
+			} catch (Exception e) {
+				System.out.println("Πρέπει να δώσετε τον αριθμό τετραγωνικών μέτρων του καταστήματός σας. Προσπαθείστε ξανά.");
+				sqm = null;
+			}
 	  	}
-	  	SCNR.nextLine();
-	  	return sqm;
+		return m2;
   	}
   
 	/**
