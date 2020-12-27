@@ -7,6 +7,7 @@
 import java.util.Scanner;
 
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -82,6 +83,73 @@ public class Interface {
 		}
 		//System.out.println(custID + " Successful"); (to check how it works with JUnit)
 		return custID;
+	}
+	
+	/**
+	 * Customer Password input.
+	 * Static method, that prompts the user to input the customer's Pasword.
+	 * 
+	 * @return String Customer's Password.
+	 */
+	public static String createPassword() {
+		System.out.print("Please enter a given  password : ");
+	    String passwordhere = SCNR.nextLine();
+	    System.out.print("Please re-enter the password to confirm : ");
+	    String confirmhere = SCNR.nextLine();
+
+	    ArrayList<String> errorList = new ArrayList<String>();
+
+	    while (!isValid(passwordhere, confirmhere, errorList)) {
+	        System.out.println("The password entered here  is invalid");
+	        for (String error : errorList) {
+	            System.out.println(error);
+	        }
+
+	        System.out.print("Please enter a given  password : ");
+	        passwordhere = SCNR.nextLine();
+	        System.out.print("Please re-enter the password to confirm : ");
+	        confirmhere = SCNR.nextLine();
+	    }
+	    System.out.println("your password is: " + passwordhere);
+	    return passwordhere;
+	}
+	public static boolean isValid(String passwordhere, String confirmhere, ArrayList<String> errorList) {
+
+	    Pattern specailCharPatten = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+	    Pattern UpperCasePatten = Pattern.compile("[A-Z ]");
+	    Pattern lowerCasePatten = Pattern.compile("[a-z ]");
+	    Pattern digitCasePatten = Pattern.compile("[0-9 ]");
+	    errorList.clear();
+
+	    boolean flag=true;
+
+	    if (!passwordhere.equals(confirmhere)) {
+	        errorList.add("password and confirm password does not match");
+	        flag=false;
+	    }
+	    if (passwordhere.length() < 8) {
+	        errorList.add("Password lenght must have alleast 8 character !!");
+	        flag=false;
+	    }
+	    if (!specailCharPatten.matcher(passwordhere).find()) {
+	        errorList.add("Password must have atleast one specail character !!");
+	        flag=false;
+	    }
+	    if (!UpperCasePatten.matcher(passwordhere).find()) {
+	        errorList.add("Password must have atleast one uppercase character !!");
+	        flag=false;
+	    }
+	    if (!lowerCasePatten.matcher(passwordhere).find()) {
+	        errorList.add("Password must have atleast one lowercase character !!");
+	        flag=false;
+	    }
+	    if (!digitCasePatten.matcher(passwordhere).find()) {
+	        errorList.add("Password must have atleast one digit character !!");
+	        flag=false;
+	    }
+
+	    return flag;
+
 	}
 
 	/**
