@@ -183,19 +183,22 @@ public class Interface {
          * @return String Customer's email address.
          */
 	public static String emailInput() {
+		
 		System.out.println("Δώστε το email του πελάτη: ");
-		String emailadr = null; 
-		while (emailadr == null) { //checks if the String is valid
-			emailadr = SCNR.nextLine();
-			Pattern pattern = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
-	        Matcher mat = pattern.matcher(emailadr);
+		Pattern pattern = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
+		String emailadr;
+		Matcher mat;
+		
+		do {
+			emailadr = SCNR.next();
+			mat = pattern.matcher(emailadr);
 	        if(mat.matches()){
 	            System.out.println("Valid email address");
-	        }else{
-	        	System.out.println("Το e-mail πελάτη που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
-	        	emailadr = null;
+	        } else {
+	        	System.out.println("Το e-mail πελάτη που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: " + emailadr);
 	        }
-		}
+		} while(!mat.matches());
+		
 		return emailadr;
 	}
 
