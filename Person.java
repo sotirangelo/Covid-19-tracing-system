@@ -22,14 +22,16 @@ public class Person {
 	private String email;
 	private long phoneNumber;
 	private Age ageCategory;
+	private String password;
 	
-	public Person(String userID, String firstName, String lastName, String email, long phoneNumber, Age ageCategory) {
+	public Person(String userID, String firstName, String lastName, String email, long phoneNumber, Age ageCategory, String password) {
 		this.userID = userID;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
 		this.ageCategory = ageCategory;
+		this.password = password;
 	}
 	
 	public String getUserID() {
@@ -67,6 +69,12 @@ public class Person {
 	}
 	public void setAgeCAtegory(Age ageCategory) {
 		this.ageCategory = ageCategory;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	@Override
 	public String toString() {
