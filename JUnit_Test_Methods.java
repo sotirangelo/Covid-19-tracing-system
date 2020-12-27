@@ -1,5 +1,5 @@
 /*
- * JUnit_Test_Methods
+z * JUnit_Test_Methods
  *
  * Copyright (not) 2020 Javavirus
  */
@@ -58,53 +58,53 @@ class JUnit_Test_Methods {
 			switch (ch) {
 				case 1:
 					double floorArea = Interface.floorAreaInput();
-					System.out.println("Τα τετραγωνικά μέτρα που δώσατε είναι: " + floorArea);
+					System.out.println("Τα τετραγωνικά μέτρα που δώσατε είναι: " + floorArea + "\n");
 					break;
 				case 2:
 					String firstName = Interface.firstNameInput();
-					System.out.println("Το όνομα που δώσατε: " + firstName);
+					System.out.println("Το όνομα που δώσατε: " + firstName + "\n");
 					break;
 				case 3:
 					String lastName = Interface.lastNameInput();
-					System.out.println("Το όνομα που δώσατε: " + lastName);
+					System.out.println("Το όνομα που δώσατε: " + lastName + "\n");
 					break;
 				case 4:
 					String email = Interface.emailInput();
-					System.out.println("Το email που δώσατε: " + email);
+					System.out.println("Το email που δώσατε: " + email + "\n");
 					break;
 				case 5:
 					long phoneNum = Interface.custPhoneNum();
-					System.out.println("Ο αριθμός τηλεφώνου που δώσατε: " + phoneNum);
+					System.out.println("Ο αριθμός τηλεφώνου που δώσατε: " + phoneNum + "\n");
 					break;
 				case 6:
 					Mask maskType = Interface.maskType();
-					System.out.println("Ο τύπος μάσκας που δώσατε: " + maskType);
+					System.out.println("Ο τύπος μάσκας που δώσατε: " + maskType + "\n");
 					break;
 				case 7:
 					Exertion exertionType = Interface.exertionType();
-					System.out.println("Το είδος δραστηριότητας καταστήματος που δώσατε: " + exertionType);
+					System.out.println("Το είδος δραστηριότητας καταστήματος που δώσατε: " + exertionType + "\n");
 					break;
 				case 8:
 					Age ageGroup = Interface.ageGroup();
-					System.out.println("Η κατηγορία ηληκίας που δώσατε: " + ageGroup);
+					System.out.println("Η κατηγορία ηληκίας που δώσατε: " + ageGroup + "\n");
 					break;
 				case 9:
 					Check checkType = Interface.checkType();
-					System.out.println("Η κατηγορία Check(In/Out) που δώσατε: " + checkType);
+					System.out.println("Η κατηγορία Check(In/Out) που δώσατε: " + checkType + "\n");
 					break;
 				case 10:
 					BusinessType businessType = Interface.inputBusinessType();
-					System.out.println("Η κατηγορία καταστήματος που δώσατε: " + businessType);
+					System.out.println("Η κατηγορία καταστήματος που δώσατε: " + businessType + "\n");
 					break;
 				case 11:
 					Date date = Interface.getDate();
-					System.out.println("Η ημερομηνία και ώρα που καταγράφθηκε: " + date);
+					System.out.println("Η ημερομηνία και ώρα που καταγράφθηκε: " + date + "\n");
 					break;
 				case 12:
 					System.out.println("Δώστε τα λεπτά που ο πελάτης ήταν στο κατάστημα: ");
 					int minutesInStore = SCNR.nextInt();
 					Date exitDate = Interface.getExitDate(Interface.getDate(), minutesInStore);
-					System.out.println("Η ημερομηνία και ώρα που καταγράφθηκε: " + exitDate);
+					System.out.println("Η ημερομηνία και ώρα που καταγράφθηκε: " + exitDate + "\n");
 					break;
 				case 13:
 					Interface.createPassword();
@@ -113,7 +113,7 @@ class JUnit_Test_Methods {
 					System.out.println("Trying to establish connection with MySQL Database:\n");
 					try {
 						DB_Connection.getConnection();
-						System.out.println("CONNECTION SUCCESSFUL");
+						System.out.println("CONNECTION SUCCESSFUL\n");
 					} catch (Exception e) {
 						System.out.println("AN ERROR HAS OCCURED:");
 						e.printStackTrace();
@@ -137,8 +137,9 @@ class JUnit_Test_Methods {
 						ArrayList<Person> users = DB_Access.getUsers();
 						int length = users.size();
 						for (int i = 0; i < length; i++) {
-							System.out.println(users.get(i).toString() + "\n");
+							System.out.println(users.get(i).toString());
 						}
+						System.out.print("\n");
 					} catch (Exception e) {
 						
 						e.printStackTrace();
@@ -149,7 +150,7 @@ class JUnit_Test_Methods {
 					String UserID = Interface.userIDInput();
 					try {
 						Person per = DB_Access.findUser(UserID);
-						System.out.println(per.toString());
+						System.out.println(per.toString() + "\n");
 					} catch (Exception e) {
 						System.out.println("AN ERROR HAS OCCURED");
 						e.printStackTrace();
@@ -162,7 +163,7 @@ class JUnit_Test_Methods {
 					String pass = SCNR.next();
 					try {
 						Person pers = DB_Access.authenticate(userID, pass);
-						System.out.println(pers.toString());
+						System.out.println(pers.toString() + "\n");
 					} catch (Exception e) {
 						System.out.println("AN ERROR HAS OCCURED");
 						e.printStackTrace();
@@ -174,12 +175,10 @@ class JUnit_Test_Methods {
 			String choice = null;
 			do {
 				choice = SCNR.next();
-				if (choice.contentEquals("yes") || choice.contentEquals("no")) {
-					if (choice.contentEquals("yes")) {
-						exit = false;
-					} else {
-						exit = true;
-					}
+				if (choice.contentEquals("yes")) {
+					exit = false;
+				} else if (choice.contentEquals("no")) {
+					exit = true;
 				} else {
 					System.out.println("Wrong input. Must be yes or no. Yours was: " + choice);
 					choice = null;
