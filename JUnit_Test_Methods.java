@@ -1,6 +1,22 @@
+/*
+ * JUnit_Test_Methods
+ *
+ * Copyright (not) 2020 Javavirus
+ */
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 import org.junit.jupiter.api.Test;
+
+/**
+ * This class consists exclusively of static methods and fields.
+ * Its purpose is to test most of the methods in this project using JUnit.
+ *
+ * @version 0.1 27 Dec 2020
+ * @author Ioannis
+ * 
+ */
 
 class JUnit_Test_Methods {
 
@@ -22,16 +38,22 @@ class JUnit_Test_Methods {
 					+ "9.  checkType();\n"
 					+ "10. inputBusinessType();\n"
 					+ "11. getDate();\n"
-					+ "12. getExitDate(Date entryDate, int minutesInStore);\n\n"
+					+ "12. getExitDate(Date entryDate, int minutesInStore);\n"
+					+ "13. createPassword();\n\n"
 					+ "DB_Connection.java\n\n"
-					+ "13. getConnection();\n");
+					+ "14. getConnection();\n\n"
+					+ "DB_Access\n\n"
+					+ "15. register(Person person);\n"
+					+ "16. getUsers();\n"
+					+ "17. findUser(UserID);\n"
+					+ "18. authenticate(String UserID, String password);\n\n");
 			int ch;
 			do {
 				ch = SCNR.nextInt();
-				if (ch <= 0 || ch >= 14) {
+				if (ch <= 0 || ch >= 19) {
 					System.out.println("Προσπαθήστε ξανά");
 				}
-			} while (ch <= 0 || ch >= 14);
+			} while (ch <= 0 || ch >= 19);
 		
 			switch (ch) {
 				case 1:
@@ -85,6 +107,9 @@ class JUnit_Test_Methods {
 					System.out.println("Η ημερομηνία και ώρα που καταγράφθηκε: " + exitDate);
 					break;
 				case 13:
+					Interface.createPassword();
+					break;
+				case 14:
 					System.out.println("Trying to establish connection with MySQL Database:\n");
 					try {
 						DB_Connection.getConnection();
@@ -94,6 +119,55 @@ class JUnit_Test_Methods {
 						e.printStackTrace();
 					}
 					break;
+				case 15:
+					System.out.println("First, create a Person object:");
+					Person person = new Person(Interface.userIDInput(), Interface.firstNameInput(), Interface.lastNameInput(),
+							 Interface.emailInput(), Interface.custPhoneNum(), Interface.ageGroup(), Interface.createPassword());
+					try {
+						DB_Access.register(person);
+						System.out.println("REGISTRATION SUCCESSFULL\n");
+					} catch (Exception e) {
+						System.out.println("AN ERROR HAS OCCURED DURING 'DB_Access.register(person)' :");
+						e.printStackTrace();
+					}
+					break;
+				case 16:
+					System.out.println("Trying to fetch Person objects from Database:");
+					try {
+						ArrayList<Person> users = DB_Access.getUsers();
+						int length = users.size();
+						for (int i = 0; i < length; i++) {
+							System.out.println(users.get(i).toString() + "\n");
+						}
+					} catch (Exception e) {
+						
+						e.printStackTrace();
+					}
+					break;
+				case 17:
+					System.out.println("Give the UserID: ");
+					String UserID = Interface.userIDInput();
+					try {
+						Person per = DB_Access.findUser(UserID);
+						System.out.println(per.toString());
+					} catch (Exception e) {
+						System.out.println("AN ERROR HAS OCCURED");
+						e.printStackTrace();
+					}
+					break;
+				case 18:
+					System.out.println("Authenticate User by providing your UserID and your Password");
+					String userID = Interface.userIDInput();
+					System.out.println("Type your password: ");
+					String pass = SCNR.next();
+					try {
+						Person pers = DB_Access.authenticate(userID, pass);
+						System.out.println(pers.toString());
+					} catch (Exception e) {
+						System.out.println("AN ERROR HAS OCCURED");
+						e.printStackTrace();
+					}
+					
 			}
 			System.out.println("Do you want to try another method?\n"
 					+ "Type yes/no");
