@@ -18,26 +18,18 @@ import java.util.Date;
  */
 
 public class Record {
-	private String businessID;
+
 	private String userID;
 	private Date entryDate;
 	private Date exitDate;
 	private Mask maskType;
 
-	public Record(String businessID, String userID, Mask maskType, Date entryDate, Date exitDate) {
-		this.businessID = businessID;
+	public Record (String userID, Mask maskType, Date entryDate, Date exitDate) {
+		
 		this.userID = userID;
 		this.maskType = maskType;
 		this.entryDate = entryDate;
 		this.exitDate = exitDate;
-	}
-
-	public String getBusinessID() {
-		return businessID;
-	}
-
-	public void setBusinessID(String businessID) {
-		this.businessID = businessID;
 	}
 
 	public String getUserID() {
@@ -70,6 +62,14 @@ public class Record {
 	
 	public void setMaskType(Mask maskType) {
 		this.maskType = maskType;
+	}
+	
+	@Override
+	public String toString() {
+		return "User ID : " + userID +
+				", Mask Type : " + maskType.name() +
+				", EntryDate : " + entryDate +
+				", Exit Date : " + exitDate;
 	}
 	
 }
