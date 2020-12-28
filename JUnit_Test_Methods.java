@@ -35,7 +35,7 @@ class JUnit_Test_Methods {
 					+ "6.  maskType();\n"
 					+ "7.  exertionType();\n"
 					+ "8.  ageGroup();\n"
-					+ "9.  checkType();\n"
+					+ "9.  ~Removed~ checkType();\n"
 					+ "10. inputBusinessType();\n"
 					+ "11. getDate();\n"
 					+ "12. getExitDate(Date entryDate, int minutesInStore);\n"
@@ -46,14 +46,23 @@ class JUnit_Test_Methods {
 					+ "15. register(Person person);\n"
 					+ "16. getUsers();\n"
 					+ "17. findUser(UserID);\n"
-					+ "18. authenticate(String UserID, String password);\n\n");
+					+ "18. authenticateUser(String UserID, String password);\n\n"
+					+ "19. register(Business business);\n"
+					+ "20. getBusinesses();\n"
+					+ "21. findBusiness(BusinessID);\n"
+					+ "22. authenticateBusiness(String BusinessID, String password);\n"
+					+ "23. createTable(BusinessID);\n\n"
+					+ "24. checkIn(String BusinessID, String UserID, Date Date, Mask MaskType);\n"
+					+ "25. checkOut(String BusinessID, String UserID, Date Date);\n"
+					+ "26. getRecords(BusinessID);\n");
+					
 			int ch;
 			do {
 				ch = SCNR.nextInt();
-				if (ch <= 0 || ch >= 19) {
+				if (ch <= 0 || ch >= 27) {
 					System.out.println("Προσπαθήστε ξανά");
 				}
-			} while (ch <= 0 || ch >= 19);
+			} while (ch <= 0 || ch >= 27);
 		
 			switch (ch) {
 				case 1:
@@ -89,8 +98,6 @@ class JUnit_Test_Methods {
 					System.out.println("Η κατηγορία ηληκίας που δώσατε: " + ageGroup + "\n");
 					break;
 				case 9:
-					Check checkType = Interface.checkType();
-					System.out.println("Η κατηγορία Check(In/Out) που δώσατε: " + checkType + "\n");
 					break;
 				case 10:
 					BusinessType businessType = Interface.inputBusinessType();
@@ -121,8 +128,9 @@ class JUnit_Test_Methods {
 					break;
 				case 15:
 					System.out.println("First, create a Person object:");
-					Person person = new Person(Interface.userIDInput(), Interface.firstNameInput(), Interface.lastNameInput(),
-							 Interface.emailInput(), Interface.custPhoneNum(), Interface.ageGroup(), Interface.createPassword());
+					Person person = new Person(Interface.userIDInput(0), Interface.firstNameInput(),
+							Interface.lastNameInput(), Interface.emailInput(), Interface.custPhoneNum(),
+							Interface.ageGroup(), Interface.createPassword());
 					try {
 						DB_Access.register(person);
 						System.out.println("REGISTRATION SUCCESSFULL\n");
@@ -147,7 +155,7 @@ class JUnit_Test_Methods {
 					break;
 				case 17:
 					System.out.println("Give the UserID: ");
-					String UserID = Interface.userIDInput();
+					String UserID = Interface.userIDInput(0);
 					try {
 						Person per = DB_Access.findUser(UserID);
 						System.out.println(per.toString() + "\n");
@@ -158,17 +166,118 @@ class JUnit_Test_Methods {
 					break;
 				case 18:
 					System.out.println("Authenticate User by providing your UserID and your Password");
-					String userID = Interface.userIDInput();
+					String userID = Interface.userIDInput(0);
 					System.out.println("Type your password: ");
 					String pass = SCNR.next();
 					try {
-						Person pers = DB_Access.authenticate(userID, pass);
+						Person pers = DB_Access.authenticateUser(userID, pass);
 						System.out.println(pers.toString() + "\n");
 					} catch (Exception e) {
 						System.out.println("AN ERROR HAS OCCURED");
 						e.printStackTrace();
 					}
-					
+					break;
+				case 19:
+					System.out.println("First, create a Business object:");
+					Business business = new Business(Interface.userIDInput(1), Interface.emailInput(),
+							Interface.createPassword(), Interface.businessNameInput(),
+							Interface.floorAreaInput(), Interface.inputBusinessType());
+					try {
+						DB_Access.register(business);
+						System.out.println("REGISTRATION SUCCESSFULL\n");
+					} catch (Exception e) {
+						System.out.println("AN ERROR HAS OCCURED DURING 'DB_Access.register(business)' :");
+						e.printStackTrace();
+					}
+					break;
+				case 20:
+					System.out.println("Trying to fetch Business objects from Database:");
+					try {
+						ArrayList<Business> businesses = DB_Access.getBusinesses();
+						int length = businesses.size();
+						for (int i = 0; i < length; i++) {
+							System.out.println(businesses.get(i).toString());
+						}
+						System.out.print("\n");
+					} catch (Exception e) {
+						
+						e.printStackTrace();
+					}
+					break;
+				case 21:
+					System.out.println("Give the BusinessID: ");
+					String BusinessID = Interface.userIDInput(1);
+					try {
+						Business bsness = DB_Access.findBusiness(BusinessID);
+						System.out.println(bsness.toString() + "\n");
+					} catch (Exception e) {
+						System.out.println("AN ERROR HAS OCCURED");
+						e.printStackTrace();
+					}
+					break;
+				case 22:
+					System.out.println("Authenticate Business by providing your BusinessID and your Password");
+					String businessID = Interface.userIDInput(1);
+					System.out.println("Type your password: ");
+					String password = SCNR.next();
+					try {
+						Business busn = DB_Access.authenticateBusiness(businessID, password);
+						System.out.println(busn.toString() + "\n");
+					} catch (Exception e) {
+						System.out.println("AN ERROR HAS OCCURED");
+						e.printStackTrace();
+					}
+					break;
+				case 23:
+					String iD = Interface.userIDInput(1);
+					try {
+						DB_Access.createTable(iD);
+						System.out.println("TABLE CREATION SUCCESSFULL\n");
+					} catch (Exception e) {
+						System.out.println("AN ERROR HAS OCCURED");
+						e.printStackTrace();
+					}
+					break;
+				case 24:
+					String businessiD = Interface.userIDInput(1);
+					String useriD = Interface.userIDInput(0);
+					Mask mask = Interface.maskType();
+					java.util.Date utilDate = Interface.getDate();
+					System.out.println("\nTrying to insert CheckIn into Database:");
+					try {
+						DB_Access.checkIn(businessiD, useriD, utilDate, mask);
+						System.out.println("CHECK IN SUCCESSFULL\n");
+					} catch (Exception e) {
+						System.out.println("AN ERROR HAS OCCURED");
+						e.printStackTrace();
+					}
+					break;
+				case 25:
+					String businessID1 = Interface.userIDInput(1);
+					String userID1 = Interface.userIDInput(0);
+					java.util.Date utilDate1 = Interface.getDate();
+					java.sql.Date sqlDate1 = new java.sql.Date(utilDate1.getTime());
+					System.out.println("\nTrying to insert CheckOut into Database:");
+					try {
+						DB_Access.checkOut(businessID1, userID1, sqlDate1);
+					} catch (Exception e) {
+						System.out.println("AN ERROR HAS OCCURED");
+						e.printStackTrace();
+					}
+					break;
+				case 26:
+					String businessID2 = Interface.userIDInput(1);
+					try {
+						ArrayList<Record> recordsList = DB_Access.getRecords(businessID2);
+						for (Record rec : recordsList) {
+							System.out.println(rec.toString());
+						}
+						System.out.println(" ");
+					} catch (Exception e) {
+						System.out.println("AN ERROR HAS OCCURED");
+						e.printStackTrace();
+					}
+					break;
 			}
 			System.out.println("Do you want to try another method?\n"
 					+ "Type yes/no");
