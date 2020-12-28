@@ -4,11 +4,9 @@
  * Copyright (not) 2020 Javavirus
  */
 
-import java.util.ArrayList;
-
 /**
  * Business class.
- * This class represents a business, which is defined by its total floor area,
+ * This class represents a business, which is defined by its businessID, email, name, total floor area,
  * and its type (for now). 
  *
  * @version 0.1 26 Nov 2020
@@ -19,14 +17,16 @@ public class Business {
 	private String name;
 	private double space;
 	private BusinessType businessType;
-	public ArrayList<Record> records = new ArrayList<Record>();
+	private String email;
+	private String password;
 
-	public Business(String businessID, String name, double space, BusinessType businessType) {
+	public Business(String businessID, String email, String password, String name, double space, BusinessType businessType) {
 		this.businessID = businessID;
+		this.email = email;
+		this.password = password;
 		this.name = name;
 		this.space = space;
 		this.businessType = businessType;
-		
 	}
 
 	public String getBusinessID() {
@@ -59,5 +59,30 @@ public class Business {
 
 	public void setBusinessType(BusinessType businessType) {
 		this.businessType = businessType;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	@Override
+	public String toString() {
+		return "Business ID : " + businessID +
+				", Business Name :" + name +
+				", Email : " + email +
+				", Floor Area : " + space +
+				" m2, Business Type : " + businessType;
 	}
 }
