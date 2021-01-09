@@ -291,6 +291,34 @@ public class Interface {
 		}
 		
 	}
+	public static Aer ventilationType() { //input of business' ventilation type//
+		System.out.println("Εισάγετε το είδος εξαερισμού του καταστήματος: ");
+		System.out.println("Αν έχετε φυσικό εξαερισμό, εισάγετε 0.");
+		System.out.println("Αν έχετε ανοιχτές πόρτες και παράθυρα, εισάγετε 1.");
+		int busVentilation = 0;
+		boolean aa = false;
+		while (aa == false) {
+			try {
+            	busVentilation = SCNR.nextInt();
+                if (busVentilation == 0 || busVentilation == 1) {
+                    aa = true;	 
+                } else {
+                   	System.out.println("Το είδος εξαερισμού που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
+		        }
+			}catch (java.util.InputMismatchException e) {
+				System.out.println("Το είδος εξαερισμού που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
+				SCNR.nextLine();
+	            continue;
+			}
+		}
+		SCNR.nextLine();
+		if (busVentilation == 0) {
+            return Aer.NATURAL;
+		} else {
+            return Aer.OPEN;
+		}
+		
+	}
 
 
 	/**
