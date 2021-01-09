@@ -9,10 +9,17 @@
  * @author Sotiris
  */
 public enum Exertion {
-	/** Resting */
-	RESTING(0.5,"Resting"),
-	/** Standing, as a low-level activity*/
-	STANDING(0,"Standing");
+	/** Resting and speaking*/
+	R_S(3.46,"Resting, Speaking"),
+	/** Resting and loudly speaking*/
+	R_L_S(22.2,"Resting, Loudly Speaking");
+	S_S(4.2, "Standing,Speaking");
+	S_L_S(23.9, "Standing, Loudly Speaking);
+	L_E_S(9.9, "Light Exercise, Speaking");
+	L_E_L_S(62.7, "Light Exercise, Loudly Speaking");
+	H_E_S(23.2, "Heavy Exercise, Speaking");
+	H_E_L_S(149, "Heavy Exercise, Loudly Speaking);
+		
 	
 	private final double exertionFactor ;
 	private final String type;
