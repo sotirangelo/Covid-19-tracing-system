@@ -61,6 +61,13 @@ public class DataAnalysis {
 		return score;
 	}
 */
+	/** Particle Deposition Rate */
+	private static final K = 0.24;
+	/** Viral Inactivation Rate */
+	private static final L = 0.63;
+	/** Total Viral Removal Rate */
+	private static IVRR = K + L;
+
 	public static ArrayList<InfectedPerson> infectionScores(String userID) {
 		ArrayList<InfectedPerson> ip = new ArrayList<InfectedPerson>();
 		ArrayList<ArrayList<Record>> tasosList = DataAccess.searchPossiblyInfected(userID);
