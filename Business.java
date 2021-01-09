@@ -16,9 +16,12 @@ public class Business {
 	private String businessID;
 	private String name;
 	private double space;
-	private BusinessType businessType;
+	private double height;
+    private BusinessType businessType;
 	private String email;
 	private String password;
+    /** Air Exchange Rate */
+    private double AER; 
 
 	public Business(String businessID, String email, String password, String name, double space, BusinessType businessType) {
 		this.businessID = businessID;
@@ -53,6 +56,10 @@ public class Business {
 		this.space = space;
 	}
 
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
 	public BusinessType getBusinessType() {
 		return businessType;
 	}
@@ -69,6 +76,13 @@ public class Business {
 		this.email = email;
 	}
 
+    public double getVolume() {
+        return height * space;   
+    }
+    
+    public double getAER() {
+        
+    }
 	public String getPassword() {
 		return password;
 	}
