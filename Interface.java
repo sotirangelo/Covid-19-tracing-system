@@ -291,7 +291,7 @@ public class Interface {
 		}
 		
 	}
-	public static Aer ventilationType() { //input of business' ventilation type//
+	public static AER ventilationType() { //input of business' ventilation type//
 		System.out.println("Εισάγετε το είδος εξαερισμού του καταστήματος: ");
 		System.out.println("Αν έχετε φυσικό εξαερισμό, εισάγετε 0.");
 		System.out.println("Αν έχετε ανοιχτές πόρτες και παράθυρα, εισάγετε 1.");
@@ -313,9 +313,9 @@ public class Interface {
 		}
 		SCNR.nextLine();
 		if (busVentilation == 0) {
-            return Aer.NATURAL;
+            return AER.NATURAL;
 		} else {
-            return Aer.OPEN;
+            return AER.OPEN;
 		}
 		
 	}
