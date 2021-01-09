@@ -38,6 +38,21 @@ public class Interface {
 	 *
 	 * @return double Floor area in square meters.
 	 */
+	public static double heigthInput() {
+		System.out.println("Πόσο είναι το ύψος του καταστήματός σας;");
+		double h = 0;
+		while (h <= 0) {
+			if (SCNR.hasNextDouble())
+				h = SCNR.nextDouble();
+	        	else {
+	        		System.out.println("Πρέπει να δώσετε το ύψος του καταστήματός σας. Προσπαθείστε ξανά.");
+	            		SCNR.nextLine();
+	            		continue;
+	        	}
+	  	}
+	  	SCNR.nextLine();
+	  	return h;
+  	}
 	public static double floorAreaInput() {
 		System.out.println("Πόσα τετραγωνικά μέτρα είναι το κατάστημά σας;");
 	  	String sqm = null;
@@ -352,6 +367,34 @@ public class Interface {
             return Exertion.RESTING;
 		} else {
             return Exertion.STANDING;
+		}
+		
+	}
+	public static AER ventilationType() { //input of business' ventilation type//
+		System.out.println("Εισάγετε το είδος εξαερισμού του καταστήματος: ");
+		System.out.println("Αν έχετε φυσικό εξαερισμό, εισάγετε 0.");
+		System.out.println("Αν έχετε ανοιχτές πόρτες και παράθυρα, εισάγετε 1.");
+		int busVentilation = 0;
+		boolean aa = false;
+		while (aa == false) {
+			try {
+            	busVentilation = SCNR.nextInt();
+                if (busVentilation == 0 || busVentilation == 1) {
+                    aa = true;	 
+                } else {
+                   	System.out.println("Το είδος εξαερισμού που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
+		        }
+			}catch (java.util.InputMismatchException e) {
+				System.out.println("Το είδος εξαερισμού που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
+				SCNR.nextLine();
+	            continue;
+			}
+		}
+		SCNR.nextLine();
+		if (busVentilation == 0) {
+            return AER.NATURAL;
+		} else {
+            return AER.OPEN;
 		}
 		
 	}
