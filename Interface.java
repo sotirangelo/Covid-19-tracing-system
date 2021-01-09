@@ -7,6 +7,7 @@
 import java.util.Scanner;
 
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -54,28 +55,37 @@ public class Interface {
   	}
 	public static double floorAreaInput() {
 		System.out.println("Πόσα τετραγωνικά μέτρα είναι το κατάστημά σας;");
-	  	double sqm = 0;
-	  	while (sqm <= 0) {
-			if (SCNR.hasNextDouble())
-				sqm = SCNR.nextDouble();
-	        	else {
-	        		System.out.println("Πρέπει να δώσετε τον αριθμό τετραγωνικών μέτρων του καταστήματός σας. Προσπαθείστε ξανά.");
-	            		SCNR.nextLine();
-	            		continue;
-	        	}
+	  	String sqm = null;
+	  	double m2 = 0;
+	  	while (sqm == null) {
+	  		sqm = SCNR.nextLine();
+			try {
+				m2 = Double.parseDouble(sqm);
+				if (m2 <= 0) {
+					System.out.println("Πρέπει να δώσετε τον αριθμό τετραγωνικών μέτρων του καταστήματός σας. Προσπαθείστε ξανά.");
+					sqm = null;
+				}
+			} catch (Exception e) {
+				System.out.println("Πρέπει να δώσετε τον αριθμό τετραγωνικών μέτρων του καταστήματός σας. Προσπαθείστε ξανά.");
+				sqm = null;
+			}
 	  	}
-	  	SCNR.nextLine();
-	  	return sqm;
+		return m2;
   	}
   
 	/**
-	 * Customer USER ID input.
-	 * Static method, that prompts the user to input the customer's USER ID.
+	 * USER / BUSINESS ID input.
+	 * Static method, that prompts the user to input the user or the business ID.
 	 * 
-	 * @return String Customer's USER ID.
+	 * @param Int : if 0 then prints 'User'ID, else it prints 'Business'ID
+	 * @return String USER / BUSINESS ID.
 	 */
-	public static String userIDInput() {
-		System.out.println("Δώστε το USER ID του πελάτη (πχ. 12345678): ");
+	public static String userIDInput(int i) {
+		if (i == 0) {
+			System.out.println("Δώστε το ID του πελάτη: ");
+		} else {
+			System.out.println("Δώστε το ID της επιχείρησης: ");
+		}
 		String custID = null;
 		while (custID == null) {
 			custID = SCNR.next();
@@ -83,16 +93,85 @@ public class Interface {
 				try {
 					Integer.parseInt(custID);
 				} catch (NumberFormatException e) {
-					System.out.println("Το USER ID του πελάτη που εισήχθει ήταν λανθασμένο. Προσπαθήστε ξανά (πχ. 12345678) : ");
+					System.out.println("Το ID του πελάτη που εισήχθει ήταν λανθασμένο. Προσπαθήστε ξανά (πχ. 12345678) : ");
 					custID = null;
 				}
 			} else {
-				System.out.println("Το USER ID του πελάτη που εισήχθει ήταν λανθασμένο. Προσπαθήστε ξανά (πχ. 12345678) : ");
+				System.out.println("Το ID του πελάτη που εισήχθει ήταν λανθασμένο. Προσπαθήστε ξανά (πχ. 12345678) : ");
 				custID = null;
 			}
 		}
-		//System.out.println(custID + " Successful"); (to check how it works with JUnit)
+		
 		return custID;
+	}
+	
+	
+	
+	/**
+	 * Customer Password input.
+	 * Static method, that prompts the user to input the customer's Pasword.
+	 * 
+	 * @return String Customer's Password.
+	 */
+	public static String createPassword() {
+		System.out.print("Please enter a given  password : ");
+	    String passwordhere = SCNR.nextLine();
+	    System.out.print("Please re-enter the password to confirm : ");
+	    String confirmhere = SCNR.nextLine();
+
+	    ArrayList<String> errorList = new ArrayList<String>();
+
+	    while (!isValid(passwordhere, confirmhere, errorList)) {
+	        System.out.println("The password entered here  is invalid");
+	        for (String error : errorList) {
+	            System.out.println(error);
+	        }
+
+	        System.out.print("Please enter a given  password : ");
+	        passwordhere = SCNR.nextLine();
+	        System.out.print("Please re-enter the password to confirm : ");
+	        confirmhere = SCNR.nextLine();
+	    }
+	    System.out.println("your password is: " + passwordhere);
+	    return passwordhere;
+	}
+	public static boolean isValid(String passwordhere, String confirmhere, ArrayList<String> errorList) {
+
+	    Pattern specailCharPatten = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+	    Pattern UpperCasePatten = Pattern.compile("[A-Z ]");
+	    Pattern lowerCasePatten = Pattern.compile("[a-z ]");
+	    Pattern digitCasePatten = Pattern.compile("[0-9 ]");
+	    errorList.clear();
+
+	    boolean flag=true;
+
+	    if (!passwordhere.equals(confirmhere)) {
+	        errorList.add("password and confirm password does not match");
+	        flag=false;
+	    }
+	    if (passwordhere.length() < 8) {
+	        errorList.add("Password lenght must have alleast 8 character !!");
+	        flag=false;
+	    }
+	    if (!specailCharPatten.matcher(passwordhere).find()) {
+	        errorList.add("Password must have atleast one specail character !!");
+	        flag=false;
+	    }
+	    if (!UpperCasePatten.matcher(passwordhere).find()) {
+	        errorList.add("Password must have atleast one uppercase character !!");
+	        flag=false;
+	    }
+	    if (!lowerCasePatten.matcher(passwordhere).find()) {
+	        errorList.add("Password must have atleast one lowercase character !!");
+	        flag=false;
+	    }
+	    if (!digitCasePatten.matcher(passwordhere).find()) {
+	        errorList.add("Password must have atleast one digit character !!");
+	        flag=false;
+	    }
+
+	    return flag;
+
 	}
 
 	/**
@@ -126,19 +205,23 @@ public class Interface {
          * @return String Customer's email address.
          */
 	public static String emailInput() {
-		System.out.println("Δώστε το email του πελάτη: ");
-		String emailadr = null; 
-		while (emailadr == null) { //checks if the String is valid
-			emailadr = SCNR.nextLine();
-			Pattern pattern = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
-	        Matcher mat = pattern.matcher(emailadr);
+		
+		System.out.println("Δώστε το email: ");
+		Pattern pattern = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
+		String emailadr;
+		Matcher mat;
+		
+		do {
+			emailadr = SCNR.next();
+			mat = pattern.matcher(emailadr);
 	        if(mat.matches()){
 	            System.out.println("Valid email address");
-	        }else{
-	        	System.out.println("Το e-mail πελάτη που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
-	        	emailadr = null;
+	        } else {
+	        	System.out.println("Το e-mail που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: " + emailadr);
 	        }
-		}
+		} while(!mat.matches());
+		
+		SCNR.reset();
 		return emailadr;
 	}
 
@@ -222,7 +305,6 @@ public class Interface {
 	 */
 	public static Date getDate() {
 		Date dateNow = new Date();
-		// System.out.println(dateNow + "    Success"); (to check how it works with JUnit)
 		return dateNow;
 	}
 	
@@ -236,13 +318,11 @@ public class Interface {
 		cal.setTime(entryDate);
 		cal.add(Calendar.MINUTE, minutesInStore);
 		Date newDate = cal.getTime();
-		// System.out.println("Entry Date: " + entryDate + "Exit Date : " +  newDate);  (to check how it works with JUnit)
 		return newDate;
 	}
 	
 	// Converts Date to String. Could be used to create a String type 'Date and Time' that can be sent to the database.
 	public static String dateToString(Date date) {
-		// System.out.println(dateFormat.format(date)); (to check how it works with JUnit)
 		return dateFormat.format(date);
 	}
 	
@@ -254,7 +334,6 @@ public class Interface {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		// System.out.println(fdate); (to check how it works with JUnit)
 		return fdate;
 	}
 	
@@ -364,44 +443,25 @@ public class Interface {
 		
 	}
 	
-	/** Customer's check type (Check in/Check out).
-     * Static method, that prompts the user to input the customer's check type.
-     *
-     * @return Check Customer's Check type (Check in/Check out).
-     */
-	public static Check checkType() {
-		System.out.println("Επιλέξτε αν ο πελάτης μπαίνει στο κατάστημα ή αν βγαίνει απο το κατάστημα : ");
-		System.out.println("Αν ο πελάτης μπαίνει στο κατάστημα, εισάγετε 0.");
-		System.out.println("Αν ο πελάτης βγαίνει απο το κατάστημα, εισάγετε 1.");
-		int custCheckType = 0;
-		boolean aa = false;
-		while (aa == false) {
-			try {
-				    custCheckType = SCNR.nextInt();
-                    if (custCheckType == 0 || custCheckType == 1) {
-         	        aa = true;	 
-                    	} else {
-			        System.out.println("Η επιλογή ήταν λανθασμένη. Παρακαλώ προσπαθήστε ξανά: ");
-		            }
-			}catch (java.util.InputMismatchException e) {
-				System.out.println("Η επιλογή ήταν λανθασμένη. Παρακαλώ προσπαθήστε ξανά: ");
-				SCNR.nextLine();
-	            continue;
-			}
-		}
-		if (custCheckType == 0) {
-            return Check.In;
-		} else {
-            return Check.Out;
-		}
-	}
 
-/**
-         * Business type input.
-         * Static method, that prompts the user to input the business' type.
-         *
-         * @return BusinessType Business' type.
-         */
+	/**
+	 * Business name input.
+	 * Static method, that prompts the user to input the business name.
+	 * 
+	 * @return String Business name.
+	 */
+	public static String businessNameInput() {
+		System.out.println("Δώστε το όνομα της επιχείρησης: ");
+		String custfirst = SCNR.nextLine();
+		return custfirst;
+	}
+	
+	/**
+     * Business type input.
+     * Static method, that prompts the user to input the business' type.
+     *
+     * @return BusinessType Business' type.
+     */
 	public static BusinessType inputBusinessType() {
 		System.out.println("Εισάγετε το είδος δραστηριότητας της επιχείρησης: ");
 		System.out.println("Αν είναι εστιατόριο, εισάγετε 0.");
