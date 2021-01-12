@@ -61,13 +61,27 @@ public class DataAnalysis {
 		return score;
 	}
 */
-	/** Particle Deposition Rate */
-	private static final K = 0.24;
-	/** Viral Inactivation Rate */
-	private static final L = 0.63;
-	/** Total Viral Removal Rate */
-	private static IVRR = K + L;
 
+	public double[] calculateErq(Business business) {
+		var erq = new double[];
+		var activity = getInfectedActivity(); //TODO
+		Record r = getRecordOfInfected(); //TODO
+		int operationMinutes = getOperationMinutes(); //TODO: For each business (start record & end record)
+		int infectedEntry; //TODO
+		int infectedExit; //TODO
+		double IVRR; //TODO
+		double V; //TODO
+		for (i = 0; i < operationMinutes ; i++) {
+			if (i < infectedEntry) {
+				erq[i] = 0;
+			} else if (i <= infectedExit) {
+				erq[i] = (activity.getErq() / (IVRR * V)) * (1 - Math.exp((IVRR * -1) * (i - infectedEntry)));
+			} else {
+				erq[i] = erq[i - 1] * Math.exp((IVRR * -1) * (i - infectedExit));
+			}
+		}
+	}
+	
 	public static ArrayList<InfectedPerson> infectionScores(String userID) {
 		ArrayList<InfectedPerson> ip = new ArrayList<InfectedPerson>();
 		ArrayList<ArrayList<Record>> tasosList = DataAccess.searchPossiblyInfected(userID);
