@@ -62,7 +62,7 @@ public class DataAnalysis {
 	}
 */
 
-	public double[] calculateErq(Business business) {
+	public double[] calculateErq(Business business) { //TODO: Add necessary methods/fields
 		var erq = new double[];
 		var activity = getInfectedActivity(); //TODO
 		Record r = getRecordOfInfected(); //TODO
@@ -82,6 +82,25 @@ public class DataAnalysis {
 		}
 	}
 	
+	public ArrayList<InfectedPerson> calculatePI(Business business) { //TODO: Add necessary methods/fields
+		var records = business.getRecords();
+		ArrayList<InfectedPerson> output = new ArrayList<InfectedPerson>();
+		double[] erq = calculateErq();
+		for (Record r : records) { //TODO: Get only useful records
+			double p = 0;
+			for (i = r.getEntry() ; i < erq.length() ; i++) {
+				if (i <= r.getExit()) {
+					p += erq[i] * ((i / 60) - ((i - 1) / 60));		
+				}
+			}
+			p *= business.getIR();
+			if (p > 0) {
+				output.add((InfectedPerson) r.getPerson()); //TODO: Fix Infected Person casing
+			}
+		}
+	}
+
+/*
 	public static ArrayList<InfectedPerson> infectionScores(String userID) {
 		ArrayList<InfectedPerson> ip = new ArrayList<InfectedPerson>();
 		ArrayList<ArrayList<Record>> tasosList = DataAccess.searchPossiblyInfected(userID);
@@ -101,5 +120,6 @@ public class DataAnalysis {
 		//Collections.sort(ip);
 		return ip;
 	}
+*/
 
 }
