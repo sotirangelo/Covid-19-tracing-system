@@ -582,4 +582,23 @@ public class DB_Access {
 		}
 		
 	} //End of getRecords
+
+    /**
+     * Get list of Businesses visited by User.
+     *
+     * @param userId, String
+     * @return stores, ArrayList<Business>
+     */
+    public static ArrayList<Business> businessesVisited(String userId) {
+        ArrayList<Business> stores = new ArrayList<Business>();
+        for (Business b : getBusinesses()) {
+            for (Record r : getRecords(b.getBusinessID())) {
+                if (r.getUserID().equals(userId)) {
+                    stores.add(b);
+                    break;
+                }
+            }
+        }
+        return stores;
+    } 
 }
