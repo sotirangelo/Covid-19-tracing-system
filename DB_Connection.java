@@ -6,11 +6,15 @@ import java.sql.SQLException;
 public class DB_Connection {
 
 	/* Database connection settings, change dbName, dbusername, dbpassword */
-	private final static String dbServer = "localhost";
+	//private final static String dbServer = "localhost";
 	private final static String dbServerPort = "3306";
-	private final static String dbName = "javavirus_DB";
-	private final static String dbusername = "root";
-	private final static String dbpassword = "8ASI4Jco!Nm!QuOL";
+	//private final static String dbName = "javavirus_DB";
+	//private final static String dbusername = "root";
+	//private final static String dbpassword = "8ASI4Jco!Nm!QuOL";
+	private final static String dbServer = "prometheus.dmst.aueb.gr";
+	private final static String dbName = "isandalis_database_dmst";
+	private final static String dbusername = "isandalis";
+	private final static String dbpassword = "U8aQEpJ357yz";
 
 	private static Connection con = null;
 
