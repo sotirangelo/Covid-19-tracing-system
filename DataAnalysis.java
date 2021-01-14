@@ -62,9 +62,9 @@ public class DataAnalysis {
 	}
 */
 
-	public double[] calculateErq(Business business) { //TODO: Add necessary methods/fields
+	public double[] calculateErq(InfectedPerson infected, Business store) { //TODO: Add necessary methods/fields
 		var erq = new double[];
-		var activity = getInfectedActivity(); //TODO
+        var activity = store.getBusinessType.getCustActivity() //TODO: getActivity method in Business, based on person's category 
 		Record r = getRecordOfInfected(); //TODO
 		int operationMinutes = getOperationMinutes(); //TODO: For each business (start record & end record)
 		int infectedEntry; //TODO
