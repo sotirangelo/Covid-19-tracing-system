@@ -21,7 +21,7 @@ public enum BusinessType {
 	private final customerActivity;
 	private final employeeActivity;
 
-	private BusinessType(double customerActivity, double employeeActivity, String type) {
+	private BusinessType(Exertion customerActivity, double employeeActivity, String type) {
 		this.type = type;
 		this.customerActivity = customerActivity;
 		this.employeeActivity = employeeActivity;
