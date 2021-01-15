@@ -61,11 +61,26 @@ public class DataAnalysis {
 		return score;
 	}
 */
+	public double getActivity(Person p, Business b) {
+		if (p instanceof InfectedPerson) {
+			if (p.isEmployee) {
+				return store.getInfectedEmpExertion();	
+			} else {
+				return store.getInfectedCustExertion();
+			}
+		} else {
+			if (p.isEmployee) {
+				return store.getHealthyEmpExertion();
+			} else {
+				return store.getHealthyCustExertion();
+			}
+		}
+	}
 
 	public double[] calculateErq(InfectedPerson infected, Business store) { //TODO: Add necessary methods/fields
 		var erq = new double[];
-        var activity = store.getBusinessType.getCustActivity() //TODO: getActivity method in Business, based on person's category 
-		Record r = getRecordOfInfected(); //TODO
+        	var activity = getActivity(infected, store);
+		Record r = getPersonsRecord(infected, store);
 		int operationMinutes = getOperationMinutes(); //TODO: For each business (start record & end record)
 		int infectedEntry; //TODO
 		int infectedExit; //TODO
