@@ -600,5 +600,23 @@ public class DB_Access {
             }
         }
         return stores;
-    } 
+    } //End of businessVisited
+    
+    /**
+     * Get Person's Record in specific business
+     *
+     * @param person, Person
+     * @param business, Business
+     * @return record, Record
+     */
+    public static Record getPersonsRecord(Person person, Business business) throws NullPointerException {
+        ArrayList<Record> records = getRecords(business.getBusinessID());
+        for (Record r : records) {
+            if (r.getUserID().equals(person.getUserID()) {
+                return r;
+            }
+        }
+        return null;
+    } //End of getPersonsRecord
+
 }
