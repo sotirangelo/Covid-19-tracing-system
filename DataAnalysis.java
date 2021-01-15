@@ -84,8 +84,8 @@ public class DataAnalysis {
 		int operationMinutes = getOperationMinutes(); //TODO: For each business (start record & end record)
 		int infectedEntry; //TODO
 		int infectedExit; //TODO
-		double IVRR; //TODO
-		double V; //TODO
+		double IVRR;
+		double V;
 		for (i = 0; i < operationMinutes ; i++) {
 			if (i < infectedEntry) {
 				erq[i] = 0;
