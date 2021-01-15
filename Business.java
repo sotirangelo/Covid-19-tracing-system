@@ -109,8 +109,15 @@ public class Business {
 	
 	public double getInfectedEmpExertion() {
 		return BusinessType.getEmplActivity().getErq();
-	}	
+	}
 	
+	public double getIVRR() {
+		return (getAER() + 0.24 + 0.63);
+	}	
+	 public double getV() {
+		 return space * height;
+	 }	 
+		 
 	@Override
 	public String toString() {
 		return "Business ID : " + businessID +
