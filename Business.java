@@ -96,6 +96,21 @@ public class Business {
 		this.password = password;
 	}
 	
+	public double getHealthyCustExertion() {
+		return BusinessType.getCustActivity().getIr();
+	}
+	
+	public double getInfectedCustExertion() {
+		return BusinessType.getCustActivity().getErq();
+	}
+	public double getHealthyEmpExertion() {
+		return BusinessType.getEmplActivity().getIr();
+	}
+	
+	public double getInfectedEmpExertion() {
+		return BusinessType.getEmplActivity().getErq();
+	}	
+	
 	@Override
 	public String toString() {
 		return "Business ID : " + businessID +
