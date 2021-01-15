@@ -23,7 +23,7 @@ public class Person {
 	private long phoneNumber;
 	private Age ageCategory;
 	private String password;
-	private boolean isEmployee;
+	private boolean employee;
 	
 	/**
 	 * Customer Constructor
@@ -36,7 +36,7 @@ public class Person {
 		this.phoneNumber = phoneNumber;
 		this.ageCategory = ageCategory;
 		this.password = password;
-		this.isEmployee = false;
+		this.employee = false;
 	}
 	
 	/** Employee Constructor
@@ -50,7 +50,7 @@ public class Person {
 		this.phoneNumber = phoneNumber;
 		this.ageCategory = ageCategory;
 		this.password = password;
-		this.isEmployee = isEmployee;
+		this.employee = employee;
 	}
 
 	
@@ -96,6 +96,9 @@ public class Person {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public boolean isEmployee() {
+		return employee;
+	}	
 	@Override
 	public String toString() {
 		return "User ID : " + userID +
