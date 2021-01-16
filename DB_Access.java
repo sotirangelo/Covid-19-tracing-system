@@ -65,6 +65,7 @@ public class DB_Access {
             stmt.executeUpdate();
 
             stmt.close();
+            con.close();
 
         } catch (Exception e) {
             throw new Exception(e.getMessage());
@@ -109,6 +110,7 @@ public class DB_Access {
 
 			rs.close();
 			stmt.close();
+			con.close();
 			return users;
 
 		} catch (Exception e) {
@@ -158,7 +160,8 @@ public class DB_Access {
 
             rs.close();
             stmt.close();
-
+            con.close();
+            
             return user;
 
 
@@ -209,7 +212,8 @@ public class DB_Access {
 
             rs.close();
             stmt.close();
-
+            con.close();
+            
             user = testUser;
             return user;
 
@@ -262,6 +266,7 @@ public class DB_Access {
             stmt.executeUpdate();
             
             stmt.close();
+            con.close();
                      
         } catch (Exception e) {
             throw new Exception(e.getMessage());
@@ -312,6 +317,7 @@ public class DB_Access {
 
 			rs.close();
 			stmt.close();
+			con.close();
 			return businesses;
 
 		} catch (Exception e) {
@@ -360,6 +366,7 @@ public class DB_Access {
 
             rs.close();
             stmt.close();
+            con.close();
 
             return business;
 
@@ -409,6 +416,7 @@ public class DB_Access {
 					BusinessType.valueOf(rs.getString("Business.BusinessType")));
             rs.close();
             stmt.close();
+            con.close();
 
             business = testBusiness;
             return business;
@@ -450,6 +458,8 @@ public class DB_Access {
             stmt.executeUpdate();
             
             stmt.close();
+            con.close();
+            
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
@@ -485,6 +495,7 @@ public class DB_Access {
             stmt.executeUpdate();
             
             stmt.close();
+            con.close();
 			
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
@@ -529,6 +540,7 @@ public class DB_Access {
             }
 			
             rs.close();
+            con.close();
 
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
@@ -571,6 +583,7 @@ public class DB_Access {
 
 			rs.close();
 			stmt.close();
+			con.close();
 			return list;
 
 		} catch (Exception e) {
