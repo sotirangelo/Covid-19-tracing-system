@@ -432,7 +432,7 @@ public class DB_Access {
 		
 		Connection con = null;
         PreparedStatement stmt = null;
-        String tableName = "javavirus_db.record" + businessID;
+        String tableName = "isandalis_database_dmst.record" + businessID;
         String sqlTable = "CREATE TABLE " + tableName + " (" +
         		"	 Number int NOT NULL AUTO_INCREMENT," +
         		"    UserID int NOT NULL," +
@@ -440,12 +440,8 @@ public class DB_Access {
         		"    EntryDate datetime NOT NULL," +
         		"    ExitDate datetime DEFAULT NULL," +
         		"  	 PRIMARY KEY (Number)," +
-        		"	 FOREIGN KEY (UserID) REFERENCES javavirus_DB.person (UserID)" +
-        		")" +
-        		
-        		"ENGINE = INNODB," +
-        		"CHARACTER SET utf8mb4," +
-        		"COLLATE utf8mb4_0900_ai_ci;";
+        		"	 FOREIGN KEY (UserID) REFERENCES isandalis_database_dmst.Person (UserID)" +
+        		");";
         
         try {
         	con = DB_Connection.getConnection();
@@ -471,7 +467,7 @@ public class DB_Access {
 	 */
 	public static void checkIn (String businessID, String userID, java.util.Date date, Mask maskType) throws Exception {
 		
-		String tableName = "javavirus_DB.record" + businessID;
+		String tableName = "isandalis_database_dmst.record" + businessID;
 		Connection con = null;
 		PreparedStatement stmt = null;
 		String sql = "INSERT INTO " + tableName + " (UserID, MaskType, EntryDate, ExitDate) VALUES (?, ?, ?, ?);";
@@ -508,7 +504,7 @@ public class DB_Access {
 		
 		Connection con = null;
 		PreparedStatement stmt = null;		
-		String tableName = "javavirus_DB.record" + businessID;
+		String tableName = "isandalis_database_dmst.record" + businessID;
 		String sql = "SELECT * FROM " + tableName + " WHERE UserID = ? AND ExitDate IS NULL;";
 		String updateSql = "UPDATE " + tableName + " SET ExitDate = ?;";
 		
@@ -554,7 +550,7 @@ public class DB_Access {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		String rsTable = "record" + businessID;
-		String sqlQuery = "SELECT * FROM javavirus_DB.record" + businessID + ";";
+		String sqlQuery = "SELECT * FROM isandalis_database_dmst.record" + businessID + ";";
 
 		try {
 
