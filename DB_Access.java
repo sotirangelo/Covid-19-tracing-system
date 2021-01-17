@@ -591,4 +591,41 @@ public class DB_Access {
 		}
 		
 	} //End of getRecords
+
+    /**
+     * Get list of Businesses visited by User.
+     *
+     * @param userId, String
+     * @return stores, ArrayList<Business>
+     */
+    public static ArrayList<Business> businessesVisited(String userId) {
+        ArrayList<Business> stores = new ArrayList<Business>();
+        for (Business b : getBusinesses()) {
+            for (Record r : getRecords(b.getBusinessID())) {
+                if (r.getUserID().equals(userId)) {
+                    stores.add(b);
+                    break;
+                }
+            }
+        }
+        return stores;
+    } //End of businessVisited
+    
+    /**
+     * Get Person's Record in specific business
+     *
+     * @param person, Person
+     * @param business, Business
+     * @return record, Record
+     */
+    public static Record getPersonsRecord(Person person, Business business) throws NullPointerException {
+        ArrayList<Record> records = getRecords(business.getBusinessID());
+        for (Record r : records) {
+            if (r.getUserID().equals(person.getUserID()) {
+                return r;
+            }
+        }
+        return null;
+    } //End of getPersonsRecord
+
 }

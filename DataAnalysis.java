@@ -61,6 +61,61 @@ public class DataAnalysis {
 		return score;
 	}
 */
+	public double getActivity(Person p, Business b) {
+		if (p instanceof InfectedPerson) {
+			if (p.isEmployee) {
+				return store.getInfectedEmpExertion();	
+			} else {
+				return store.getInfectedCustExertion();
+			}
+		} else {
+			if (p.isEmployee) {
+				return store.getHealthyEmpExertion();
+			} else {
+				return store.getHealthyCustExertion();
+			}
+		}
+	}
+
+	public double[] calculateErq(InfectedPerson infected, Business store) { //TODO: Add necessary methods/fields
+		var erq = new double[];
+        	var activity = getActivity(infected, store);
+		Record r = getPersonsRecord(infected, store);
+		int operationMinutes = getOperationMinutes(); //TODO: For each business (start record & end record)
+		int infectedEntry; //TODO
+		int infectedExit; //TODO
+		double IVRR;
+		double V;
+		for (i = 0; i < operationMinutes ; i++) {
+			if (i < infectedEntry) {
+				erq[i] = 0;
+			} else if (i <= infectedExit) {
+				erq[i] = (activity.getErq() / (IVRR * V)) * (1 - Math.exp((IVRR * -1) * (i - infectedEntry)));
+			} else {
+				erq[i] = erq[i - 1] * Math.exp((IVRR * -1) * (i - infectedExit));
+			}
+		}
+	}
+	
+	public ArrayList<InfectedPerson> calculatePI(Business business) { //TODO: Add necessary methods/fields
+		var records = business.getRecords();
+		ArrayList<InfectedPerson> output = new ArrayList<InfectedPerson>();
+		double[] erq = calculateErq();
+		for (Record r : records) { //TODO: Get only useful records
+			double p = 0;
+			for (i = r.getEntry() ; i < erq.length() ; i++) {
+				if (i <= r.getExit()) {
+					p += erq[i] * ((i / 60) - ((i - 1) / 60));		
+				}
+			}
+			p *= business.getIR();
+			if (p > 0) {
+				output.add((InfectedPerson) r.getPerson()); //TODO: Fix Infected Person casing
+			}
+		}
+	}
+
+/*
 	public static ArrayList<InfectedPerson> infectionScores(String userID) {
 		ArrayList<InfectedPerson> ip = new ArrayList<InfectedPerson>();
 		ArrayList<ArrayList<Record>> tasosList = DataAccess.searchPossiblyInfected(userID);
@@ -80,5 +135,6 @@ public class DataAnalysis {
 		//Collections.sort(ip);
 		return ip;
 	}
+*/
 
 }
