@@ -10,7 +10,7 @@
 public enum BusinessType {
 	//TODO fix restaurant and bar capacity
 	RESTAURANT(Exertion.R_S, Exertion.L_E_S, "Restaurant"),
-	BAR(Exertion.R_L_S, Exertion.S_L_S "Bar"),
+	BAR(Exertion.R_L_S, Exertion.S_L_S, "Bar"),
 	OFFICE(Exertion.R_S, Exertion.S_S, "Office"),
 	STORE(Exertion.L_E_S, Exertion.S_S, "Store"),
 	MARKET(Exertion.L_E_S, Exertion.S_S, "Market");
@@ -18,8 +18,8 @@ public enum BusinessType {
 	private final String type;
 
 	/** Square metres distance per person */
-	private final customerActivity;
-	private final employeeActivity;
+	private final Exertion customerActivity;
+	private final Exertion employeeActivity;
 
 	private BusinessType(Exertion customerActivity, Exertion employeeActivity, String type) {
 		this.type = type;
@@ -32,11 +32,11 @@ public enum BusinessType {
 		return type;
 	}
 
-	public double getCustActivity() {
+	public Exertion getCustActivity() {
 		return customerActivity;
 	}
 	
-	public double getEmplActivity() {
+	public Exertion getEmplActivity() {
 		return employeeActivity;
 	}
 }

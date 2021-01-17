@@ -181,7 +181,7 @@ class JUnit_Test_Methods {
 					System.out.println("First, create a Business object:");
 					Business business = new Business(Interface.userIDInput(1), Interface.emailInput(),
 							Interface.createPassword(), Interface.businessNameInput(),
-							Interface.floorAreaInput(), Interface.inputBusinessType());
+							Interface.floorAreaInput(), Interface.inputBusinessType(), Interface.ventilationType());
 					try {
 						DB_Access.register(business);
 						System.out.println("REGISTRATION SUCCESSFULL\n");

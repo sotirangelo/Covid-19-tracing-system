@@ -18,7 +18,7 @@ public enum Exertion {
 	L_E_S(9.9, 1.38, "Light Exercise, Speaking"),
 	L_E_L_S(62.7, 1.38, "Light Exercise, Loudly Speaking"),
 	H_E_S(23.2, 3.3, "Heavy Exercise, Speaking"),
-	H_E_L_S(149, 3.3, "Heavy Exercise, Loudly Speaking);
+	H_E_L_S(149, 3.3, "Heavy Exercise, Loudly Speaking");
 		
 	/** Quanta Emission Rate */
 	private final double erq ;

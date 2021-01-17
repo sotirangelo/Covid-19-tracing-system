@@ -235,7 +235,7 @@ public class DB_Access {
         Connection con = null;
         PreparedStatement stmt = null;
         String checkSql = "SELECT * FROM Business WHERE BusinessID = ? OR Email = ?";
-        String sql = "INSERT INTO Business (BusinessID, Email, Password, Name, Space, BusinessType) VALUES (?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO Business (BusinessID, Email, Password, Name, Space, BusinessType, AER) VALUES (?, ?, ?, ?, ?, ?, ?);";
                 
         try {
 
@@ -262,6 +262,7 @@ public class DB_Access {
             stmt.setString(4, business.getName());
             stmt.setDouble(5, business.getSpace());
             stmt.setString(6, business.getBusinessType().name());
+            stmt.setString(7,  business.getVentilation().name());
 
             stmt.executeUpdate();
             
@@ -309,7 +310,8 @@ public class DB_Access {
 												rs.getString("Business.Password"),
 												rs.getString("Business.Name"),
 												rs.getLong("Business.Space"),
-												BusinessType.valueOf(rs.getString("Business.BusinessType")));
+												BusinessType.valueOf(rs.getString("Business.BusinessType")),
+												AER.valueOf(rs.getString("Business.AER")));
 
 							businesses.add(business);
 
@@ -362,7 +364,8 @@ public class DB_Access {
 					rs.getString("Business.Password"),
 					rs.getString("Business.Name"),
 					rs.getLong("Business.Space"),
-					BusinessType.valueOf(rs.getString("Business.BusinessType")));
+					BusinessType.valueOf(rs.getString("Business.BusinessType")),
+					AER.valueOf(rs.getString("Business.AER")));
 
             rs.close();
             stmt.close();
@@ -413,7 +416,8 @@ public class DB_Access {
 					rs.getString("Business.Password"),
 					rs.getString("Business.Name"),
 					rs.getLong("Business.Space"),
-					BusinessType.valueOf(rs.getString("Business.BusinessType")));
+					BusinessType.valueOf(rs.getString("Business.BusinessType")),
+					AER.valueOf(rs.getString("Business.AER")));
             rs.close();
             stmt.close();
             con.close();
@@ -600,14 +604,19 @@ public class DB_Access {
      */
     public static ArrayList<Business> businessesVisited(String userId) {
         ArrayList<Business> stores = new ArrayList<Business>();
-        for (Business b : getBusinesses()) {
-            for (Record r : getRecords(b.getBusinessID())) {
-                if (r.getUserID().equals(userId)) {
-                    stores.add(b);
-                    break;
-                }
-            }
-        }
+        try {
+			for (Business b : getBusinesses()) {
+			    for (Record r : getRecords(b.getBusinessID())) {
+			        if (r.getUserID().equals(userId)) {
+			            stores.add(b);
+			            break;
+			        }
+			    }
+			}
+		} catch (Exception e) {
+			System.out.println("AN ERROR HAS OCCURED: ");
+			e.printStackTrace();
+		}
         return stores;
     } //End of businessVisited
     
@@ -619,12 +628,19 @@ public class DB_Access {
      * @return record, Record
      */
     public static Record getPersonsRecord(Person person, Business business) throws NullPointerException {
-        ArrayList<Record> records = getRecords(business.getBusinessID());
-        for (Record r : records) {
-            if (r.getUserID().equals(person.getUserID()) {
+        ArrayList<Record> records ;
+		try {
+			records = getRecords(business.getBusinessID());
+			for (Record r : records) {
+            if (r.getUserID().equals(person.getUserID())) {
                 return r;
             }
         }
+		} catch (Exception e) {
+			System.out.println("AN ERROR HAS OCCURED: ");
+			e.printStackTrace();
+		}
+        
         return null;
     } //End of getPersonsRecord
 
