@@ -21,19 +21,20 @@ public class Business {
 	private String email;
 	private String password;
     /** Air Exchange Rate */
-    private double AER; 
+    private AER ventilation; 
 	private BusinessType businessType;
 	private String email;
 	private String password;
 
 
-	public Business(String businessID, String email, String password, String name, double space, BusinessType businessType) {
+	public Business(String businessID, String email, String password, String name, double space, BusinessType businessType, AER ventilation) {
 		this.businessID = businessID;
 		this.email = email;
 		this.password = password;
 		this.name = name;
 		this.space = space;
 		this.businessType = businessType;
+		this.ventilation = ventilation;
 	}
 
 	public String getBusinessID() {
@@ -42,6 +43,18 @@ public class Business {
 
 	public void setBusinessID(String businessID) {
 		this.businessID = businessID;
+	}
+	
+	public void setVentilation(AER ventilation) {
+		this.ventilation = ventilation;
+	}
+	
+	public void getVentilation() {
+		return ventilation;
+	}
+	
+	public void getAER() {
+		return ventilation.getValue();
 	}
 
 	public String getName() {
