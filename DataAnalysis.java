@@ -18,66 +18,33 @@ import java.util.ArrayList;
  * @author
  */
 public class DataAnalysis {
-/*	
-	private Person p = new Person();
-	private double maskScore = scoreFromMask(p); 
-	private double exertionScore = scoreFromExertion(p);
-	private double ageScore = scoreDependingOnAge(p);
-	private double generalScore = maskScore + exertionScore + ageScore;
 	
-	public double scoreFromMask(Person p) {
-		double score =0;
-		if (p.getMask() == Mask.NONE) {
-			score +=0;
-		} else if(p.getMask() == Mask.FABRIC) {
-			score +=1;
-		}else if(p.getMask() == Mask.MEDICAL) {
-			score +=2;
-		}else if (p.getMask() == Mask.RESPIRATOR) {
-			score +=3;
+	public static ArrayList<InfectedPerson> contactTracing(InfectedPerson infected) {
+		ArrayList<InfectedPerson> allInfected = new ArrayList<InfectedPerson>();
+		ArrayList<Business> covidstores = DB_Access.businessesVisited(infected.getUserID());
+		for (Business b : covidstores) {
+			allInfected.addAll(calculatePI(infected, b));
 		}
-		return score;
+		return allInfected;
 	}
-	public double scoreFromExertion(Person p) {
-		double score = 0;
-		if (p.getExertion() == Exertion.RESTING) {
-			score +=0.5;
-		} else if (p.getExertion() == Exertion.STANDING) {
-			score +=0;
-		}
-		return score;
-	}
-	public double scoreDependingOnAge(Person p) {
-		double score = 0;
-		if (p.getAgeCategory() == Age.UNDERAGE) {
-			score += 0;
-		}else if (p.getAgeCategory() == Age.EIGHTEEN) {
-			score += 1;
-		}else if (p.getAgeCategory() == Age.THIRTY) {
-			score += 2;
-		}else if (p.getAgeCategory() == Age.SIXTY) {
-			score +=3;
-		}
-		return score;
-	}
-*/
-	public double getActivity(Person p, Business b) {
+	
+	public static double getActivity(Person p, Business b) {
 		if (p instanceof InfectedPerson) {
-			if (p.isEmployee) {
-				return store.getInfectedEmpExertion();	
+			if (p.isEmployee()) {
+				return b.getInfectedEmpExertion();	
 			} else {
-				return store.getInfectedCustExertion();
+				return b.getInfectedCustExertion();
 			}
 		} else {
-			if (p.isEmployee) {
-				return store.getHealthyEmpExertion();
+			if (p.isEmployee()) {
+				return b.getHealthyEmpExertion();
 			} else {
-				return store.getHealthyCustExertion();
+				return b.getHealthyCustExertion();
 			}
 		}
 	}
 
-	public double[] calculateErq(InfectedPerson infected, Business store) { //TODO: Add necessary methods/fields
+	public static double[] calculateErq(InfectedPerson infected, Business store) { //TODO: Add necessary methods/fields
 		var erq = new double[];
         	var activity = getActivity(infected, store);
 		Record r = getPersonsRecord(infected, store);
@@ -97,13 +64,13 @@ public class DataAnalysis {
 		}
 	}
 	
-	public ArrayList<InfectedPerson> calculatePI(Business business) { //TODO: Add necessary methods/fields
-		var records = business.getRecords();
+	public static ArrayList<InfectedPerson> calculatePI(InfectedPerson infected, Business business) { //TODO: Add necessary methods/fields
+		var records = DB_Access.getRecords(business.getBusinessID());
 		ArrayList<InfectedPerson> output = new ArrayList<InfectedPerson>();
-		double[] erq = calculateErq();
+		double[] erq = calculateErq(infected, business);
 		for (Record r : records) { //TODO: Get only useful records
 			double p = 0;
-			for (i = r.getEntry() ; i < erq.length() ; i++) {
+			for (int i = r.getEntry() ; i < erq.length ; i++) {
 				if (i <= r.getExit()) {
 					p += erq[i] * ((i / 60) - ((i - 1) / 60));		
 				}
@@ -114,7 +81,7 @@ public class DataAnalysis {
 			}
 		}
 	}
-
+	
 /*
 	public static ArrayList<InfectedPerson> infectionScores(String userID) {
 		ArrayList<InfectedPerson> ip = new ArrayList<InfectedPerson>();
