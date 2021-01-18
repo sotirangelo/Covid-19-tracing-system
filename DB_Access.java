@@ -63,6 +63,12 @@ public class DB_Access {
             stmt.setString(7,  person.getPassword());
 
             stmt.executeUpdate();
+            
+            if (person.isEmployee()) {
+            	stmt.executeQuery("INSERT INTO Employee " +
+            					  "(UserID) VALUES " +
+            					  "(" + person.getUserID() + ");");
+            }
 
             stmt.close();
             con.close();
@@ -235,7 +241,7 @@ public class DB_Access {
         Connection con = null;
         PreparedStatement stmt = null;
         String checkSql = "SELECT * FROM Business WHERE BusinessID = ? OR Email = ?";
-        String sql = "INSERT INTO Business (BusinessID, Email, Password, Name, Space, BusinessType, AER) VALUES (?, ?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO Business (BusinessID, Email, Password, Name, Space, BusinessType, ventilation) VALUES (?, ?, ?, ?, ?, ?, ?);";
                 
         try {
 
@@ -272,14 +278,6 @@ public class DB_Access {
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
-        
-        try {
-        	System.out.println("\nTrying to create Record table:");
-        	createTable(business.getBusinessID());
-        } catch (Exception e) {
-            throw new Exception(e.getMessage());
-        }
-
 	}//end of register
 	
 	/**
@@ -430,48 +428,10 @@ public class DB_Access {
             throw new Exception(e.getMessage());
         }
 
-	} //End of findBusiness
+	} //End of findBusiness	
 	
 	/**
-	 * Creates Record Table (javavirus_DB.record`businessID`) on Database for the businessID given.
-	 * 
-	 * Automatically used by register(business) method.
-	 * 
-	 * @param businessID
-	 * @throws Exception
-	 */
-	public static void createTable(String businessID) throws Exception {
-		
-		Connection con = null;
-        PreparedStatement stmt = null;
-        String tableName = "isandalis_database_dmst.record" + businessID;
-        String sqlTable = "CREATE TABLE " + tableName + " (" +
-        		"	 Number int NOT NULL AUTO_INCREMENT," +
-        		"    UserID int NOT NULL," +
-        		"    MaskType varchar(20) NOT NULL," +
-        		"    EntryDate datetime NOT NULL," +
-        		"    ExitDate datetime DEFAULT NULL," +
-        		"  	 PRIMARY KEY (Number)," +
-        		"	 FOREIGN KEY (UserID) REFERENCES isandalis_database_dmst.Person (UserID)" +
-        		");";
-        
-        try {
-        	con = DB_Connection.getConnection();
-        	
-        	stmt = con.prepareStatement(sqlTable);
-            stmt.executeUpdate();
-            
-            stmt.close();
-            con.close();
-            
-        } catch (Exception e) {
-            throw new Exception(e.getMessage());
-        }
-        
-	} //End of createTable
-	
-	/**
-	 * Stores userID, maskType and date (EntryDate) on the given businessID record table (javavirus_DB.record`businessID`)
+	 * Stores userID, maskType and date (EntryDate) on the record table (javavirus_DB.Record)
 	 * 
 	 * @param businessID, String
 	 * @param userID, String
@@ -480,11 +440,9 @@ public class DB_Access {
 	 * @throws Exception
 	 */
 	public static void checkIn (String businessID, String userID, java.util.Date date, Mask maskType) throws Exception {
-		
-		String tableName = "isandalis_database_dmst.record" + businessID;
 		Connection con = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO " + tableName + " (UserID, MaskType, EntryDate, ExitDate) VALUES (?, ?, ?, ?);";
+		String sql = "INSERT INTO isandalis_database_dmst.Record (UserID, MaskType, EntryDate, ExitDate) VALUES (?, ?, ?, ?);";
 
 		try {
 			
@@ -506,9 +464,8 @@ public class DB_Access {
 		}
 	} //End of checkIn
 	
-	
 	/**
-	 * Stores date (ExitDate) on the given businessID record table (javavirus_DB.record`businessID`) where ExitDate of given UserID is null
+	 * Stores date (ExitDate) on record table (javavirus_DB.Record) where ExitDate of given UserID is null
 	 * 
 	 * @param businessID, String
 	 * @param userID, String
@@ -519,7 +476,7 @@ public class DB_Access {
 		
 		Connection con = null;
 		PreparedStatement stmt = null;		
-		String tableName = "isandalis_database_dmst.record" + businessID;
+		String tableName = "isandalis_database_dmst.Record";
 		String sql = "SELECT * FROM " + tableName + " WHERE UserID = ? AND ExitDate IS NULL;";
 		String updateSql = "UPDATE " + tableName + " SET ExitDate = ?;";
 		
@@ -552,12 +509,12 @@ public class DB_Access {
 	} //End of checkOut
 
 	/**
-	 * Fetch records of the given businessID record table (javavirus_DB.record`businessID`)
+	 * Fetch records of the given business' records (javavirus_DB.Record)
 	 * 
 	 * @param businessID, String
 	 * @return list, ArrayList<Record>
 	 * @throws Exception
-	 */
+	 */	
 	public static ArrayList<Record> getRecords(String businessID) throws Exception {
 		
 		ArrayList<Record> list = new ArrayList<Record>();
@@ -565,8 +522,9 @@ public class DB_Access {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String rsTable = "record" + businessID;
-		String sqlQuery = "SELECT * FROM isandalis_database_dmst.record" + businessID + ";";
+		String sqlQuery = "SELECT * " +
+						  "FROM isandalis_database_dmst.Record " +
+						  "WHERE Record.BusinessID = " + businessID + ";";
 
 		try {
 
@@ -574,13 +532,12 @@ public class DB_Access {
 			stmt = con.prepareStatement(sqlQuery);
 			rs = stmt.executeQuery();
 
-			while(rs.next()) {
+			while(rs.next()) { 
 							
-							Record record = new Record(rs.getString(rsTable + ".UserID"),
-												Mask.valueOf(rs.getString(rsTable + ".MaskType")),
-												rs.getTimestamp(rsTable + ".EntryDate"),
-												rs.getTimestamp(rsTable + ".ExitDate"));
-
+							Record record = new Record(rs.getString("Record.UserID"),
+													Mask.valueOf(rs.getString("Record.MaskType")),
+													rs.getTimestamp("Record.EntryDate"),
+													rs.getString("Record.BusinessID"));
 							list.add(record);
 
 			}

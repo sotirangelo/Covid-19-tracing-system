@@ -23,13 +23,13 @@ public class Record {
 	private Date entryDate;
 	private Date exitDate;
 	private Mask maskType;
+	private String businessID;
 
-	public Record (String userID, Mask maskType, Date entryDate, Date exitDate) {
-		
+	public Record (String userID, Mask maskType, Date entryDate, String businessID) {
 		this.userID = userID;
 		this.maskType = maskType;
 		this.entryDate = entryDate;
-		this.exitDate = exitDate;
+		this.businessID = businessID;
 	}
 
 	public String getUserID() {
@@ -58,6 +58,14 @@ public class Record {
 	
 	public Mask getMaskType() {
 		return maskType;
+	}
+	
+	public void setBusinessID(String businessID) {
+		this.businessID = businessID;
+	}
+	
+	public String getBusinessID() {
+		return businessID;
 	}
 	
 	public void setMaskType(Mask maskType) {
