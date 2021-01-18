@@ -309,7 +309,7 @@ public class DB_Access {
 												rs.getString("Business.Name"),
 												rs.getLong("Business.Space"),
 												BusinessType.valueOf(rs.getString("Business.BusinessType")),
-												AER.valueOf(rs.getString("Business.AER")));
+												AER.valueOf(rs.getString("Business.ventilation")));
 
 							businesses.add(business);
 
@@ -428,10 +428,10 @@ public class DB_Access {
             throw new Exception(e.getMessage());
         }
 
-	} //End of findBusiness	
+	} //End of findBusiness
 	
 	/**
-	 * Stores userID, maskType and date (EntryDate) on the record table (javavirus_DB.Record)
+	 * Stores userID, maskType and date (EntryDate) on the record table (isandalis_database_dmst.Record)
 	 * 
 	 * @param businessID, String
 	 * @param userID, String
@@ -442,7 +442,8 @@ public class DB_Access {
 	public static void checkIn (String businessID, String userID, java.util.Date date, Mask maskType) throws Exception {
 		Connection con = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO isandalis_database_dmst.Record (UserID, MaskType, EntryDate, ExitDate) VALUES (?, ?, ?, ?);";
+		String sql = "INSERT INTO isandalis_database_dmst.Record (UserID, MaskType,"
+				+ " EntryDate, ExitDate, BusinessID) VALUES (?, ?, ?, ?, ?);";
 
 		try {
 			
@@ -454,6 +455,7 @@ public class DB_Access {
             stmt.setString(2, maskType.name());
             stmt.setTimestamp(3, new Timestamp(date.getTime()));
             stmt.setDate(4, null);
+            stmt.setString(5, businessID);
             stmt.executeUpdate();
             
             stmt.close();
@@ -465,7 +467,7 @@ public class DB_Access {
 	} //End of checkIn
 	
 	/**
-	 * Stores date (ExitDate) on record table (javavirus_DB.Record) where ExitDate of given UserID is null
+	 * Stores date (ExitDate) on record table (isandalis_database_dmst.Record) where ExitDate of given UserID is null
 	 * 
 	 * @param businessID, String
 	 * @param userID, String
@@ -477,7 +479,7 @@ public class DB_Access {
 		Connection con = null;
 		PreparedStatement stmt = null;		
 		String tableName = "isandalis_database_dmst.Record";
-		String sql = "SELECT * FROM " + tableName + " WHERE UserID = ? AND ExitDate IS NULL;";
+		String sql = "SELECT * FROM " + tableName + " WHERE BusinessID = ? AND UserID = ? AND ExitDate IS NULL;";
 		String updateSql = "UPDATE " + tableName + " SET ExitDate = ?;";
 		
 		try {
@@ -485,7 +487,8 @@ public class DB_Access {
 			con = DB_Connection.getConnection();
 			
             stmt = con.prepareStatement(sql);
-            stmt.setString(1, userID);
+            stmt.setString(1, businessID);
+            stmt.setString(2, userID);
             ResultSet rs = stmt.executeQuery();
             
             if (rs.next()) {
@@ -509,7 +512,7 @@ public class DB_Access {
 	} //End of checkOut
 
 	/**
-	 * Fetch records of the given business' records (javavirus_DB.Record)
+	 * Fetch records of the given business' records (isandalis_database_dmst.Record)
 	 * 
 	 * @param businessID, String
 	 * @return list, ArrayList<Record>
@@ -534,11 +537,12 @@ public class DB_Access {
 
 			while(rs.next()) { 
 							
-							Record record = new Record(rs.getString("Record.UserID"),
-													Mask.valueOf(rs.getString("Record.MaskType")),
-													rs.getTimestamp("Record.EntryDate"),
-													rs.getString("Record.BusinessID"));
-							list.add(record);
+				Record record = new Record(rs.getString("Record.UserID"),
+				Mask.valueOf(rs.getString("Record.MaskType")),
+				rs.getTimestamp("Record.EntryDate"),
+				rs.getTimestamp("Record.ExitDate"),
+				rs.getString("Record.BusinessID"));
+				list.add(record);
 
 			}
 

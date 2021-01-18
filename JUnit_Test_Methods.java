@@ -229,14 +229,7 @@ class JUnit_Test_Methods {
 					}
 					break;
 				case 23:
-					String iD = Interface.userIDInput(1);
-					try {
-						DB_Access.createTable(iD);
-						System.out.println("TABLE CREATION SUCCESSFULL\n");
-					} catch (Exception e) {
-						System.out.println("AN ERROR HAS OCCURED");
-						e.printStackTrace();
-					}
+					
 					break;
 				case 24:
 					String businessiD = Interface.userIDInput(1);

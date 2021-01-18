@@ -25,10 +25,11 @@ public class Record {
 	private Mask maskType;
 	private String businessID;
 
-	public Record (String userID, Mask maskType, Date entryDate, String businessID) {
+	public Record (String userID, Mask maskType, Date entryDate, Date exitDate, String businessID) {
 		this.userID = userID;
 		this.maskType = maskType;
 		this.entryDate = entryDate;
+		this.exitDate = exitDate;
 		this.businessID = businessID;
 	}
 
