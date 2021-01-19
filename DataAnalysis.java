@@ -4,7 +4,11 @@
  * Copyright (not) 2020 Javavirus
  */
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Analysis of data (temporarily from arraylists).
@@ -22,7 +26,7 @@ public class DataAnalysis {
 	public static ArrayList<InfectedPerson> contactTracing(InfectedPerson infected) {
 		ArrayList<InfectedPerson> allInfected = new ArrayList<InfectedPerson>();
 		ArrayList<Business> covidstores = DB_Access.businessesVisited(infected.getUserID());
-		for (Business b : covidstores) {
+		for (Business b : covidstores) { //covidstores might include same store multiple times
 			allInfected.addAll(calculatePI(infected, b));
 		}
 		return allInfected;
@@ -43,11 +47,11 @@ public class DataAnalysis {
 			}
 		}
 	}
-
+/*
 	public static double[] calculateErq(InfectedPerson infected, Business store) { //TODO: Add necessary methods/fields
 		var erq = new double[];
         	var activity = getActivity(infected, store);
-		Record r = getPersonsRecord(infected, store);
+		Record r = DB_Access.getPersonsRecord(infected, store);
 		int operationMinutes = getOperationMinutes(); //TODO: For each business (start record & end record)
 		int infectedEntry; //TODO
 		int infectedExit; //TODO
@@ -80,6 +84,65 @@ public class DataAnalysis {
 				output.add((InfectedPerson) r.getPerson()); //TODO: Fix Infected Person casing
 			}
 		}
+	}
+*/
+	
+	public static ArrayList<InfectedPerson> calculateErq (InfectedPerson infected, Business business) {
+		
+		Record record1 = DB_Access.getPersonsRecord(infected, business); //ONLY NEED FIRST RECORD (IN CASE OF MULTIPLE)
+		
+		ArrayList<Record> dayrecords = getBusinessDayRecords(LocalDateTime record1.getEntryDate()); //LocalDateTime or Timestamp
+		//DIFFERENT METHODS
+		//get start and end dates
+		Record start;
+		Record end;
+		for (int i = 0; i < dayrecords.size(); i++) {
+			if (i == 0) {
+				start = dayrecords.get(i);
+				end = dayrecords.get(i);
+			} else {
+				if (start.getEntryDate().after(dayrecords.get(i).getEntryDate())) {
+					start = dayrecords.get(i);
+				}
+				if (end.getExitDate().before(dayrecords.get(i).getExitDate())) {
+					end = dayrecords.get(i);
+				}
+			}
+		}
+		//Import LocalDateTime
+	
+		Record record; //Infected record parameter
+		Business business = DB_Access.findBusiness(record.getBusinessID());
+		double activity = getActivity(DB_Access.findUser(record.getUserID()), business);
+		LocalDateTime startTime= convertToLocalDateTime(start.getEntryDate());//TODO: convertToLocalDateTime(Date dateToConvert)
+		LocalDateTime endTime = convertToLocalDateTime(end.getExitDate());
+		LocalDateTime recordEntryTime = convertToLocalDateTime(record.getEntryDate());
+		LocalDateTime recordExitTime = convertToLocalDateTime(record.getExitDate());
+		Duration businessDuration = Duration.between(startTime, endTime);
+		double[] erq = new double[(int) businessDuration.toMinutes()];	
+		int entry = (int) Duration.between(startTime, recordEntryTime).toMinutes();
+		int exit = (int) Duration.between(startTime, recordExitTime).toMinutes();
+		for (int counter = 0; counter <= (int) businessDuration.toMinutes(); counter++) {
+			if (counter < entry) {
+				erq[counter] = 0;
+			} else if (counter < exit) {
+				erq[counter] = (activity / (business.getIVRR() * business.getV())) * (1 - Math.exp((business.getIVRR() * -1) * (counter - entry)));
+			} else {
+				erq[counter] = erq[counter - 1] * Math.exp((business.getIVRR() * -1) * (counter - exit));
+			}
+		}
+		return erq;
+			
+	}
+	
+	public static LocalDateTime convertToLocalDateTime(Date dateToConvert) {
+	    return dateToConvert.toInstant()
+	      .atZone(ZoneId.systemDefault())
+	      .toLocalDateTime();
+	}
+	
+	private static getMinMaxRecords() {
+		
 	}
 	
 /*

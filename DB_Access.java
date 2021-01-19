@@ -65,6 +65,7 @@ public class DB_Access {
             stmt.executeUpdate();
 
             stmt.close();
+            con.close();
 
         } catch (Exception e) {
             throw new Exception(e.getMessage());
@@ -109,6 +110,7 @@ public class DB_Access {
 
 			rs.close();
 			stmt.close();
+			con.close();
 			return users;
 
 		} catch (Exception e) {
@@ -158,7 +160,8 @@ public class DB_Access {
 
             rs.close();
             stmt.close();
-
+            con.close();
+            
             return user;
 
 
@@ -209,7 +212,8 @@ public class DB_Access {
 
             rs.close();
             stmt.close();
-
+            con.close();
+            
             user = testUser;
             return user;
 
@@ -231,7 +235,7 @@ public class DB_Access {
         Connection con = null;
         PreparedStatement stmt = null;
         String checkSql = "SELECT * FROM Business WHERE BusinessID = ? OR Email = ?";
-        String sql = "INSERT INTO Business (BusinessID, Email, Password, Name, Space, BusinessType) VALUES (?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO Business (BusinessID, Email, Password, Name, Space, BusinessType, AER) VALUES (?, ?, ?, ?, ?, ?, ?);";
                 
         try {
 
@@ -258,10 +262,12 @@ public class DB_Access {
             stmt.setString(4, business.getName());
             stmt.setDouble(5, business.getSpace());
             stmt.setString(6, business.getBusinessType().name());
+            stmt.setString(7,  business.getVentilation().name());
 
             stmt.executeUpdate();
             
             stmt.close();
+            con.close();
                      
         } catch (Exception e) {
             throw new Exception(e.getMessage());
@@ -304,7 +310,8 @@ public class DB_Access {
 												rs.getString("Business.Password"),
 												rs.getString("Business.Name"),
 												rs.getLong("Business.Space"),
-												BusinessType.valueOf(rs.getString("Business.BusinessType")));
+												BusinessType.valueOf(rs.getString("Business.BusinessType")),
+												AER.valueOf(rs.getString("Business.AER")));
 
 							businesses.add(business);
 
@@ -312,6 +319,7 @@ public class DB_Access {
 
 			rs.close();
 			stmt.close();
+			con.close();
 			return businesses;
 
 		} catch (Exception e) {
@@ -356,10 +364,12 @@ public class DB_Access {
 					rs.getString("Business.Password"),
 					rs.getString("Business.Name"),
 					rs.getLong("Business.Space"),
-					BusinessType.valueOf(rs.getString("Business.BusinessType")));
+					BusinessType.valueOf(rs.getString("Business.BusinessType")),
+					AER.valueOf(rs.getString("Business.AER")));
 
             rs.close();
             stmt.close();
+            con.close();
 
             return business;
 
@@ -406,9 +416,11 @@ public class DB_Access {
 					rs.getString("Business.Password"),
 					rs.getString("Business.Name"),
 					rs.getLong("Business.Space"),
-					BusinessType.valueOf(rs.getString("Business.BusinessType")));
+					BusinessType.valueOf(rs.getString("Business.BusinessType")),
+					AER.valueOf(rs.getString("Business.AER")));
             rs.close();
             stmt.close();
+            con.close();
 
             business = testBusiness;
             return business;
@@ -432,7 +444,7 @@ public class DB_Access {
 		
 		Connection con = null;
         PreparedStatement stmt = null;
-        String tableName = "javavirus_db.record" + businessID;
+        String tableName = "isandalis_database_dmst.record" + businessID;
         String sqlTable = "CREATE TABLE " + tableName + " (" +
         		"	 Number int NOT NULL AUTO_INCREMENT," +
         		"    UserID int NOT NULL," +
@@ -440,12 +452,8 @@ public class DB_Access {
         		"    EntryDate datetime NOT NULL," +
         		"    ExitDate datetime DEFAULT NULL," +
         		"  	 PRIMARY KEY (Number)," +
-        		"	 FOREIGN KEY (UserID) REFERENCES javavirus_DB.person (UserID)" +
-        		")" +
-        		
-        		"ENGINE = INNODB," +
-        		"CHARACTER SET utf8mb4," +
-        		"COLLATE utf8mb4_0900_ai_ci;";
+        		"	 FOREIGN KEY (UserID) REFERENCES isandalis_database_dmst.Person (UserID)" +
+        		");";
         
         try {
         	con = DB_Connection.getConnection();
@@ -454,6 +462,8 @@ public class DB_Access {
             stmt.executeUpdate();
             
             stmt.close();
+            con.close();
+            
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
@@ -471,7 +481,7 @@ public class DB_Access {
 	 */
 	public static void checkIn (String businessID, String userID, java.util.Date date, Mask maskType) throws Exception {
 		
-		String tableName = "javavirus_DB.record" + businessID;
+		String tableName = "isandalis_database_dmst.record" + businessID;
 		Connection con = null;
 		PreparedStatement stmt = null;
 		String sql = "INSERT INTO " + tableName + " (UserID, MaskType, EntryDate, ExitDate) VALUES (?, ?, ?, ?);";
@@ -489,6 +499,7 @@ public class DB_Access {
             stmt.executeUpdate();
             
             stmt.close();
+            con.close();
 			
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
@@ -508,7 +519,7 @@ public class DB_Access {
 		
 		Connection con = null;
 		PreparedStatement stmt = null;		
-		String tableName = "javavirus_DB.record" + businessID;
+		String tableName = "isandalis_database_dmst.record" + businessID;
 		String sql = "SELECT * FROM " + tableName + " WHERE UserID = ? AND ExitDate IS NULL;";
 		String updateSql = "UPDATE " + tableName + " SET ExitDate = ?;";
 		
@@ -533,6 +544,7 @@ public class DB_Access {
             }
 			
             rs.close();
+            con.close();
 
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
@@ -554,7 +566,7 @@ public class DB_Access {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		String rsTable = "record" + businessID;
-		String sqlQuery = "SELECT * FROM javavirus_DB.record" + businessID + ";";
+		String sqlQuery = "SELECT * FROM isandalis_database_dmst.record" + businessID + ";";
 
 		try {
 
@@ -575,6 +587,7 @@ public class DB_Access {
 
 			rs.close();
 			stmt.close();
+			con.close();
 			return list;
 
 		} catch (Exception e) {
@@ -591,14 +604,19 @@ public class DB_Access {
      */
     public static ArrayList<Business> businessesVisited(String userId) {
         ArrayList<Business> stores = new ArrayList<Business>();
-        for (Business b : getBusinesses()) {
-            for (Record r : getRecords(b.getBusinessID())) {
-                if (r.getUserID().equals(userId)) {
-                    stores.add(b);
-                    break;
-                }
-            }
-        }
+        try {
+			for (Business b : getBusinesses()) {
+			    for (Record r : getRecords(b.getBusinessID())) {
+			        if (r.getUserID().equals(userId)) {
+			            stores.add(b);
+			            break;
+			        }
+			    }
+			}
+		} catch (Exception e) {
+			System.out.println("AN ERROR HAS OCCURED: ");
+			e.printStackTrace();
+		}
         return stores;
     } //End of businessVisited
     
@@ -610,12 +628,19 @@ public class DB_Access {
      * @return record, Record
      */
     public static Record getPersonsRecord(Person person, Business business) throws NullPointerException {
-        ArrayList<Record> records = getRecords(business.getBusinessID());
-        for (Record r : records) {
-            if (r.getUserID().equals(person.getUserID()) {
+        ArrayList<Record> records ;
+		try {
+			records = getRecords(business.getBusinessID());
+			for (Record r : records) {
+            if (r.getUserID().equals(person.getUserID())) {
                 return r;
             }
         }
+		} catch (Exception e) {
+			System.out.println("AN ERROR HAS OCCURED: ");
+			e.printStackTrace();
+		}
+        
         return null;
     } //End of getPersonsRecord
 

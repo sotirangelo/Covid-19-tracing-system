@@ -22,9 +22,6 @@ public class Business {
 	private String password;
     /** Air Exchange Rate */
     private AER ventilation; 
-	private BusinessType businessType;
-	private String email;
-	private String password;
 
 
 	public Business(String businessID, String email, String password, String name, double space, BusinessType businessType, AER ventilation) {
@@ -49,11 +46,11 @@ public class Business {
 		this.ventilation = ventilation;
 	}
 	
-	public void getVentilation() {
+	public AER getVentilation() {
 		return ventilation;
 	}
 	
-	public void getAER() {
+	public double getAER() {
 		return ventilation.getValue();
 	}
 
@@ -97,9 +94,6 @@ public class Business {
         return height * space;   
     }
     
-    public double getAER() {
-        
-    }
 
 	public String getPassword() {
 		return password;
@@ -110,18 +104,18 @@ public class Business {
 	}
 	
 	public double getHealthyCustExertion() {
-		return BusinessType.getCustActivity().getIr();
+		return businessType.getCustActivity().getIr();
 	}
 	
 	public double getInfectedCustExertion() {
-		return BusinessType.getCustActivity().getErq();
+		return businessType.getCustActivity().getErq();
 	}
 	public double getHealthyEmpExertion() {
-		return BusinessType.getEmplActivity().getIr();
+		return businessType.getEmplActivity().getIr();
 	}
 	
 	public double getInfectedEmpExertion() {
-		return BusinessType.getEmplActivity().getErq();
+		return businessType.getEmplActivity().getErq();
 	}
 	
 	public double getIVRR() {
