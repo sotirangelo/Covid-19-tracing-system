@@ -241,7 +241,7 @@ public class DB_Access {
 	 * Updates existing User's Age Category with the given one
 	 * 
 	 * @param userID, String
-	 * @param age, Age (Enum)
+	 * @param age, Age (Enumeration)
 	 * @throws Exception
 	 */
 	public static void editUserAgeCategory(String userID, Age age) throws Exception {
@@ -445,6 +445,141 @@ public class DB_Access {
             throw new Exception(e.getMessage());
         }
 	} //End of findBusiness
+	
+	/**
+	 * Updates existing Business Email with the given one
+	 * 
+	 * @param businessID, String
+	 * @param email, String
+	 * @throws Exception
+	 */
+	public static void editBusinessEmail(String businessID, String email) throws Exception {
+		Connection con = null;
+		PreparedStatement stmt = null;		
+		String tableName = "isandalis_database_dmst.Business";
+		String updateSql = "UPDATE " + tableName + " SET Email = ? WHERE BusinessID = ?;";
+		try {
+			con = DB_Connection.getConnection();
+		    stmt = con.prepareStatement(updateSql);
+		    stmt.setString(1, email);
+		    stmt.setString(2,businessID);
+		    stmt.executeUpdate();
+		    System.out.println("EMAIL UPDATED SUCCESSFULLY");
+		    stmt.close();
+		    con.close();
+		} catch (Exception e) {
+			System.out.println("AN ERROR HAS OCCURED");
+			throw new Exception(e.getMessage());
+		}
+	} //End of editBusinessEmail
+	
+	/**
+	 * Updates existing Business Password with the given one
+	 * 
+	 * @param businesID, String
+	 * @param password, String
+	 * @throws Exception
+	 */
+	public static void editBusinessPassword(String businessID, String password) throws Exception {
+		Connection con = null;
+		PreparedStatement stmt = null;		
+		String tableName = "isandalis_database_dmst.Business";
+		String updateSql = "UPDATE " + tableName + " SET Password = ? WHERE BusinessID = ?;";
+		try {
+			con = DB_Connection.getConnection();
+		    stmt = con.prepareStatement(updateSql);
+		    stmt.setString(1, password);
+		    stmt.setString(2,businessID);
+		    stmt.executeUpdate();
+		    System.out.println("PASSWORD UPDATED SUCCESSFULLY");
+		    stmt.close();
+		    con.close();
+		} catch (Exception e) {
+			System.out.println("AN ERROR HAS OCCURED");
+			throw new Exception(e.getMessage());
+		}
+	} //End of editBusinessPassword
+	
+	/**
+	 * Updates existing Business Floor Area with the given one
+	 * 
+	 * @param businesID, String
+	 * @param space, double
+	 * @throws Exception
+	 */
+	public static void editBusinessSpace(String businessID, double space) throws Exception {
+		Connection con = null;
+		PreparedStatement stmt = null;		
+		String tableName = "isandalis_database_dmst.Business";
+		String updateSql = "UPDATE " + tableName + " SET Space = ? WHERE BusinessID = ?;";
+		try {
+			con = DB_Connection.getConnection();
+		    stmt = con.prepareStatement(updateSql);
+		    stmt.setDouble(1, space);
+		    stmt.setString(2, businessID);
+		    stmt.executeUpdate();
+		    System.out.println("FLOOR AREA UPDATED SUCCESSFULLY");
+		    stmt.close();
+		    con.close();
+		} catch (Exception e) {
+			System.out.println("AN ERROR HAS OCCURED");
+			throw new Exception(e.getMessage());
+		}
+	} //End of editBusinesssSpace
+	
+	/**
+	 * Updates existing Business Type with the given one
+	 * 
+	 * @param businesID, String
+	 * @param businessType, BusinessType (Enumeration)
+	 * @throws Exception
+	 */
+	public static void editBusinessType(String businessID, BusinessType businessType) throws Exception {
+		Connection con = null;
+		PreparedStatement stmt = null;		
+		String tableName = "isandalis_database_dmst.Business";
+		String updateSql = "UPDATE " + tableName + " SET BusinessType = ? WHERE BusinessID = ?;";
+		try {
+			con = DB_Connection.getConnection();
+		    stmt = con.prepareStatement(updateSql);
+		    stmt.setString(1, businessType.name());
+		    stmt.setString(2, businessID);
+		    stmt.executeUpdate();
+		    System.out.println("BUSINESS TYPE UPDATED SUCCESSFULLY");
+		    stmt.close();
+		    con.close();
+		} catch (Exception e) {
+			System.out.println("AN ERROR HAS OCCURED");
+			throw new Exception(e.getMessage());
+		}
+	} //End of editBusinesssType
+	
+	/**
+	 * Updates existing Business Type with the given one
+	 * 
+	 * @param businesID, String
+	 * @param ventilationType, AER (Enumeration)
+	 * @throws Exception
+	 */
+	public static void editBusinessVentilationType(String businessID, AER ventilationType) throws Exception {
+		Connection con = null;
+		PreparedStatement stmt = null;		
+		String tableName = "isandalis_database_dmst.Business";
+		String updateSql = "UPDATE " + tableName + " SET ventilation = ? WHERE BusinessID = ?;";
+		try {
+			con = DB_Connection.getConnection();
+		    stmt = con.prepareStatement(updateSql);
+		    stmt.setString(1, ventilationType.name());
+		    stmt.setString(2, businessID);
+		    stmt.executeUpdate();
+		    System.out.println("VENTILATION TYPE UPDATED SUCCESSFULLY");
+		    stmt.close();
+		    con.close();
+		} catch (Exception e) {
+			System.out.println("AN ERROR HAS OCCURED");
+			throw new Exception(e.getMessage());
+		}
+	} //End of editBusinesssVentilationType
 	
 	/**
 	 * Stores userID, maskType and date (EntryDate) on the record table (isandalis_database_dmst.Record)
