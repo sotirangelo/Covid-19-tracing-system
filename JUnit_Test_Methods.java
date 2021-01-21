@@ -59,10 +59,10 @@ class JUnit_Test_Methods {
 			int ch;
 			do {
 				ch = SCNR.nextInt();
-				if (ch <= 0 || ch >= 27) {
+				if (ch <= 0 || ch >= 40) {
 					System.out.println("Προσπαθήστε ξανά");
 				}
-			} while (ch <= 0 || ch >= 27);
+			} while (ch <= 0 || ch >= 40);
 		
 			switch (ch) {
 				case 1:
@@ -268,6 +268,26 @@ class JUnit_Test_Methods {
 						System.out.println(" ");
 					} catch (Exception e) {
 						System.out.println("AN ERROR HAS OCCURED");
+						e.printStackTrace();
+					}
+					break;
+				case 27:
+					String businessID3 = Interface.userIDInput(1);
+					String userID3 = Interface.userIDInput(0);
+					try {
+						System.out.println("\nTrying to edit last Record of given businessID:");
+						DB_Access.editLastRecordsUserID(businessID3, userID3);
+					} catch (Exception e) {
+						System.out.println("AN ERROR HAS OCCURED");
+						e.printStackTrace();
+					}
+					break;
+				case 28:
+					String userID4 = Interface.userIDInput(0);
+					String mail = Interface.emailInput();
+					try {
+						DB_Access.editUserEmail(userID4, mail);
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
 					break;
