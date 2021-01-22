@@ -790,7 +790,8 @@ public class DB_Access {
             	Record record = new Record(rs.getString("Record.UserID"),
             			Mask.valueOf(rs.getString("Record.MaskType")),
 						rs.getTimestamp("Record.EntryDate"),
-						rs.getTimestamp("Record.ExitDate"));
+						rs.getTimestamp("Record.ExitDate"),
+            			rs.getString("Record.BusinessID"));
             	records.add(record);
             }
             rs.close();
