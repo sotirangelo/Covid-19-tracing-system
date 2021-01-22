@@ -28,7 +28,7 @@ public class DB_Access {
 	 * @param user, Person
 	 * @throws Exception, if encounter any error.
 	 */
-	public static void register(Person person) throws Exception {
+	public static void register(Person person) {
         Connection con = null;
         PreparedStatement stmt = null;
         String checkSql = "SELECT * FROM Person WHERE UserID = ? OR Email = ?";
@@ -42,7 +42,7 @@ public class DB_Access {
             if (rs.next()) {
                 rs.close();
                 stmt.close();
-                throw new Exception("UserID or Email already registered");
+                System.out.println("UserID or Email already registered");
             }
             rs.close();
             stmt = con.prepareStatement(sql);
@@ -62,7 +62,8 @@ public class DB_Access {
             stmt.close();
             con.close();
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+        	System.out.println("ERROR WHILE REGISTERING USER");
+            e.printStackTrace();
         }
 	}//end of register
 	
@@ -72,8 +73,8 @@ public class DB_Access {
 	 * @throws Exception, if encounter any error.
 	 * @return ArrayList<Person>, which contains all the Person objects on the Database.
 	 */
-	public static ArrayList<Person> getUsers() throws Exception {
-		ArrayList<Person> users =  new ArrayList<Person>();
+	public static ArrayList<Person> getUsers() {
+		ArrayList<Person> users = new ArrayList<Person>();
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -95,10 +96,11 @@ public class DB_Access {
 			rs.close();
 			stmt.close();
 			con.close();
-			return users;
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE FETCHING USERS FROM DATABASE");
+            e.printStackTrace();
 		}
+		return users;
 	} //End of getUsers
 	
 	/**
@@ -109,10 +111,11 @@ public class DB_Access {
 	 * @return User, the Person object
 	 * @throws Exception, if the credentials are not valid
 	 */
-	public static Person authenticateUser(String UserID, String password) throws Exception {
+	public static Person authenticateUser(String UserID, String password) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		Person user = null;
 		String sqlQuery = "SELECT * FROM Person WHERE UserID=? AND Password=?;";
         try {
             con = DB_Connection.getConnection();
@@ -123,9 +126,9 @@ public class DB_Access {
             if (!rs.next()) {
                 rs.close();
                 stmt.close();
-                throw new Exception("Wrong UserID or password");
+                System.out.println("Wrong UserID or password");
             }
-            Person user = new Person(rs.getString("Person.UserID"),
+            user = new Person(rs.getString("Person.UserID"),
 				rs.getString("Person.firstName"),
 				rs.getString("Person.lastName"),
 				rs.getString("Person.Email"),
@@ -135,10 +138,11 @@ public class DB_Access {
             rs.close();
             stmt.close();
             con.close();
-            return user;
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+        	System.out.println("ERROR WHILE AUTHENTICATING USER");
+            e.printStackTrace();
         }
+        return user;
 	} //End of authenticateUser
 	
 	/**
@@ -148,17 +152,17 @@ public class DB_Access {
 	 * @return User, the Person object
 	 * @throws Exception, if user not found
 	 */
-	public static Person findUser(String UserID) throws Exception {
+	public static Person findUser(String UserID) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		Person user = null;
 		String sqlQuery = "SELECT * FROM Person WHERE UserID=?;";
 		try {
             con = DB_Connection.getConnection();
             stmt = con.prepareStatement(sqlQuery);
             stmt.setString(1, UserID);
             rs = stmt.executeQuery();
-            Person user = null;
             if (!rs.next()) {
             	rs.close();
                 stmt.close();
@@ -175,10 +179,11 @@ public class DB_Access {
             stmt.close();
             con.close();
             user = testUser;
-            return user;
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+        	System.out.println("ERROR WHILE SEARCHING FOR SPECIFIC USER");
+            e.printStackTrace();
         }
+		return user;
 	} //End of findUser
 	
 	/**
@@ -188,7 +193,7 @@ public class DB_Access {
 	 * @param email, String
 	 * @throws Exception
 	 */
-	public static void editUserEmail(String userID, String email) throws Exception {
+	public static void editUserEmail(String userID, String email) {
 		Connection con = null;
 		PreparedStatement stmt = null;		
 		String tableName = "isandalis_database_dmst.Person";
@@ -203,8 +208,8 @@ public class DB_Access {
 		    stmt.close();
 		    con.close();
 		} catch (Exception e) {
-			System.out.println("AN ERROR HAS OCCURED");
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE UPDATING USER EMAIL");
+            e.printStackTrace();
 		}
 	} //End of editUserEmail
 	
@@ -215,7 +220,7 @@ public class DB_Access {
 	 * @param phoneNumber, long
 	 * @throws Exception
 	 */
-	public static void editUserPhoneNumber(String userID, long phoneNumber) throws Exception {
+	public static void editUserPhoneNumber(String userID, long phoneNumber) {
 		Connection con = null;
 		PreparedStatement stmt = null;		
 		String tableName = "isandalis_database_dmst.Person";
@@ -230,8 +235,8 @@ public class DB_Access {
 		    stmt.close();
 		    con.close();
 		} catch (Exception e) {
-			System.out.println("AN ERROR HAS OCCURED");
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE UPDATING USER PHONE NUMBER");
+            e.printStackTrace();
 		}
 	} //End of editUserPhoneNumber
 	
@@ -242,7 +247,7 @@ public class DB_Access {
 	 * @param age, Age (Enumeration)
 	 * @throws Exception
 	 */
-	public static void editUserAgeCategory(String userID, Age age) throws Exception {
+	public static void editUserAgeCategory(String userID, Age age) {
 		Connection con = null;
 		PreparedStatement stmt = null;		
 		String tableName = "isandalis_database_dmst.Person";
@@ -257,8 +262,8 @@ public class DB_Access {
 		    stmt.close();
 		    con.close();
 		} catch (Exception e) {
-			System.out.println("AN ERROR HAS OCCURED");
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE UPDATING USER AGE CATEGORY");
+            e.printStackTrace();
 		}
 	} //End of editUserAgeCategory
 	
@@ -269,7 +274,7 @@ public class DB_Access {
 	 * @param password, String
 	 * @throws Exception
 	 */
-	public static void editUserPassword(String userID, String password) throws Exception {
+	public static void editUserPassword(String userID, String password) {
 		Connection con = null;
 		PreparedStatement stmt = null;		
 		String tableName = "isandalis_database_dmst.Person";
@@ -284,8 +289,8 @@ public class DB_Access {
 		    stmt.close();
 		    con.close();
 		} catch (Exception e) {
-			System.out.println("AN ERROR HAS OCCURED");
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE UPDATING USER PASSWORD");
+            e.printStackTrace();
 		}
 	} //End of editUserAgeCategory
 	
@@ -295,7 +300,7 @@ public class DB_Access {
 	 * @param business, Business
 	 * @throws Exception, if encounter any error.
 	 */
-	public static void register(Business business) throws Exception {
+	public static void register(Business business) {
         Connection con = null;
         PreparedStatement stmt = null;
         String checkSql = "SELECT * FROM Business WHERE BusinessID = ? OR Email = ?";
@@ -309,7 +314,7 @@ public class DB_Access {
             if (rs.next()) {
                 rs.close();
                 stmt.close();
-                throw new Exception("BusinessID or Email already registered");
+                System.out.println("BusinessID or Email already registered");
             }
             rs.close();
             stmt = con.prepareStatement(sql);
@@ -324,7 +329,8 @@ public class DB_Access {
             stmt.close();
             con.close();    
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+        	System.out.println("ERROR WHILE REGISTERING BUSINESS");
+            e.printStackTrace();
         }
 	}//end of register
 	
@@ -334,7 +340,7 @@ public class DB_Access {
 	 * @return ArrayList<Business>, which contains all the Business objects on the Database.
 	 * @throws Exception, if encounter any error.
 	 */
-	public static ArrayList<Business> getBusinesses() throws Exception {
+	public static ArrayList<Business> getBusinesses() {
 		ArrayList<Business> businesses =  new ArrayList<Business>();
 		Connection con = null;
 		PreparedStatement stmt = null;
@@ -357,10 +363,11 @@ public class DB_Access {
 			rs.close();
 			stmt.close();
 			con.close();
-			return businesses;
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE FETCHING BUSINESSES");
+            e.printStackTrace();
 		}
+		return businesses;
 	} //End of getBusinesses
 	
 	/**
@@ -371,10 +378,11 @@ public class DB_Access {
 	 * @return business, the Business object
 	 * @throws Exception, if the credentials are not valid
 	 */
-	public static Business authenticateBusiness(String BusinessID, String password) throws Exception {
+	public static Business authenticateBusiness(String BusinessID, String password) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		Business business = null;
 		String sqlQuery = "SELECT * FROM Business WHERE BusinessID=? AND Password=?;";
         try {
             con = DB_Connection.getConnection();
@@ -385,9 +393,9 @@ public class DB_Access {
             if (!rs.next()) {
                 rs.close();
                 stmt.close();
-                throw new Exception("Wrong BusinessID or password");
+                System.out.println("Wrong BusinessID or password");
             }
-            Business business = new Business(rs.getString("Business.BusinessID"),
+            business = new Business(rs.getString("Business.BusinessID"),
 					rs.getString("Business.Email"),
 					rs.getString("Business.Password"),
 					rs.getString("Business.Name"),
@@ -397,10 +405,11 @@ public class DB_Access {
             rs.close();
             stmt.close();
             con.close();
-            return business;
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+        	System.out.println("ERROR WHILE AUTHENTICATING BUSINESS");
+            e.printStackTrace();
         }
+        return business;
 	} //End of authenticateBusiness
 	
 	/**
@@ -410,21 +419,20 @@ public class DB_Access {
 	 * @return business, the Business object
 	 * @throws Exception, if user not found
 	 */
-	public static Business findBusiness(String businessID) throws Exception {
+	public static Business findBusiness(String businessID) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		Business business = null;
 		String sqlQuery = "SELECT * FROM Business WHERE BusinessID=?;";
 		try {
             con = DB_Connection.getConnection();
             stmt = con.prepareStatement(sqlQuery);
             stmt.setString(1, businessID);
             rs = stmt.executeQuery();
-            Business business = null;
             if (!rs.next()) {
             	rs.close();
                 stmt.close();
-                return business;
             }
             Business testBusiness = new Business(rs.getString("Business.BusinessID"),
 					rs.getString("Business.Email"),
@@ -437,11 +445,11 @@ public class DB_Access {
             stmt.close();
             con.close();
             business = testBusiness;
-            return business;
-
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+        	System.out.println("ERROR WHILE SEARCHING FOR A SPECIFIC BUSINESS");
+            e.printStackTrace();
         }
+		return business;
 	} //End of findBusiness
 	
 	/**
@@ -451,7 +459,7 @@ public class DB_Access {
 	 * @param email, String
 	 * @throws Exception
 	 */
-	public static void editBusinessEmail(String businessID, String email) throws Exception {
+	public static void editBusinessEmail(String businessID, String email) {
 		Connection con = null;
 		PreparedStatement stmt = null;		
 		String tableName = "isandalis_database_dmst.Business";
@@ -466,8 +474,8 @@ public class DB_Access {
 		    stmt.close();
 		    con.close();
 		} catch (Exception e) {
-			System.out.println("AN ERROR HAS OCCURED");
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE UPDATING BUSINESS EMAIL");
+            e.printStackTrace();
 		}
 	} //End of editBusinessEmail
 	
@@ -478,7 +486,7 @@ public class DB_Access {
 	 * @param password, String
 	 * @throws Exception
 	 */
-	public static void editBusinessPassword(String businessID, String password) throws Exception {
+	public static void editBusinessPassword(String businessID, String password) {
 		Connection con = null;
 		PreparedStatement stmt = null;		
 		String tableName = "isandalis_database_dmst.Business";
@@ -493,8 +501,8 @@ public class DB_Access {
 		    stmt.close();
 		    con.close();
 		} catch (Exception e) {
-			System.out.println("AN ERROR HAS OCCURED");
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE UPDATING BUSINESS PASSWORD");
+            e.printStackTrace();
 		}
 	} //End of editBusinessPassword
 	
@@ -505,7 +513,7 @@ public class DB_Access {
 	 * @param space, double
 	 * @throws Exception
 	 */
-	public static void editBusinessSpace(String businessID, double space) throws Exception {
+	public static void editBusinessSpace(String businessID, double space) {
 		Connection con = null;
 		PreparedStatement stmt = null;		
 		String tableName = "isandalis_database_dmst.Business";
@@ -520,8 +528,8 @@ public class DB_Access {
 		    stmt.close();
 		    con.close();
 		} catch (Exception e) {
-			System.out.println("AN ERROR HAS OCCURED");
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE UPDATING BUSINESS FLOOR AREA");
+            e.printStackTrace();
 		}
 	} //End of editBusinesssSpace
 	
@@ -532,7 +540,7 @@ public class DB_Access {
 	 * @param businessType, BusinessType (Enumeration)
 	 * @throws Exception
 	 */
-	public static void editBusinessType(String businessID, BusinessType businessType) throws Exception {
+	public static void editBusinessType(String businessID, BusinessType businessType) {
 		Connection con = null;
 		PreparedStatement stmt = null;		
 		String tableName = "isandalis_database_dmst.Business";
@@ -547,8 +555,8 @@ public class DB_Access {
 		    stmt.close();
 		    con.close();
 		} catch (Exception e) {
-			System.out.println("AN ERROR HAS OCCURED");
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE UPDATING BUSINESS TYPE");
+            e.printStackTrace();
 		}
 	} //End of editBusinesssType
 	
@@ -559,7 +567,7 @@ public class DB_Access {
 	 * @param ventilationType, AER (Enumeration)
 	 * @throws Exception
 	 */
-	public static void editBusinessVentilationType(String businessID, AER ventilationType) throws Exception {
+	public static void editBusinessVentilationType(String businessID, AER ventilationType) {
 		Connection con = null;
 		PreparedStatement stmt = null;		
 		String tableName = "isandalis_database_dmst.Business";
@@ -574,8 +582,8 @@ public class DB_Access {
 		    stmt.close();
 		    con.close();
 		} catch (Exception e) {
-			System.out.println("AN ERROR HAS OCCURED");
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE UPDATING BUSINESS VENTILATION TYPE");
+            e.printStackTrace();
 		}
 	} //End of editBusinesssVentilationType
 	
@@ -588,7 +596,7 @@ public class DB_Access {
 	 * @param maskType, Mask (enum)
 	 * @throws Exception
 	 */
-	public static void checkIn (String businessID, String userID, java.util.Date date, Mask maskType) throws Exception {
+	public static void checkIn (String businessID, String userID, java.util.Date date, Mask maskType) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		String sql = "INSERT INTO isandalis_database_dmst.Record (UserID, MaskType,"
@@ -605,7 +613,8 @@ public class DB_Access {
             stmt.close();
             con.close();
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE CHECKING IN");
+            e.printStackTrace();
 		}
 	} //End of checkIn
 	
@@ -617,7 +626,7 @@ public class DB_Access {
 	 * @param date, java.util.Date
 	 * @throws Exception
 	 */
-	public static void checkOut(String businessID, String userID, Date date) throws Exception {
+	public static void checkOut(String businessID, String userID, Date date) {
 		Connection con = null;
 		PreparedStatement stmt = null;		
 		String tableName = "isandalis_database_dmst.Record";
@@ -633,7 +642,8 @@ public class DB_Access {
             stmt.close();
             con.close();
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE CHECKING OUT");
+            e.printStackTrace();
 		}
 	} //End of checkOut
 
@@ -644,7 +654,7 @@ public class DB_Access {
 	 * @return list, ArrayList<Record>
 	 * @throws Exception
 	 */	
-	public static ArrayList<Record> getRecords(String businessID) throws Exception {
+	public static ArrayList<Record> getRecords(String businessID) {
 		ArrayList<Record> list = new ArrayList<Record>();
 		Connection con = null;
 		PreparedStatement stmt = null;
@@ -667,11 +677,11 @@ public class DB_Access {
 			rs.close();
 			stmt.close();
 			con.close();
-			return list;
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE FETCHING RECORDS");
+            e.printStackTrace();
 		}
-		
+		return list;
 	} //End of getRecords
 	
 	/**
@@ -681,7 +691,7 @@ public class DB_Access {
 	 * @param userID, String
 	 * @throws Exception 
 	 */
-	public static void editLastRecordsUserID(String businessID, String userID) throws Exception {
+	public static void editLastRecordsUserID(String businessID, String userID) {
 		Connection con = null;
 		PreparedStatement stmt = null;		
 		String tableName = "isandalis_database_dmst.Record";
@@ -710,7 +720,8 @@ public class DB_Access {
             rs.close();
             con.close();
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE UPDATING USER ID ON LAST BUSINESS RECORD");
+            e.printStackTrace();
 		}
 	}// End of editLastRecordsUserID
 
@@ -732,7 +743,7 @@ public class DB_Access {
 			    }
 			}
 		} catch (Exception e) {
-			System.out.println("AN ERROR HAS OCCURED: ");
+			System.out.println("ERROR WHILE FETCHING BUSINESSES VISITED BY SPECIFIC USER");
 			e.printStackTrace();
 		}
         return stores;
@@ -745,7 +756,7 @@ public class DB_Access {
      * @param business, Business
      * @return record, Record
      */
-    public static Record getPersonsRecord(Person person, Business business) throws NullPointerException {
+    public static Record getPersonsRecord(Person person, Business business) {
         ArrayList<Record> records ;
 		try {
 			records = getRecords(business.getBusinessID());
@@ -755,7 +766,7 @@ public class DB_Access {
             }
         }
 		} catch (Exception e) {
-			System.out.println("AN ERROR HAS OCCURED: ");
+			System.out.println("ERROR WHILE FETCHING RECORDS OF A SPECIFIC USER");
 			e.printStackTrace();
 		}
         return null;
