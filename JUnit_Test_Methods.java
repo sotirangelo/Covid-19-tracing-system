@@ -54,15 +54,16 @@ class JUnit_Test_Methods {
 					+ "23. createTable(BusinessID);\n\n"
 					+ "24. checkIn(String BusinessID, String UserID, Date Date, Mask MaskType);\n"
 					+ "25. checkOut(String BusinessID, String UserID, Date Date);\n"
-					+ "26. getRecords(BusinessID);\n");
+					+ "26. getRecords(BusinessID);\n"
+					+ "29. contactTracing(InfectedPerson person);\n");
 					
 			int ch;
 			do {
 				ch = SCNR.nextInt();
-				if (ch <= 0 || ch >= 27) {
+				if (ch <= 0 || ch >= 40) {
 					System.out.println("Προσπαθήστε ξανά");
 				}
-			} while (ch <= 0 || ch >= 27);
+			} while (ch <= 0 || ch >= 40);
 		
 			switch (ch) {
 				case 1:
@@ -229,14 +230,7 @@ class JUnit_Test_Methods {
 					}
 					break;
 				case 23:
-					String iD = Interface.userIDInput(1);
-					try {
-						DB_Access.createTable(iD);
-						System.out.println("TABLE CREATION SUCCESSFULL\n");
-					} catch (Exception e) {
-						System.out.println("AN ERROR HAS OCCURED");
-						e.printStackTrace();
-					}
+					
 					break;
 				case 24:
 					String businessiD = Interface.userIDInput(1);
@@ -278,6 +272,43 @@ class JUnit_Test_Methods {
 						e.printStackTrace();
 					}
 					break;
+				case 27:
+					String businessID3 = Interface.userIDInput(1);
+					String userID3 = Interface.userIDInput(0);
+					try {
+						System.out.println("\nTrying to edit last Record of given businessID:");
+						DB_Access.editLastRecordsUserID(businessID3, userID3);
+					} catch (Exception e) {
+						System.out.println("AN ERROR HAS OCCURED");
+						e.printStackTrace();
+					}
+					break;
+				case 28:
+					String userID4 = Interface.userIDInput(0);
+					String mail = Interface.emailInput();
+					try {
+						DB_Access.editUserEmail(userID4, mail);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					break;
+				case 29://XXX fix this
+					SCNR.nextLine();
+					System.out.println("Enter userID, to create InfectedPerson:");
+					String x = SCNR.nextLine();
+					InfectedPerson y = null;
+				try {
+					y = new InfectedPerson(DB_Access.findUser(x), 1);
+					System.out.println("Found user: " + y.getFirstName() + " with id: " + x);
+					DB_Access.addInfected(y);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				ArrayList<InfectedPerson> inf = DataAnalysis.contactTracing(y);
+				System.out.println("List of possibly infected:");
+				for (InfectedPerson p : inf) {
+					System.out.println(p);
+				}
 			}
 			System.out.println("Do you want to try another method?\n"
 					+ "Type yes/no");
