@@ -54,7 +54,8 @@ class JUnit_Test_Methods {
 					+ "23. createTable(BusinessID);\n\n"
 					+ "24. checkIn(String BusinessID, String UserID, Date Date, Mask MaskType);\n"
 					+ "25. checkOut(String BusinessID, String UserID, Date Date);\n"
-					+ "26. getRecords(BusinessID);\n");
+					+ "26. getRecords(BusinessID);\n"
+					+ "29. contactTracing(InfectedPerson person);\n");
 					
 			int ch;
 			do {
@@ -291,6 +292,23 @@ class JUnit_Test_Methods {
 						e.printStackTrace();
 					}
 					break;
+				case 29://XXX fix this
+					SCNR.nextLine();
+					System.out.println("Enter userID, to create InfectedPerson:");
+					String x = SCNR.nextLine();
+					InfectedPerson y = null;
+				try {
+					y = new InfectedPerson(DB_Access.findUser(x), 1);
+					System.out.println("Found user: " + y.getFirstName() + " with id: " + x);
+					DB_Access.addInfected(y);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				ArrayList<InfectedPerson> inf = DataAnalysis.contactTracing(y);
+				System.out.println("List of possibly infected:");
+				for (InfectedPerson p : inf) {
+					System.out.println(p);
+				}
 			}
 			System.out.println("Do you want to try another method?\n"
 					+ "Type yes/no");
