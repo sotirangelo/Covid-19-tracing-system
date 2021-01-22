@@ -21,19 +21,17 @@ public class Business {
 	private String email;
 	private String password;
     /** Air Exchange Rate */
-    private double AER; 
-	private BusinessType businessType;
-	private String email;
-	private String password;
+    private AER ventilation; 
 
 
-	public Business(String businessID, String email, String password, String name, double space, BusinessType businessType) {
+	public Business(String businessID, String email, String password, String name, double space, BusinessType businessType, AER ventilation) {
 		this.businessID = businessID;
 		this.email = email;
 		this.password = password;
 		this.name = name;
 		this.space = space;
 		this.businessType = businessType;
+		this.ventilation = ventilation;
 	}
 
 	public String getBusinessID() {
@@ -42,6 +40,18 @@ public class Business {
 
 	public void setBusinessID(String businessID) {
 		this.businessID = businessID;
+	}
+	
+	public void setVentilation(AER ventilation) {
+		this.ventilation = ventilation;
+	}
+	
+	public AER getVentilation() {
+		return ventilation;
+	}
+	
+	public double getAER() {
+		return ventilation.getValue();
 	}
 
 	public String getName() {
@@ -84,9 +94,6 @@ public class Business {
         return height * space;   
     }
     
-    public double getAER() {
-        
-    }
 
 	public String getPassword() {
 		return password;
@@ -96,6 +103,28 @@ public class Business {
 		this.password = password;
 	}
 	
+	public double getHealthyCustExertion() {
+		return businessType.getCustActivity().getIr();
+	}
+	
+	public double getInfectedCustExertion() {
+		return businessType.getCustActivity().getErq();
+	}
+	public double getHealthyEmpExertion() {
+		return businessType.getEmplActivity().getIr();
+	}
+	
+	public double getInfectedEmpExertion() {
+		return businessType.getEmplActivity().getErq();
+	}
+	
+	public double getIVRR() {
+		return (getAER() + 0.24 + 0.63);
+	}	
+	 public double getV() {
+		 return space * height;
+	 }	 
+		 
 	@Override
 	public String toString() {
 		return "Business ID : " + businessID +

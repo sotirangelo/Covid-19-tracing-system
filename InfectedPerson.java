@@ -1,20 +1,19 @@
 
 //implements Comparable
 public class InfectedPerson extends Person { 
-	private double score;
+	private double infectionPropability;
 	
-	public InfectedPerson(String UserID, String firstName, String lastName, String email, long phoneNumber,
-			Age ageCategory) {
-		super(UserID, firstName, lastName, email, phoneNumber, ageCategory);
-
+	public InfectedPerson(Person p, double infectionPropability) {
+		super(p.getUserID(), p.getFirstName(), p.getLastName(), p.getEmail(), p.getPhoneNumber(), p.getAgeCategory(), p.getPassword());
+		this.infectionPropability = infectionPropability;
 	}
 
-	public double getScore () { 
-      		return this.score; 
+	public double getPropability () { 
+      		return this.infectionPropability; 
       	}
 
-    	public void setScore (double x) { 
-      		this.score = x; 
+    	public void setPropability (double x) { 
+      		infectionPropability = x; 
       	}
 /*
 	@Override
