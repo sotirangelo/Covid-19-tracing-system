@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="351.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LauncherController">
+   <children>
+      <Button fx:id="btn1Customer" layoutX="115.0" layoutY="176.0" mnemonicParsing="false" onAction="#createCustomer" prefHeight="70.0" prefWidth="82.0" style="-fx-background-color: #E96151;" text="Customer" textFill="WHITE" />
+      <AnchorPane prefHeight="84.0" prefWidth="491.0" style="-fx-background-color: #E96151;">
+         <children>
+            <Label fx:id="lbl1AppName" layoutX="41.0" layoutY="19.0" prefHeight="46.0" prefWidth="264.0" text="Javavirus® Covid Tracing App " textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="56.0" fitWidth="106.0" layoutX="371.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Javavirus%20Logo.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Label fx:id="lbl2Welcome" layoutX="23.0" layoutY="93.0" prefHeight="17.0" prefWidth="210.0" text="Welcome to the Javavirus App!" textFill="#e96151">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl3Choose" layoutX="23.0" layoutY="130.0" prefHeight="17.0" prefWidth="64.0" text="You are a:" textFill="#e96151">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Button fx:id="btn2Business" layoutX="304.0" layoutY="176.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="82.0" style="-fx-background-color: #E96151;" text="Business" textFill="WHITE" />
+      <Button fx:id="btn4Exit" layoutX="442.0" layoutY="89.0" mnemonicParsing="false" onAction="#exitButtonOnAction" style="-fx-background-color: #E96151;" text="Exit" textFill="WHITE" />
+      <Button fx:id="btn3Output" layoutX="326.0" layoutY="296.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" style="-fx-background-color: #E96151;" text="Output" textFill="WHITE" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="604.0" prefWidth="374.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.CustomerSignUpController">
+   <children>
+      <AnchorPane layoutX="-4.0" prefHeight="109.0" prefWidth="384.0" style="-fx-background-color: #E96151;">
+         <children>
+            <Label fx:id="lbl1CustomerRegistration" layoutX="53.0" layoutY="45.0" prefHeight="20.0" prefWidth="152.0" text="Customer Registration " textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="65.0" fitWidth="121.0" layoutX="249.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Javavirus%20Logo.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Label fx:id="lbl2RegistrationStatus" layoutX="25.0" layoutY="120.0" prefHeight="17.0" prefWidth="217.0" text="Registration Status">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Button fx:id="btn2Close" layoutX="303.0" layoutY="113.0" minWidth="37.0" mnemonicParsing="false" prefWidth="10.0" style="-fx-background-color: #E96151;" text="X" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Label fx:id="lbl3FirstName" layoutX="105.0" layoutY="162.0" text="First Name" />
+      <Label fx:id="lbl4LastName" layoutX="106.0" layoutY="236.0" text="Last Name" />
+      <Label fx:id="lbl5UserID" layoutX="104.0" layoutY="297.0" text="User ID" />
+      <Label fx:id="lbl6Email" layoutX="106.0" layoutY="359.0" text="E-mail" />
+      <Label fx:id="lbl7PhoneNumber" layoutX="103.0" layoutY="425.0" text="Phone Number" />
+      <TextField fx:id="txt1FirstName" layoutX="104.0" layoutY="186.0" promptText="e.g Georgios" />
+      <TextField fx:id="txt2LastName" layoutX="103.0" layoutY="253.0" promptText="e.g Papadopoulos" />
+      <TextField fx:id="txt3UserID" layoutX="104.0" layoutY="314.0" promptText="XXXXXXXX" />
+      <TextField fx:id="txt4Email" layoutX="104.0" layoutY="376.0" promptText="e.g geopap@gmail.com" />
+      <TextField fx:id="txt5PhoneNumber" layoutX="104.0" layoutY="442.0" promptText="XXXXXXXXXX" />
+      <Button fx:id="btn1Register" layoutX="152.0" layoutY="567.0" mnemonicParsing="false" style="-fx-background-color: #E96151;" text="Register" textFill="WHITE" />
+      <Label fx:id="lbl8Age" layoutX="106.0" layoutY="487.0" text="Age" />
+      <TextField fx:id="txt6Age" layoutX="103.0" layoutY="504.0" promptText="0-99" />
+   </children>
+</AnchorPane>
