@@ -403,7 +403,7 @@ public class DB_Access {
 					rs.getString("Business.Name"),
 					rs.getLong("Business.Space"),
 					BusinessType.valueOf(rs.getString("Business.BusinessType")),
-					AER.valueOf(rs.getString("Business.AER")));
+					AER.valueOf(rs.getString("Business.ventilation")));
             rs.close();
             stmt.close();
             con.close();
@@ -426,7 +426,7 @@ public class DB_Access {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		Business business = null;
-		String sqlQuery = "SELECT * FROM Business WHERE BusinessID=?;";
+		String sqlQuery = "SELECT * FROM Business WHERE BusinessID = ?;";
 		try {
             con = DB_Connection.getConnection();
             stmt = con.prepareStatement(sqlQuery);
@@ -442,7 +442,7 @@ public class DB_Access {
 					rs.getString("Business.Name"),
 					rs.getLong("Business.Space"),
 					BusinessType.valueOf(rs.getString("Business.BusinessType")),
-					AER.valueOf(rs.getString("Business.AER")));
+					AER.valueOf(rs.getString("Business.ventilation")));
             rs.close();
             stmt.close();
             con.close();
@@ -614,6 +614,7 @@ public class DB_Access {
             stmt.executeUpdate();
             stmt.close();
             con.close();
+            System.out.println("CHECK IN SUCCESSFULL\n");
 		} catch (Exception e) {
 			System.out.println("ERROR WHILE CHECKING IN");
             e.printStackTrace();
@@ -726,7 +727,7 @@ public class DB_Access {
             e.printStackTrace();
 		}
 	}// End of editLastRecordsUserID
-
+	
     /**
      * Get list of Businesses visited by User.
      *
