@@ -1,0 +1,34 @@
+
+public class Output {
+
+TableView<TyposEpistrofis> table;
+
+
+
+
+TableColumn<TyposEpistrofis,TyposstosigkekrimenoColumn> nameColumn = new TableColumn<>("TitlosStilis");
+nameColumn.setMinWidth(200) //Posa pixel thes na exei to sigkekrimeno column
+nameColumn.setCellValueFactory(new PropertyValueFactory<>("name")); // pare apo ta antikeimena pou 
+	// epistrefeis to zitoumeno stoixeio
+
+TableColumn<TyposEpistrofis,TyposstosigkekrimenoColumn> nameColumn = new TableColumn<>("TitlosStilis");
+nameColumn.setMinWidth(200) //Posa pixel thes na exei to sigkekrimeno column
+nameColumn.steCellValueFactory(new PropertyValueFactory<>("name")); // pare apo ta antikeimena pou 
+	// epistrefeis to zitoumeno stoixeio
+
+TableColumn<TyposEpistrofis,TyposstosigkekrimenoColumn> nameColumn = new TableColumn<>("TitlosStilis");
+nameColumn.setMinWidth(200) //Posa pixel thes na exei to sigkekrimeno column
+nameColumn.steCellValueFactory(new PropertyValueFactory<>("name")); // pare apo ta antikeimena pou 
+	// epistrefeis to zitoumeno stoixeio
+
+
+table = new TableView<>();
+table.setItems(getTypoEpistrofis()); \\Fortoneis ta antikeimena ton infected
+table.addColumns().addAll(protistili, deuteristili, tritistili, ktlp)
+
+
+//methodos gia na epistrepseis ta antikeimena pou theloume 
+public ObservableList<TyposEpistrofis> getTypoEpistrofis (){ 
+	ObservableList<TyposEpistrofis> infectedPeople = FXCollections.observableArrayList();
+	Syndesi me database gia na valoume ta antikeimena mesa
+}
