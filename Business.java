@@ -24,12 +24,13 @@ public class Business {
     private AER ventilation; 
 
 
-	public Business(String businessID, String email, String password, String name, double space, BusinessType businessType, AER ventilation) {
+	public Business(String businessID, String email, String password, String name, double space, double height, BusinessType businessType, AER ventilation) {
 		this.businessID = businessID;
 		this.email = email;
 		this.password = password;
 		this.name = name;
 		this.space = space;
+		this.height = height;
 		this.businessType = businessType;
 		this.ventilation = ventilation;
 	}
@@ -64,6 +65,10 @@ public class Business {
 
 	public double getSpace() {
 		return space;
+	}
+	
+	public double getHeight() {
+		return height;
 	}
 
 	public void setSpace(double space) {

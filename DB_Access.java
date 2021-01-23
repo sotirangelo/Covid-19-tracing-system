@@ -70,6 +70,40 @@ public class DB_Access {
 	}//end of register
 	
 	/**
+	 * Add infected person in db.
+	 * 
+	 * @param person InfectedPerson
+	 */
+	public static void addInfected(InfectedPerson person) {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        String checkSql = "SELECT * FROM InfectedPerson WHERE UserID = ?";
+        String sql = "INSERT INTO InfectedPerson (UserID, Propability) VALUES (?, ?);";
+        try {
+            con = DB_Connection.getConnection();
+            stmt = con.prepareStatement(checkSql);
+            stmt.setString(1, person.getUserID());
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                rs.close();
+                stmt.close();
+                System.out.println("UserID already registered as infected.");
+                return; //TODO: Remove
+            }
+            rs.close();
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, person.getUserID());
+            stmt.setDouble(2, person.getPropability());
+            stmt.executeUpdate();
+            stmt.close();
+            con.close();
+        } catch (Exception e) {
+        	System.out.println("ERROR WHILE REGISTERING INFECTED USER");
+            e.printStackTrace();
+        }
+	}//end of infected register
+	
+	/**
 	 * Fetch Users from Database.
 	 *
 	 * @throws Exception, if encounter any error.
@@ -306,7 +340,7 @@ public class DB_Access {
         Connection con = null;
         PreparedStatement stmt = null;
         String checkSql = "SELECT * FROM Business WHERE BusinessID = ? OR Email = ?";
-        String sql = "INSERT INTO Business (BusinessID, Email, Password, Name, Space, BusinessType, ventilation) VALUES (?, ?, ?, ?, ?, ?, ?);";   
+        String sql = "INSERT INTO Business (BusinessID, Email, Password, Name, Space, height, BusinessType, ventilation) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";   
         try {
             con = DB_Connection.getConnection();
             stmt = con.prepareStatement(checkSql);
@@ -325,8 +359,9 @@ public class DB_Access {
             stmt.setString(3,  business.getPassword());
             stmt.setString(4, business.getName());
             stmt.setDouble(5, business.getSpace());
-            stmt.setString(6, business.getBusinessType().name());
-            stmt.setString(7,  business.getVentilation().name());
+            stmt.setDouble(6, business.getHeight());
+            stmt.setString(7, business.getBusinessType().name());
+            stmt.setString(8,  business.getVentilation().name());
             stmt.executeUpdate();
             stmt.close();
             con.close();    
@@ -357,7 +392,8 @@ public class DB_Access {
 					rs.getString("Business.Email"),
 					rs.getString("Business.Password"),
 					rs.getString("Business.Name"),
-					rs.getLong("Business.Space"),
+					rs.getDouble("Business.Space"),
+					rs.getDouble("Business.height"),
 					BusinessType.valueOf(rs.getString("Business.BusinessType")),
 					AER.valueOf(rs.getString("Business.ventilation")));
 				businesses.add(business);
@@ -401,9 +437,10 @@ public class DB_Access {
 					rs.getString("Business.Email"),
 					rs.getString("Business.Password"),
 					rs.getString("Business.Name"),
-					rs.getLong("Business.Space"),
+					rs.getDouble("Business.Space"),
+					rs.getDouble("Business.height"),
 					BusinessType.valueOf(rs.getString("Business.BusinessType")),
-					AER.valueOf(rs.getString("Business.AER")));
+					AER.valueOf(rs.getString("Business.ventilation")));
             rs.close();
             stmt.close();
             con.close();
@@ -440,9 +477,10 @@ public class DB_Access {
 					rs.getString("Business.Email"),
 					rs.getString("Business.Password"),
 					rs.getString("Business.Name"),
-					rs.getLong("Business.Space"),
+					rs.getDouble("Business.Space"),
+					rs.getDouble("Business.height"),
 					BusinessType.valueOf(rs.getString("Business.BusinessType")),
-					AER.valueOf(rs.getString("Business.AER")));
+					AER.valueOf(rs.getString("Business.ventilation")));
             rs.close();
             stmt.close();
             con.close();
@@ -776,7 +814,7 @@ public class DB_Access {
     
     public static ArrayList<Record> getBusinessDayRecords(Timestamp recordtime) {
     	ArrayList<Record> records = new ArrayList<Record>();
-    	String formattedDate = new SimpleDateFormat("yyyy-mm-dd").format(recordtime);
+    	String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(recordtime);
     	Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -790,7 +828,8 @@ public class DB_Access {
             	Record record = new Record(rs.getString("Record.UserID"),
             			Mask.valueOf(rs.getString("Record.MaskType")),
 						rs.getTimestamp("Record.EntryDate"),
-						rs.getTimestamp("Record.ExitDate"));
+						rs.getTimestamp("Record.ExitDate"),
+            			rs.getString("Record.BusinessID"));
             	records.add(record);
             }
             rs.close();
