@@ -28,9 +28,7 @@ public class DataAnalysis {
 		ArrayList<InfectedPerson> allInfected = new ArrayList<InfectedPerson>();
 		ArrayList<Business> covidstores = removeDuplicateBusinesses(DB_Access.businessesVisited(infected.getUserID()));
 		for (Business b : covidstores) {
-			System.out.println(infected.getFirstName() + " has been to: " + b.getName());
-			ArrayList<InfectedPerson> temp = calculatePI(infected, b);
-			allInfected.addAll(temp);
+			allInfected.addAll(calculatePI(infected, b));
 		}
 		return allInfected;
 	}
@@ -94,7 +92,6 @@ public class DataAnalysis {
 		Record covidrecord = DB_Access.getPersonsRecord(infected, business); //ONLY NEED FIRST RECORD (IN CASE OF MULTIPLE)
 		var records = DB_Access.getBusinessDayRecords((Timestamp) covidrecord.getEntryDate());
 		double[] erq = calculateTotalErq(covidrecord);
-		System.out.println("Where he came into contact with: ");
 		for (Record r : records) { // Iterate day's records...
 			if (DB_Access.isUserIDInfected(r.getUserID()) == false) { //...ignoring already infected
 				double p = 0;
@@ -103,13 +100,16 @@ public class DataAnalysis {
 						p += erq[i] * ((i / 60) - ((i - 1) / 60));		
 					}
 				}
+				try {
 				Person temp = DB_Access.findUser(r.getUserID());//TODO: Fix Exception Handling	
 				p *= getActivity(temp, business);
-				System.out.println(temp.getFirstName() + "\n");
 				if (p > 0) {
 					
 					infectedPeople.add(new InfectedPerson(temp, p));
 				}		
+					} catch (Exception e) {
+						e.printStackTrace();
+					} 
 			}
 		}
 		return infectedPeople;
@@ -117,41 +117,41 @@ public class DataAnalysis {
 	
 	public static double[] calculateTotalErq(Record covidrecord) {
 		double[] totalerq = new double[(int) getBusinessDayDuration(covidrecord).toMinutes()];
-		System.out.println("totalerq.length: " + totalerq.length);
-		for (int i = 0; i < totalerq.length; i++) { //XXX: Fill totalerq with zeros
+		for (int i = 0; i < 0; i++) { //XXX: Fill totalerq with zeros
 			totalerq[i] = 0;
 		}
 		ArrayList<Record> dayrecords = DB_Access.getBusinessDayRecords((Timestamp) covidrecord.getEntryDate());
 		for (Record r : dayrecords) {
+			try {
 				if (DB_Access.isUserIDInfected(r.getUserID())) {
 					double[] erq = calculateErq(r);
 					for (int i = 0; i < erq.length; i++) {
 						totalerq[i] += erq[i];
 					}
 				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return totalerq;
 		
 	}
 	
 	private static double[] calculateErq (Record record) {
-		Business business = DB_Access.findBusiness(record.getBusinessID());// TODO FIX EXCEPTION HANDLING
+		Business business = DB_Access.findBusiness(record.getBusinessID());
 		double activity = getActivity(DB_Access.findUser(record.getUserID()), business);
 		Duration businessDayDuration = getBusinessDayDuration(record);
 		double[] erq = new double[(int) businessDayDuration.toMinutes()];	
 		int entry = getEntryMinute(record);
 		int exit = getExitMinute(record);
-		System.out.println("EXIT: " + exit + " DATE: " + record.getExitDate());
 		for (int counter = 0; counter <= (int) businessDayDuration.toMinutes(); counter++) {
 			if (counter < entry) {
 				erq[counter] = 0;
 			} else if (counter < exit) {
-				//System.out.println(activity + "/" + business.getIVRR() +"*"+ business.getV()+")"+ "*"+ "1"+ "- Math.exp((-business.getIVRR())" +"*" +"(counter -" + " entry)))");
-				erq[counter] = (activity / (business.getIVRR() * business.getV())) * (1 - Math.exp((-business.getIVRR()) * (counter - entry)));
+				erq[counter] = (activity / (business.getIVRR() * business.getV())) * (1 - Math.exp((business.getIVRR() * -1) * (counter - entry)));
 			} else {
-				erq[counter] = erq[counter - 1] * Math.exp((-business.getIVRR()) * (counter - exit));
+				erq[counter] = erq[counter - 1] * Math.exp((business.getIVRR() * -1) * (counter - exit));
 			}
-			//System.out.println("ERQ: " + erq[counter]);
 		}
 		return erq;
 			
@@ -172,30 +172,47 @@ public class DataAnalysis {
 		}
 		return newList;
 	}
-	
+	/**
+	 *Calculates and returns the time a record entries a business, as an integer, based on the time a business starts its operation
+	 *param record 
+	 **return exit
+	 */
 	private static int getEntryMinute(Record record) {
 		LocalDateTime startTime = convertToLocalDateTime(getStartRecord(record.getEntryDate()).getEntryDate());
 		LocalDateTime recordEntryTime = convertToLocalDateTime(record.getEntryDate());
 		int entry = (int) Duration.between(startTime, recordEntryTime).toMinutes();
 		return entry;
 	}
-	
+	/**
+	 *Calculates and returns the time a record exits a business, as an integer, based on the time a business starts its operation
+	 *param record 
+	 **return exit
+	 */
 	private static int getExitMinute(Record record) {
 		LocalDateTime startTime = convertToLocalDateTime(getStartRecord(record.getEntryDate()).getEntryDate());
 		LocalDateTime recordExitTime = convertToLocalDateTime(record.getExitDate());
 		int exit = (int) Duration.between(startTime, recordExitTime).toMinutes();
 		return exit;
 	}
-	
+	/**
+	 *Finds and returns the time duration a business is orerating 
+	 *param record 
+	 *return businessDayDuration;
+	 */
 	private static Duration getBusinessDayDuration(Record record) {
 		Record start = getStartRecord(record.getEntryDate()); //start of business hours
 		Record end = getLastRecord(record.getEntryDate()); //end of business hours		
+		Business business = DB_Access.findBusiness(start.getBusinessID());
 		LocalDateTime startTime= convertToLocalDateTime(start.getEntryDate());//TODO: convertToLocalDateTime(Date dateToConvert)
 		LocalDateTime endTime = convertToLocalDateTime(end.getExitDate());
 		Duration businessDayDuration = Duration.between(startTime, endTime);
 		return businessDayDuration;
 	}
-	
+	/**
+	 *Finds and returns the first Record of a business for a specific date
+	 *param date which is the date we are intersted of
+	 *return start which is the first record of the date
+	 */
 	private static Record getStartRecord(Date date) {
 		ArrayList<Record> dayrecords = DB_Access.getBusinessDayRecords((Timestamp) date);//record1.getEntryDate
 		Record start = null;
@@ -210,7 +227,11 @@ public class DataAnalysis {
 		}
 		return start;
 	}
-	
+	/**
+	 *Finds and returns the last Record of a business for a specific date
+	 *param date which is the date we are intersted of
+	 *return end which is the last record of the date
+	 */
 	private static Record getLastRecord(Date date) {
 		ArrayList<Record> dayrecords = DB_Access.getBusinessDayRecords((Timestamp) date);//record1.getEntryDate
 		Record end = null;
