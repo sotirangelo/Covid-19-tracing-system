@@ -182,7 +182,7 @@ class JUnit_Test_Methods {
 					System.out.println("First, create a Business object:");
 					Business business = new Business(Interface.userIDInput(1), Interface.emailInput(),
 							Interface.createPassword(), Interface.businessNameInput(),
-							Interface.floorAreaInput(), Interface.inputBusinessType(), Interface.ventilationType());
+							Interface.floorAreaInput(), Interface.heigthInput(), Interface.inputBusinessType(), Interface.ventilationType());
 					try {
 						DB_Access.register(business);
 						System.out.println("REGISTRATION SUCCESSFULL\n");
@@ -296,19 +296,17 @@ class JUnit_Test_Methods {
 					SCNR.nextLine();
 					System.out.println("Enter userID, to create InfectedPerson:");
 					String x = SCNR.nextLine();
-					InfectedPerson y = null;
-				try {
-					y = new InfectedPerson(DB_Access.findUser(x), 1);
+					InfectedPerson y = new InfectedPerson(DB_Access.findUser(x), 1);
 					System.out.println("Found user: " + y.getFirstName() + " with id: " + x);
 					DB_Access.addInfected(y);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				ArrayList<InfectedPerson> inf = DataAnalysis.contactTracing(y);
-				System.out.println("List of possibly infected:");
-				for (InfectedPerson p : inf) {
-					System.out.println(p);
-				}
+					System.out.println("Searching for infected");
+					ArrayList<InfectedPerson> inf = DataAnalysis.contactTracing(y);
+					System.out.println("Search complete");
+					System.out.println("List of possibly infected:");
+					for (InfectedPerson p : inf) {
+						System.out.println(p);
+					}
+					break;
 			}
 			System.out.println("Do you want to try another method?\n"
 					+ "Type yes/no");
