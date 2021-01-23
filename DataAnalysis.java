@@ -4,7 +4,12 @@
  * Copyright (not) 2020 Javavirus
  */
 
+import java.sql.Timestamp;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Analysis of data (temporarily from arraylists).
@@ -18,69 +23,36 @@ import java.util.ArrayList;
  * @author
  */
 public class DataAnalysis {
-/*	
-	private Person p = new Person();
-	private double maskScore = scoreFromMask(p); 
-	private double exertionScore = scoreFromExertion(p);
-	private double ageScore = scoreDependingOnAge(p);
-	private double generalScore = maskScore + exertionScore + ageScore;
 	
-	public double scoreFromMask(Person p) {
-		double score =0;
-		if (p.getMask() == Mask.NONE) {
-			score +=0;
-		} else if(p.getMask() == Mask.FABRIC) {
-			score +=1;
-		}else if(p.getMask() == Mask.MEDICAL) {
-			score +=2;
-		}else if (p.getMask() == Mask.RESPIRATOR) {
-			score +=3;
+	public static ArrayList<InfectedPerson> contactTracing(InfectedPerson infected) {
+		ArrayList<InfectedPerson> allInfected = new ArrayList<InfectedPerson>();
+		ArrayList<Business> covidstores = removeDuplicateBusinesses(DB_Access.businessesVisited(infected.getUserID()));
+		for (Business b : covidstores) {
+			allInfected.addAll(calculatePI(infected, b));
 		}
-		return score;
+		return allInfected;
 	}
-	public double scoreFromExertion(Person p) {
-		double score = 0;
-		if (p.getExertion() == Exertion.RESTING) {
-			score +=0.5;
-		} else if (p.getExertion() == Exertion.STANDING) {
-			score +=0;
-		}
-		return score;
-	}
-	public double scoreDependingOnAge(Person p) {
-		double score = 0;
-		if (p.getAgeCategory() == Age.UNDERAGE) {
-			score += 0;
-		}else if (p.getAgeCategory() == Age.EIGHTEEN) {
-			score += 1;
-		}else if (p.getAgeCategory() == Age.THIRTY) {
-			score += 2;
-		}else if (p.getAgeCategory() == Age.SIXTY) {
-			score +=3;
-		}
-		return score;
-	}
-*/
-	public double getActivity(Person p, Business b) {
+	
+	public static double getActivity(Person p, Business b) {
 		if (p instanceof InfectedPerson) {
-			if (p.isEmployee) {
-				return store.getInfectedEmpExertion();	
+			if (p.isEmployee()) {
+				return b.getInfectedEmpExertion();	
 			} else {
-				return store.getInfectedCustExertion();
+				return b.getInfectedCustExertion();
 			}
 		} else {
-			if (p.isEmployee) {
-				return store.getHealthyEmpExertion();
+			if (p.isEmployee()) {
+				return b.getHealthyEmpExertion();
 			} else {
-				return store.getHealthyCustExertion();
+				return b.getHealthyCustExertion();
 			}
 		}
 	}
-
-	public double[] calculateErq(InfectedPerson infected, Business store) { //TODO: Add necessary methods/fields
+/*
+	public static double[] calculateErq(InfectedPerson infected, Business store) { //TODO: Add necessary methods/fields
 		var erq = new double[];
         	var activity = getActivity(infected, store);
-		Record r = getPersonsRecord(infected, store);
+		Record r = DB_Access.getPersonsRecord(infected, store);
 		int operationMinutes = getOperationMinutes(); //TODO: For each business (start record & end record)
 		int infectedEntry; //TODO
 		int infectedExit; //TODO
@@ -97,13 +69,13 @@ public class DataAnalysis {
 		}
 	}
 	
-	public ArrayList<InfectedPerson> calculatePI(Business business) { //TODO: Add necessary methods/fields
-		var records = business.getRecords();
+	public static ArrayList<InfectedPerson> calculatePI(InfectedPerson infected, Business business) { //TODO: Add necessary methods/fields
+		var records = DB_Access.getRecords(business.getBusinessID());
 		ArrayList<InfectedPerson> output = new ArrayList<InfectedPerson>();
-		double[] erq = calculateErq();
+		double[] erq = calculateErq(infected, business);
 		for (Record r : records) { //TODO: Get only useful records
 			double p = 0;
-			for (i = r.getEntry() ; i < erq.length() ; i++) {
+			for (int i = r.getEntry() ; i < erq.length ; i++) {
 				if (i <= r.getExit()) {
 					p += erq[i] * ((i / 60) - ((i - 1) / 60));		
 				}
@@ -114,27 +86,144 @@ public class DataAnalysis {
 			}
 		}
 	}
-
-/*
-	public static ArrayList<InfectedPerson> infectionScores(String userID) {
-		ArrayList<InfectedPerson> ip = new ArrayList<InfectedPerson>();
-		ArrayList<ArrayList<Record>> tasosList = DataAccess.searchPossiblyInfected(userID);
-		for (ArrayList<Record> a_r : tasosList) {
-			for (Record r : a_r) {
-				double score = 0;
-				score += r.getMaskType().getEfficiency();
-				Person p = DataAccess.recordMatching(r.getUserID());
-				score += p.getAgeCategory().getVulnerability();
-				InfectedPerson temp = new InfectedPerson(p.getUserID(), p.getFirstName(), p.getLastName(), p.getEmail(), p.getPhoneNumber(), p.getAgeCategory()); 
-				temp.setScore(score);
-				ip.add(temp);
-
-			}
-
-		}
-		//Collections.sort(ip);
-		return ip;
-	}
 */
-
+	public static ArrayList<InfectedPerson> calculatePI(InfectedPerson infected, Business business) {
+		ArrayList<InfectedPerson> infectedPeople = new ArrayList<InfectedPerson>();
+		Record covidrecord = DB_Access.getPersonsRecord(infected, business); //ONLY NEED FIRST RECORD (IN CASE OF MULTIPLE)
+		var records = DB_Access.getBusinessDayRecords((Timestamp) covidrecord.getEntryDate());
+		double[] erq = calculateTotalErq(covidrecord);
+		for (Record r : records) { // Iterate day's records...
+			if (DB_Access.isUserIDInfected(r.getUserID()) == false) { //...ignoring already infected
+				double p = 0;
+				for (int i = getEntryMinute(r) ; i < erq.length ; i++) {
+					if (i <= getExitMinute(r)) {
+						p += erq[i] * ((i / 60) - ((i - 1) / 60));		
+					}
+				}
+				try {
+				Person temp = DB_Access.findUser(r.getUserID());//TODO: Fix Exception Handling	
+				p *= getActivity(temp, business);
+				if (p > 0) {
+					
+					infectedPeople.add(new InfectedPerson(temp, p));
+				}		
+					} catch (Exception e) {
+						e.printStackTrace();
+					} 
+			}
+		}
+		return infectedPeople;
+	}
+	
+	public static double[] calculateTotalErq(Record covidrecord) {
+		double[] totalerq = new double[(int) getBusinessDayDuration(covidrecord).toMinutes()];
+		for (int i = 0; i < 0; i++) { //XXX: Fill totalerq with zeros
+			totalerq[i] = 0;
+		}
+		ArrayList<Record> dayrecords = DB_Access.getBusinessDayRecords((Timestamp) covidrecord.getEntryDate());
+		for (Record r : dayrecords) {
+			try {
+				if (DB_Access.isUserIDInfected(r.getUserID())) {
+					double[] erq = calculateErq(r);
+					for (int i = 0; i < erq.length; i++) {
+						totalerq[i] += erq[i];
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return totalerq;
+		
+	}
+	
+	private static double[] calculateErq (Record record) {
+		Business business = DB_Access.findBusiness(record.getBusinessID());
+		double activity = getActivity(DB_Access.findUser(record.getUserID()), business);
+		Duration businessDayDuration = getBusinessDayDuration(record);
+		double[] erq = new double[(int) businessDayDuration.toMinutes()];	
+		int entry = getEntryMinute(record);
+		int exit = getExitMinute(record);
+		for (int counter = 0; counter <= (int) businessDayDuration.toMinutes(); counter++) {
+			if (counter < entry) {
+				erq[counter] = 0;
+			} else if (counter < exit) {
+				erq[counter] = (activity / (business.getIVRR() * business.getV())) * (1 - Math.exp((business.getIVRR() * -1) * (counter - entry)));
+			} else {
+				erq[counter] = erq[counter - 1] * Math.exp((business.getIVRR() * -1) * (counter - exit));
+			}
+		}
+		return erq;
+			
+	}
+	
+	public static LocalDateTime convertToLocalDateTime(Date dateToConvert) {
+	    return dateToConvert.toInstant()
+	      .atZone(ZoneId.systemDefault())
+	      .toLocalDateTime();
+	}
+	
+	private static ArrayList<Business> removeDuplicateBusinesses(ArrayList<Business> list) {
+		ArrayList<Business> newList = new ArrayList<Business>();
+		for (Business b : list) {
+			if (newList.contains(b) == false) {
+				newList.add(b);
+			}
+		}
+		return newList;
+	}
+	
+	private static int getEntryMinute(Record record) {
+		LocalDateTime startTime = convertToLocalDateTime(getStartRecord(record.getEntryDate()).getEntryDate());
+		LocalDateTime recordEntryTime = convertToLocalDateTime(record.getEntryDate());
+		int entry = (int) Duration.between(startTime, recordEntryTime).toMinutes();
+		return entry;
+	}
+	
+	private static int getExitMinute(Record record) {
+		LocalDateTime startTime = convertToLocalDateTime(getStartRecord(record.getEntryDate()).getEntryDate());
+		LocalDateTime recordExitTime = convertToLocalDateTime(record.getExitDate());
+		int exit = (int) Duration.between(startTime, recordExitTime).toMinutes();
+		return exit;
+	}
+	
+	private static Duration getBusinessDayDuration(Record record) {
+		Record start = getStartRecord(record.getEntryDate()); //start of business hours
+		Record end = getLastRecord(record.getEntryDate()); //end of business hours		
+		Business business = DB_Access.findBusiness(start.getBusinessID());
+		LocalDateTime startTime= convertToLocalDateTime(start.getEntryDate());//TODO: convertToLocalDateTime(Date dateToConvert)
+		LocalDateTime endTime = convertToLocalDateTime(end.getExitDate());
+		Duration businessDayDuration = Duration.between(startTime, endTime);
+		return businessDayDuration;
+	}
+	
+	private static Record getStartRecord(Date date) {
+		ArrayList<Record> dayrecords = DB_Access.getBusinessDayRecords((Timestamp) date);//record1.getEntryDate
+		Record start = null;
+		for (int i = 0; i < dayrecords.size(); i++) {
+			if (i == 0) {
+				start = dayrecords.get(i);
+			} else {
+				if (start.getEntryDate().after(dayrecords.get(i).getEntryDate())) {
+					start = dayrecords.get(i);
+				}
+			}
+		}
+		return start;
+	}
+	
+	private static Record getLastRecord(Date date) {
+		ArrayList<Record> dayrecords = DB_Access.getBusinessDayRecords((Timestamp) date);//record1.getEntryDate
+		Record end = null;
+		for (int i = 0; i < dayrecords.size(); i++) {
+			if (i == 0) {
+				end = dayrecords.get(i);
+			} else {
+				if (end.getExitDate().before(dayrecords.get(i).getExitDate())) {
+					end = dayrecords.get(i);
+				}
+			}
+		}
+		return end;
+	}
 }

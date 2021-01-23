@@ -73,7 +73,8 @@ class JUnit_Test_Methods {
 					+ "35. editBusinessVentilationType(String, AER);\n"
 					+ "36. editLastRecordsUserID(String, String);\n\n"
 					+ "37. businessesVisited(String);\n"
-					+ "38. getPersonsRecord(Person, Business);\n");					
+					+ "38. getPersonsRecord(Person, Business);\n"					
+					+ "39. contactTracing(InfectedPerson person);\n");
 			int ch;
 			do {
 				ch = SCNR.nextInt();
@@ -415,6 +416,23 @@ class JUnit_Test_Methods {
 					break;
 				case 38:
 					break;
+				case 39://XXX fix this
+					SCNR.nextLine();
+					System.out.println("Enter userID, to create InfectedPerson:");
+					String x = SCNR.nextLine();
+					InfectedPerson y = null;
+				try {
+					y = new InfectedPerson(DB_Access.findUser(x), 1);
+					System.out.println("Found user: " + y.getFirstName() + " with id: " + x);
+					DB_Access.addInfected(y);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				ArrayList<InfectedPerson> inf = DataAnalysis.contactTracing(y);
+				System.out.println("List of possibly infected:");
+				for (InfectedPerson p : inf) {
+					System.out.println(p);
+				}
 			}
 			System.out.println("Do you want to try another method?\n"
 					+ "Type yes/no");

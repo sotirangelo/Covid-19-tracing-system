@@ -7,7 +7,9 @@
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.sql.Date;
 
@@ -772,5 +774,61 @@ public class DB_Access {
 		}
         return null;
     } //End of getPersonsRecord
+    
+    public static ArrayList<Record> getBusinessDayRecords(Timestamp recordtime) {
+    	ArrayList<Record> records = new ArrayList<Record>();
+    	String formattedDate = new SimpleDateFormat("yyyy-mm-dd").format(recordtime);
+    	Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sqlQuery = "SELECT * FROM Record WHERE CAST(EntryDate AS Date)=?;";
+		try {	
+            con = DB_Connection.getConnection();
+            stmt = con.prepareStatement(sqlQuery);
+            stmt.setString(1, formattedDate);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+            	Record record = new Record(rs.getString("Record.UserID"),
+            			Mask.valueOf(rs.getString("Record.MaskType")),
+						rs.getTimestamp("Record.EntryDate"),
+						rs.getTimestamp("Record.ExitDate"),
+            			rs.getString("Record.BusinessID"));
+            	records.add(record);
+            }
+            rs.close();
+            stmt.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+		return records;
+    }
+    
+    public static boolean isUserIDInfected(String UserID) {
+    	Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sqlQuery = "SELECT * FROM InfectedPerson WHERE UserID=" + UserID + ";";
+
+		try {
+
+            con = DB_Connection.getConnection();
+			stmt = con.prepareStatement(sqlQuery);
+			rs = stmt.executeQuery();
+			return rs.next();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				stmt.close();
+				con.close();				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+    }
 
 }

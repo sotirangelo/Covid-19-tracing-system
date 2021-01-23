@@ -78,7 +78,8 @@ public class Record {
 		return "User ID : " + userID +
 				", Mask Type : " + maskType.name() +
 				", EntryDate : " + entryDate +
-				", Exit Date : " + exitDate;
+				", Exit Date : " + exitDate +
+				", Business ID : " + businessID;
 	}
 	
 }
