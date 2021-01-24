@@ -34,7 +34,7 @@ public class DB_Access {
         Connection con = null;
         PreparedStatement stmt = null;
         String checkSql = "SELECT * FROM Person WHERE UserID = ? OR Email = ?";
-        String sql = "INSERT INTO Person (UserID, firstName, lastName, email, PhoneNumber, AgeCategory, Password) VALUES (?, ?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO isandalis_database_dmst.Person (UserID, firstName, lastName, email, PhoneNumber, AgeCategory, Password) VALUES (?, ?, ?, ?, ?, ?, md5(?));";
         try {
             con = DB_Connection.getConnection();
             stmt = con.prepareStatement(checkSql);
@@ -80,7 +80,7 @@ public class DB_Access {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sqlQuery = "SELECT * FROM Person;";
+		String sqlQuery = "SELECT * FROM isandalis_database_dmst.Person;";
 		try {
             con = DB_Connection.getConnection();
 			stmt = con.prepareStatement(sqlQuery);
@@ -118,7 +118,7 @@ public class DB_Access {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		Person user = null;
-		String sqlQuery = "SELECT * FROM Person WHERE UserID=? AND Password=?;";
+		String sqlQuery = "SELECT * FROM isandalis_database_dmst.Person WHERE UserID=? AND Password=md5(?);";
         try {
             con = DB_Connection.getConnection();
             stmt = con.prepareStatement(sqlQuery);
@@ -159,7 +159,7 @@ public class DB_Access {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		Person user = null;
-		String sqlQuery = "SELECT * FROM Person WHERE UserID=?;";
+		String sqlQuery = "SELECT * FROM isandalis_database_dmst.Person WHERE UserID=?;";
 		try {
             con = DB_Connection.getConnection();
             stmt = con.prepareStatement(sqlQuery);
@@ -280,7 +280,7 @@ public class DB_Access {
 		Connection con = null;
 		PreparedStatement stmt = null;		
 		String tableName = "isandalis_database_dmst.Person";
-		String updateSql = "UPDATE " + tableName + " SET Password = ? WHERE UserID = ?;";
+		String updateSql = "UPDATE " + tableName + " SET Password = md5(?) WHERE UserID = ?;";
 		try {
 			con = DB_Connection.getConnection();
 		    stmt = con.prepareStatement(updateSql);
@@ -296,6 +296,7 @@ public class DB_Access {
 		}
 	} //End of editUserAgeCategory
 	
+
 	/**
 	 * Register/create new Business.
 	 *
@@ -306,7 +307,7 @@ public class DB_Access {
         Connection con = null;
         PreparedStatement stmt = null;
         String checkSql = "SELECT * FROM Business WHERE BusinessID = ? OR Email = ?";
-        String sql = "INSERT INTO Business (BusinessID, Email, Password, Name, Space, BusinessType, ventilation) VALUES (?, ?, ?, ?, ?, ?, ?);";   
+        String sql = "INSERT INTO Business (BusinessID, Email, Password, Name, Space, height, BusinessType, ventilation) VALUES (?, ?, md5(?), ?, ?, ?, ?, ?);";   
         try {
             con = DB_Connection.getConnection();
             stmt = con.prepareStatement(checkSql);
@@ -325,8 +326,9 @@ public class DB_Access {
             stmt.setString(3,  business.getPassword());
             stmt.setString(4, business.getName());
             stmt.setDouble(5, business.getSpace());
-            stmt.setString(6, business.getBusinessType().name());
-            stmt.setString(7,  business.getVentilation().name());
+            stmt.setDouble(6, business.getHeight());
+            stmt.setString(7, business.getBusinessType().name());
+            stmt.setString(8,  business.getVentilation().name());
             stmt.executeUpdate();
             stmt.close();
             con.close();    
@@ -357,7 +359,8 @@ public class DB_Access {
 					rs.getString("Business.Email"),
 					rs.getString("Business.Password"),
 					rs.getString("Business.Name"),
-					rs.getLong("Business.Space"),
+					rs.getDouble("Business.Space"),
+					rs.getDouble("Business.height"),
 					BusinessType.valueOf(rs.getString("Business.BusinessType")),
 					AER.valueOf(rs.getString("Business.ventilation")));
 				businesses.add(business);
@@ -385,7 +388,7 @@ public class DB_Access {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		Business business = null;
-		String sqlQuery = "SELECT * FROM Business WHERE BusinessID=? AND Password=?;";
+		String sqlQuery = "SELECT * FROM Business WHERE BusinessID=? AND Password=md5(?);";
         try {
             con = DB_Connection.getConnection();
             stmt = con.prepareStatement(sqlQuery);
@@ -401,7 +404,8 @@ public class DB_Access {
 					rs.getString("Business.Email"),
 					rs.getString("Business.Password"),
 					rs.getString("Business.Name"),
-					rs.getLong("Business.Space"),
+					rs.getDouble("Business.Space"),
+					rs.getDouble("Business.height"),
 					BusinessType.valueOf(rs.getString("Business.BusinessType")),
 					AER.valueOf(rs.getString("Business.ventilation")));
             rs.close();
@@ -440,7 +444,8 @@ public class DB_Access {
 					rs.getString("Business.Email"),
 					rs.getString("Business.Password"),
 					rs.getString("Business.Name"),
-					rs.getLong("Business.Space"),
+					rs.getDouble("Business.Space"),
+					rs.getDouble("Business.height"),
 					BusinessType.valueOf(rs.getString("Business.BusinessType")),
 					AER.valueOf(rs.getString("Business.ventilation")));
             rs.close();
@@ -492,7 +497,7 @@ public class DB_Access {
 		Connection con = null;
 		PreparedStatement stmt = null;		
 		String tableName = "isandalis_database_dmst.Business";
-		String updateSql = "UPDATE " + tableName + " SET Password = ? WHERE BusinessID = ?;";
+		String updateSql = "UPDATE " + tableName + " SET Password = md5(?) WHERE BusinessID = ?;";
 		try {
 			con = DB_Connection.getConnection();
 		    stmt = con.prepareStatement(updateSql);
@@ -781,7 +786,7 @@ public class DB_Access {
     	Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sqlQuery = "SELECT * FROM Record WHERE CAST(EntryDate AS Date)=?;";
+		String sqlQuery = "SELECT * FROM isandalis_database_dmst.Record WHERE CAST(EntryDate AS Date)=?;";
 		try {	
             con = DB_Connection.getConnection();
             stmt = con.prepareStatement(sqlQuery);
@@ -808,7 +813,7 @@ public class DB_Access {
     	Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sqlQuery = "SELECT * FROM InfectedPerson WHERE UserID=" + UserID + ";";
+		String sqlQuery = "SELECT * FROM isandalis_database_dmst.InfectedPerson WHERE UserID=" + UserID + ";";
 
 		try {
 

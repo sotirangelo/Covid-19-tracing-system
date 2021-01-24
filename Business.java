@@ -24,12 +24,13 @@ public class Business {
     private AER ventilation; 
 
 
-	public Business(String businessID, String email, String password, String name, double space, BusinessType businessType, AER ventilation) {
+	public Business(String businessID, String email, String password, String name, double space, double height, BusinessType businessType, AER ventilation) {
 		this.businessID = businessID;
 		this.email = email;
 		this.password = password;
 		this.name = name;
 		this.space = space;
+		this.height = height;
 		this.businessType = businessType;
 		this.ventilation = ventilation;
 	}
@@ -65,6 +66,10 @@ public class Business {
 	public double getSpace() {
 		return space;
 	}
+	
+	public double getHeight() {
+		return height;
+	}
 
 	public void setSpace(double space) {
 		this.space = space;
@@ -89,12 +94,13 @@ public class Business {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-  
-    public double getVolume() {
-        return height * space;   
-    }
-    
-
+  	/**
+	*Calculates and returns the volume of a business
+	*/
+   	 public double getVolume() {
+       	         return height * space;   
+         }
+	
 	public String getPassword() {
 		return password;
 	}
@@ -102,35 +108,44 @@ public class Business {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+	/**
+	 *Finds and returns the Exertion of a healthy customer
+	 */
 	public double getHealthyCustExertion() {
 		return businessType.getCustActivity().getIr();
 	}
-	
+	/**
+	 *Finds and returns the Exertion of an infected customer
+	 */
 	public double getInfectedCustExertion() {
 		return businessType.getCustActivity().getErq();
 	}
+	/**
+	 *Finds and returns the Exertion of a healthy employee
+	 */
 	public double getHealthyEmpExertion() {
 		return businessType.getEmplActivity().getIr();
 	}
-	
+	/**
+	 *Finds and returns the Exertion of an infected employee
+	 */
 	public double getInfectedEmpExertion() {
 		return businessType.getEmplActivity().getErq();
 	}
-	
+	/** 
+	 *Calculates and returns the total viral removal rate 
+	 */
 	public double getIVRR() {
 		return (getAER() + 0.24 + 0.63);
-	}	
-	 public double getV() {
-		 return space * height;
-	 }	 
-		 
+	}		 
 	@Override
 	public String toString() {
 		return "Business ID : " + businessID +
 				", Business Name :" + name +
 				", Email : " + email +
 				", Floor Area : " + space +
-				" m2, Business Type : " + businessType;
+				" m2, Ceiling Height : " + height +
+				" m, Business Type : " + businessType +
+				"Ventilation Type : " + ventilation.name();
 	}
 }

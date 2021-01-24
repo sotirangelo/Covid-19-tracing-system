@@ -200,7 +200,7 @@ class JUnit_Test_Methods {
 					System.out.println("First, create a Business object:");
 					business = new Business(Interface.userIDInput(1), Interface.emailInput(),
 							Interface.createPassword(), Interface.businessNameInput(),
-							Interface.floorAreaInput(), Interface.inputBusinessType(), Interface.ventilationType());
+							Interface.floorAreaInput(), Interface.heigthInput(), Interface.inputBusinessType(), Interface.ventilationType());
 					try {
 						DB_Access.register(business);
 						System.out.println("REGISTRATION SUCCESSFULL\n");
@@ -324,11 +324,7 @@ class JUnit_Test_Methods {
 					userID = Interface.userIDInput(0);
 					password = Interface.createPassword();
 					try {
-						user = DB_Access.findUser(userID);
-						System.out.println("Old Password: " + user.getPassword());
 						DB_Access.editUserPassword(userID, password);
-						user = DB_Access.findUser(userID);
-						System.out.println("New Password: " + user.getPassword());
 					} catch (Exception e) {
 					}
 					break;
@@ -424,7 +420,7 @@ class JUnit_Test_Methods {
 				try {
 					y = new InfectedPerson(DB_Access.findUser(x), 1);
 					System.out.println("Found user: " + y.getFirstName() + " with id: " + x);
-					DB_Access.addInfected(y);
+					//DB_Access.addInfected(y);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
