@@ -37,7 +37,10 @@ import javafx.stage.Stage;
 		
 		@FXML
 		private Label lbl8Age;
-	
+		
+		@FXML
+		private Label lbl9CustomerSignUp;
+			
 	
 		
 		/* Buttons */
@@ -73,15 +76,7 @@ import javafx.stage.Stage;
 		
 		
 
-		public void CustomerSignUp(ActionEvent event) throws Exception {
-			Stage customerSignUpStage = new Stage();
-			Parent root = FXMLLoader.load(getClass().getResource("/application/CustomerSignUp.fxml"));
-			Scene scene = new Scene(root,384,189);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			customerSignUpStage.setScene(scene);
-			customerSignUpStage.show();
-		}
-
+		
 		
 		public void closeButtonOnAction(ActionEvent event) {
 			Stage customerSignUpStage = (Stage) btn2Close.getScene().getWindow();
@@ -91,8 +86,6 @@ import javafx.stage.Stage;
 		
 		
 		}
-	
-
 	
 
 
