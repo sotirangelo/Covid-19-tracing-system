@@ -6,35 +6,51 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="329.0" prefWidth="409.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="application.CustomerController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="339.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.CustomerController">
    <children>
-      <Button fx:id="btn1LogIn" layoutX="288.0" layoutY="190.0" mnemonicParsing="false" text="Log In" />
-      <AnchorPane prefHeight="79.0" prefWidth="417.0" style="-fx-background-color: #E96151;">
-         <children>
-            <ImageView fitHeight="56.0" fitWidth="96.0" layoutX="306.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../Javavirus%20Logo.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="lbl1Title" layoutX="46.0" layoutY="26.0" prefHeight="27.0" prefWidth="151.0" text="Customer Log In " textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
-      <Label fx:id="lbl2EnterID" layoutX="21.0" layoutY="92.0" prefHeight="17.0" prefWidth="209.0" text="Please enter your ID:" textFill="#e95151" />
-      <TextField fx:id="txt1UserID" layoutX="64.0" layoutY="190.0" promptText="XXXXXXXX" />
-      <Label fx:id="lbl3UserID" layoutX="64.0" layoutY="144.0" text="User ID" />
-      <AnchorPane layoutX="-8.0" layoutY="309.0" prefHeight="52.0" prefWidth="425.0" style="-fx-background-color: #E96151;">
-         <children>
-            <Label fx:id="lbl4NewHere" layoutX="37.0" layoutY="18.0" prefHeight="17.0" prefWidth="117.0" text="Are you new here;" textFill="WHITE" />
-            <Button fx:id="btn2SignUp" layoutX="298.0" layoutY="14.0" mnemonicParsing="false" onAction="#CustomerSignUpButtonOnAction" text="Sign Up" />
-         </children>
-      </AnchorPane>
-      <Button fx:id="btn3Exit" layoutX="358.0" layoutY="88.0" mnemonicParsing="false" onAction="#exitButtonOnAction" text="Exit" />
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="339.0" prefWidth="552.0">
+         <right>
+            <AnchorPane prefHeight="329.0" prefWidth="304.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="btn1LogIn" layoutX="96.0" layoutY="208.0" mnemonicParsing="false" text="Log In" />
+                  <TextField fx:id="txt1UserID" layoutX="46.0" layoutY="145.0" promptText="XXXXXXXX" />
+                  <Label fx:id="lbl3UserID" layoutX="45.0" layoutY="116.0" text="User ID">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btn3Exit" layoutX="273.0" layoutY="2.0" mnemonicParsing="false" onAction="#exitButtonOnAction" text="Back" />
+                  <Button fx:id="btn2SignUp" layoutX="171.0" layoutY="290.0" mnemonicParsing="false" onAction="#CustomerSignUpButtonOnAction" text="Sign Up" />
+                  <Label fx:id="lbl4NewHere" layoutX="45.0" layoutY="294.0" prefHeight="17.0" prefWidth="117.0" text="Not registered yet?" />
+                  <Label fx:id="lbl6UserLogInStatus" layoutX="118.0" layoutY="116.0" prefHeight="17.0" prefWidth="71.0" text="Status" />
+               </children>
+            </AnchorPane>
+         </right>
+         <left>
+            <AnchorPane prefHeight="399.0" prefWidth="244.0" style="-fx-background-color: #E96151;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="lbl1Title" layoutX="15.0" layoutY="179.0" prefHeight="27.0" prefWidth="230.0" text="Javavirus® Covid19 Tracing App " textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="83.0" fitWidth="124.0" layoutX="68.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Javavirus%20Logo.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="lbl5CustomerLogIn" layoutX="72.0" layoutY="247.0" prefHeight="20.0" prefWidth="116.0" text="Customer Log In" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </left>
+      </BorderPane>
    </children>
-</AnchorPane>
+</StackPane>
