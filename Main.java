@@ -8,18 +8,18 @@ import javafx.scene.Scene;
 
 
 
+
 public class Main extends Application {
+	
 	@Override
-	public void start(Stage primaryStage) {
-		try {
+	public void start(Stage primaryStage) throws Exception {
 			Parent root = FXMLLoader.load(getClass().getResource("/application/Launcher.fxml"));
-			Scene scene = new Scene(root,490,351);
+			Scene scene = new Scene(root,430,320);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
+			primaryStage.setTitle("Javavirus Covid Tracing App");
+			primaryStage.setFullScreen(true);
 			primaryStage.show();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public static void main(String[] args) {
