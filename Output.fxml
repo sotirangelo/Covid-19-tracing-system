@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.OutputController">
+   <children>
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0">
+         <left>
+            <AnchorPane prefHeight="500.0" prefWidth="228.0" style="-fx-background-color: #E96151;" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="83.0" fitWidth="124.0" layoutX="53.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Javavirus%20Logo.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="lbl1Title" layoutX="4.0" layoutY="216.0" prefHeight="20.0" prefWidth="223.0" text="Javavirus® Covid19 Tracing App " textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbl2Output" layoutX="88.0" layoutY="292.0" prefHeight="20.0" prefWidth="52.0" text="Output" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </left>
+         <right>
+            <BorderPane prefHeight="500.0" prefWidth="275.0" BorderPane.alignment="CENTER">
+               <right>
+                  <TableView fx:id="tableView" prefHeight="500.0" prefWidth="474.0" BorderPane.alignment="CENTER">
+                    <columns>
+                      <TableColumn fx:id="nameColumn" maxWidth="4000.0" minWidth="20.0" prefWidth="160.0" text="Name" />
+                      <TableColumn fx:id="ageColumn" maxWidth="4000.0" prefWidth="66.0" resizable="false" text="Age" />
+                        <TableColumn fx:id="emailColumn" prefWidth="152.0" text="Email" />
+                        <TableColumn fx:id="scoreColumn" prefWidth="92.0" text="Score" />
+                    </columns>
+                  </TableView>
+               </right>
+            </BorderPane>
+         </right>
+      </BorderPane>
+   </children>
+</StackPane>
