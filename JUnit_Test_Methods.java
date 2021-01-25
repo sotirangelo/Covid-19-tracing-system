@@ -42,7 +42,7 @@ class JUnit_Test_Methods {
 					+ "6.  maskType();\n"
 					+ "7.  exertionType();\n"
 					+ "8.  ageGroup();\n"
-					+ "9.  ~Removed~ checkType();\n"
+					+ "9.  findNewUserID();\n"
 					+ "10. inputBusinessType();\n"
 					+ "11. getDate();\n"
 					+ "12. getExitDate(Date entryDate, int minutesInStore);\n"
@@ -58,7 +58,7 @@ class JUnit_Test_Methods {
 					+ "20. getBusinesses();\n"
 					+ "21. findBusiness(BusinessID);\n"
 					+ "22. authenticateBusiness(String BusinessID, String password);\n"
-					+ "23. ~Removed~ createTable(BusinessID);\n\n"
+					+ "23. findNewBusinessID();\n\n"
 					+ "24. checkIn(String BusinessID, String UserID, Date Date, Mask MaskType);\n"
 					+ "25. checkOut(String BusinessID, String UserID, Date Date);\n"
 					+ "26. getRecords(BusinessID);\n\n"
@@ -117,6 +117,9 @@ class JUnit_Test_Methods {
 					System.out.println("Η κατηγορία ηληκίας που δώσατε: " + ageGroup + "\n");
 					break;
 				case 9:
+					System.out.println("Trying to get new userID:");
+					userID = DB_Access.findNewUserID();
+					System.out.println("New UserID: " + userID);
 					break;
 				case 10:
 					BusinessType businessType = Interface.inputBusinessType();
@@ -147,12 +150,11 @@ class JUnit_Test_Methods {
 					break;
 				case 15:
 					System.out.println("First, create a Person object:");
-					Person person = new Person(Interface.userIDInput(0), Interface.firstNameInput(),
+					Person person = new Person(DB_Access.findNewUserID(), Interface.firstNameInput(),
 							Interface.lastNameInput(), Interface.emailInput(), Interface.custPhoneNum(),
 							Interface.ageGroup(), Interface.createPassword());
 					try {
 						DB_Access.register(person);
-						System.out.println("REGISTRATION SUCCESSFULL\n");
 					} catch (Exception e) {
 						System.out.println("AN ERROR HAS OCCURED DURING 'DB_Access.register(person)' :");
 						e.printStackTrace();
@@ -198,12 +200,11 @@ class JUnit_Test_Methods {
 					break;
 				case 19:
 					System.out.println("First, create a Business object:");
-					business = new Business(Interface.userIDInput(1), Interface.emailInput(),
+					business = new Business(DB_Access.findNewBusinessID(), Interface.emailInput(),
 							Interface.createPassword(), Interface.businessNameInput(),
 							Interface.floorAreaInput(), Interface.heigthInput(), Interface.inputBusinessType(), Interface.ventilationType());
 					try {
 						DB_Access.register(business);
-						System.out.println("REGISTRATION SUCCESSFULL\n");
 					} catch (Exception e) {
 						System.out.println("AN ERROR HAS OCCURED DURING 'DB_Access.register(business)' :");
 						e.printStackTrace();
@@ -247,6 +248,9 @@ class JUnit_Test_Methods {
 					}
 					break;
 				case 23:
+					System.out.println("Trying to get new businessID:");
+					businessID = DB_Access.findNewBusinessID();
+					System.out.println("New BusinessID: " + businessID);
 					break;
 				case 24:
 					businessID = Interface.userIDInput(1);

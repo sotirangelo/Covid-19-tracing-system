@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Random;
 import java.sql.Date;
 
 /**
@@ -25,6 +26,51 @@ import java.sql.Date;
 public class DB_Access {
 	
 	/**
+	 * Returns a random UserID that doesn't exist in the Database
+	 * 
+	 * @return userID, String (8-digit UserID)
+	 * @throws Exception, if encounter any error.
+	 */
+	public static String findNewUserID() {
+		String userID;
+		int numbers;
+		ArrayList<String> userIDs = new ArrayList<String>();
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sqlQuery = "SELECT UserID FROM isandalis_database_dmst.Person;";
+		try {
+            con = DB_Connection.getConnection();
+			stmt = con.prepareStatement(sqlQuery);
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				userIDs.add(rs.getString("Person.UserID"));
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			System.out.println("ERROR WHILE FETCHING USER-IDs FROM DATABASE");
+            e.printStackTrace();
+		}
+		Random r = new Random();
+		boolean flag = true;
+		do {
+			flag = false;
+			userID = "";
+			numbers = 10000000 + (int)(r.nextFloat() * 89990000);
+			userID += String.valueOf(numbers);
+			for (String x: userIDs) {
+				if (x.equals(userID)) {
+					flag = true;
+					break;
+				}
+			}
+		} while(flag);
+		return userID;
+	} //End of findNewUserID
+	
+	/**
 	 * Register/create new User.
 	 *
 	 * @param user, Person
@@ -33,18 +79,18 @@ public class DB_Access {
 	public static void register(Person person) {
         Connection con = null;
         PreparedStatement stmt = null;
-        String checkSql = "SELECT * FROM Person WHERE UserID = ? OR Email = ?";
+        String checkSql = "SELECT * FROM Person WHERE PhoneNumber = ?";
         String sql = "INSERT INTO isandalis_database_dmst.Person (UserID, firstName, lastName, email, PhoneNumber, AgeCategory, Password) VALUES (?, ?, ?, ?, ?, ?, md5(?));";
         try {
             con = DB_Connection.getConnection();
             stmt = con.prepareStatement(checkSql);
-            stmt.setString(1, person.getUserID());
-            stmt.setString(2, person.getEmail());
+            stmt.setLong(1, person.getPhoneNumber());
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 rs.close();
                 stmt.close();
-                System.out.println("UserID or Email already registered");
+                System.out.println("Phone already registered");
+                return;
             }
             rs.close();
             stmt = con.prepareStatement(sql);
@@ -57,12 +103,13 @@ public class DB_Access {
             stmt.setString(7,  person.getPassword());
             stmt.executeUpdate();
             if (person.isEmployee()) {
-            	stmt.executeQuery("INSERT INTO Employee " +
-            	  "(UserID) VALUES " +
-            	  "(" + person.getUserID() + ");");
+            	stmt.executeQuery("INSERT INTO "
+            			+ "isandalis_database_dmst.Employee (UserID) "
+            			+ "VALUES (" + person.getUserID() + ");");
             }
             stmt.close();
             con.close();
+            System.out.println("REGISTRATION SUCCESSFULL");
         } catch (Exception e) {
         	System.out.println("ERROR WHILE REGISTERING USER");
             e.printStackTrace();
@@ -292,7 +339,51 @@ public class DB_Access {
 		}
 	} //End of editUserAgeCategory
 	
-
+	/**
+	 * Returns a random UserID that doesn't exist in the Database
+	 * 
+	 * @return userID, String (8-digit UserID)
+	 * @throws Exception, if encounter any error.
+	 */
+	public static String findNewBusinessID() {
+		String businessID;
+		int numbers;
+		ArrayList<String> businessIDs = new ArrayList<String>();
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sqlQuery = "SELECT BusinessID FROM isandalis_database_dmst.Business;";
+		try {
+            con = DB_Connection.getConnection();
+			stmt = con.prepareStatement(sqlQuery);
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				businessIDs.add(rs.getString("Business.BusinessID"));
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			System.out.println("ERROR WHILE FETCHING BUSINESS-IDs FROM DATABASE");
+            e.printStackTrace();
+		}
+		Random r = new Random();
+		boolean flag = true;
+		do {
+			flag = false;
+			businessID = "";
+			numbers = 10000000 + (int)(r.nextFloat() * 89990000);
+			businessID += String.valueOf(numbers);
+			for (String x: businessIDs) {
+				if (x.equals(businessID)) {
+					flag = true;
+					break;
+				}
+			}
+		} while(flag);
+		return businessID;
+	} //End of findNewBusinessID
+	
 	/**
 	 * Register/create new Business.
 	 *
@@ -302,18 +393,18 @@ public class DB_Access {
 	public static void register(Business business) {
         Connection con = null;
         PreparedStatement stmt = null;
-        String checkSql = "SELECT * FROM isandalis_database_dmst.Business WHERE BusinessID = ? OR Email = ?";
+        String checkSql = "SELECT * FROM isandalis_database_dmst.Business WHERE Email = ?";
         String sql = "INSERT INTO Business (BusinessID, Email, Password, Name, Space, height, BusinessType, ventilation) VALUES (?, ?, md5(?), ?, ?, ?, ?, ?);";   
         try {
             con = DB_Connection.getConnection();
             stmt = con.prepareStatement(checkSql);
-            stmt.setString(1, business.getBusinessID());
-            stmt.setString(2, business.getEmail());
+            stmt.setString(1, business.getEmail());
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 rs.close();
                 stmt.close();
-                System.out.println("BusinessID or Email already registered");
+                System.out.println("Email already registered");
+                return;
             }
             rs.close();
             stmt = con.prepareStatement(sql);
@@ -328,6 +419,7 @@ public class DB_Access {
             stmt.executeUpdate();
             stmt.close();
             con.close();    
+            System.out.println("REGISTRATION SUCCESSFULL");
         } catch (Exception e) {
         	System.out.println("ERROR WHILE REGISTERING BUSINESS");
             e.printStackTrace();
