@@ -65,7 +65,7 @@ class JUnit_Test_Methods {
 					+ "27. editUserEmail(String, String);\n"
 					+ "28. editUserPhoneNumber(String, long);\n"
 					+ "29. editUserAgeCategory(String, Age);\n"
-					+ "30. editUserPassword(String, String);\n"
+					+ "30. editUserPassword(String, String);\n\n"
 					+ "31. editBusinessEmail(String, String);\n"
 					+ "32. editBusinessPassword(String, String);\n"
 					+ "33. editBusinessSpace(String, double);\n"
@@ -74,14 +74,16 @@ class JUnit_Test_Methods {
 					+ "36. editLastRecordsUserID(String, String);\n\n"
 					+ "37. businessesVisited(String);\n"
 					+ "38. getPersonsRecord(Person, Business);\n"					
-					+ "39. contactTracing(InfectedPerson person);\n");
+					+ "39. contactTracing(InfectedPerson person);\n\n"
+					+ "40. registerTracingUser(String, String, String, String, long);\n"
+					+ "41. authenticateTracingUser(String, String);\n\n");
 			int ch;
 			do {
 				ch = SCNR.nextInt();
-				if (ch <= 0 || ch >= 40) {
+				if (ch <= 0 || ch >= 42) {
 					System.out.println("Προσπαθήστε ξανά");
 				}
-			} while (ch <= 0 || ch >= 40);
+			} while (ch <= 0 || ch >= 42);
 		
 			switch (ch) {
 				case 1:
@@ -421,18 +423,36 @@ class JUnit_Test_Methods {
 					System.out.println("Enter userID, to create InfectedPerson:");
 					String x = SCNR.nextLine();
 					InfectedPerson y = null;
-				try {
-					y = new InfectedPerson(DB_Access.findUser(x), 1);
-					System.out.println("Found user: " + y.getFirstName() + " with id: " + x);
-					//DB_Access.addInfected(y);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				ArrayList<InfectedPerson> inf = DataAnalysis.contactTracing(y);
-				System.out.println("List of possibly infected:");
-				for (InfectedPerson p : inf) {
-					System.out.println(p);
-				}
+					try {
+						y = new InfectedPerson(DB_Access.findUser(x), 1);
+						System.out.println("Found user: " + y.getFirstName() + " with id: " + x);
+						//DB_Access.addInfected(y);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					ArrayList<InfectedPerson> inf = DataAnalysis.contactTracing(y);
+					System.out.println("List of possibly infected:");
+					for (InfectedPerson p : inf) {
+						System.out.println(p);
+					}
+					break;
+				case 40:
+					password = Interface.createPassword();
+					String firstname = Interface.firstNameInput();
+					String lastname = Interface.lastNameInput();
+					email = Interface.emailInput();
+					phoneNum = Interface.custPhoneNum();
+					try {
+						DB_Access.registerTracingUser(password, firstname, lastname, email, phoneNum);
+					} catch (Exception e) { }
+					break;
+				case 41:
+					email = Interface.emailInput();
+					password = SCNR.next();
+					try {
+						boolean isVer = DB_Access.authenticateTracingUser(email, password);
+						System.out.println("User Verified Status: " + isVer);
+					} catch (Exception e) { }
 			}
 			System.out.println("Do you want to try another method?\n"
 					+ "Type yes/no");

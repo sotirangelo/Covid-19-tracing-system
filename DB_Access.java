@@ -812,6 +812,146 @@ public class DB_Access {
 		}
 	}// End of editLastRecordsUserID
 	
+	/**
+	 * Register/create new Tracing User. It will need to be manually verified, because this account will have access to the personal information of all Users and Businesses
+	 *
+	 * @param password, String
+	 * @param firstName, String
+	 * @param lastName, String
+	 * @param email, String
+	 * @param phoneNum, long
+	 * @throws Exception, if encounter any error.
+	 */
+	public static void registerTracingUser(String password, String firstName, String lastName, String email, long phoneNum) {
+		Connection con = null;
+        PreparedStatement stmt = null;
+        String checkSql = "SELECT * FROM isandalis_database_dmst.TracingUser WHERE PhoneNumber = ? OR Email = ?";
+        String sql = "INSERT INTO isandalis_database_dmst.TracingUser (ID, Password, firstName, lastName, email, PhoneNumber, Verified) VALUES (?, md5(?), ?, ?, ?, ?, ?);";
+        try {
+            con = DB_Connection.getConnection();
+            stmt = con.prepareStatement(checkSql);
+            stmt.setLong(1, phoneNum);
+            stmt.setString(2,  email);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                rs.close();
+                stmt.close();
+                System.out.println("Phone or Email already registered");
+                return;
+            }
+            rs.close();
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, findNewTracingID());
+            stmt.setString(2, password);
+            stmt.setString(3, firstName);
+            stmt.setString(4, lastName);
+            stmt.setString(5, email);
+            stmt.setLong(6, phoneNum);
+            stmt.setBoolean(7,  false);
+            stmt.executeUpdate();
+            stmt.close();
+            con.close();
+            System.out.println("REGISTRATION SUCCESSFULL");
+        } catch (Exception e) {
+        	System.out.println("ERROR WHILE REGISTERING TRACING USER");
+            e.printStackTrace();
+        }
+	} //End of registerTracingUser
+	
+	/**
+	 * This method is used to authenticate a user.
+	 *
+	 * @param UserID, String
+	 * @param Password, String
+	 * @return User, the Person object
+	 * @throws Exception, if the credentials are not valid
+	 */
+	public static boolean authenticateTracingUser(String email, String password) {
+		boolean ver = true;
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sqlQuery = "SELECT * FROM isandalis_database_dmst.TracingUser WHERE Email=? AND Password=md5(?);";
+        try {
+        	boolean isVerified = false;
+            con = DB_Connection.getConnection();
+            stmt = con.prepareStatement(sqlQuery);
+            stmt.setString(1, email);
+            stmt.setString(2, password);
+            rs = stmt.executeQuery();
+            if (!rs.next()) {
+                rs.close();
+                stmt.close();
+                con.close();
+                System.out.println("Wrong UserID or password");
+                return false;
+            } else {
+            	isVerified = rs.getBoolean("TracingUser.Verified");
+            }
+            if (!isVerified) {
+            	rs.close();
+            	stmt.close();
+            	con.close();
+            	System.out.println("USER NOT VERIFIED YET");
+            	return false;
+            }
+            System.out.println("USER IS VERIFIED");
+            rs.close();
+            stmt.close();
+            con.close();
+            ver = true;
+        } catch (Exception e) {
+        	System.out.println("ERROR WHILE AUTHENTICATING USER");
+            e.printStackTrace();
+        }
+        return ver;
+	} //End of authenticateTracingUser
+	
+	/**
+	 * Returns a random TracingUserID that doesn't exist in the Database
+	 * 
+	 * @return tracingID, String (8-digit TracingUserID)
+	 * @throws Exception, if encounter any error.
+	 */
+	public static String findNewTracingID() {
+		String tracingID;
+		int numbers;
+		ArrayList<String> tracingIDs = new ArrayList<String>();
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sqlQuery = "SELECT ID FROM isandalis_database_dmst.TracingUser;";
+		try {
+            con = DB_Connection.getConnection();
+			stmt = con.prepareStatement(sqlQuery);
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				tracingIDs.add(rs.getString("TracingUser.ID"));
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			System.out.println("ERROR WHILE FETCHING TRACING-IDs FROM DATABASE");
+            e.printStackTrace();
+		}
+		Random r = new Random();
+		boolean flag = true;
+		do {
+			flag = false;
+			tracingID = "";
+			numbers = 10000000 + (int)(r.nextFloat() * 89990000);
+			tracingID += String.valueOf(numbers);
+			for (String x: tracingIDs) {
+				if (x.equals(tracingID)) {
+					flag = true;
+					break;
+				}
+			}
+		} while(flag);
+		return tracingID;
+	} //End of findNewTracingID
+	
     /**
      * Get list of Businesses visited by User.
      *
