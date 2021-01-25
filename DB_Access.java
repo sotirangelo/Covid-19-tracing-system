@@ -340,9 +340,9 @@ public class DB_Access {
 	} //End of editUserAgeCategory
 	
 	/**
-	 * Returns a random UserID that doesn't exist in the Database
+	 * Returns a random BusinessID that doesn't exist in the Database
 	 * 
-	 * @return userID, String (8-digit UserID)
+	 * @return businessID, String (8-digit BusinessID)
 	 * @throws Exception, if encounter any error.
 	 */
 	public static String findNewBusinessID() {
