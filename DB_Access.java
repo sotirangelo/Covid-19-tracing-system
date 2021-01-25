@@ -198,8 +198,7 @@ public class DB_Access {
 	public static void editUserEmail(String userID, String email) {
 		Connection con = null;
 		PreparedStatement stmt = null;		
-		String tableName = "isandalis_database_dmst.Person";
-		String updateSql = "UPDATE " + tableName + " SET Email = ? WHERE UserID = ?;";
+		String updateSql = "UPDATE isandalis_database_dmst.Person SET Email = ? WHERE UserID = ?;";
 		try {
 			con = DB_Connection.getConnection();
 		    stmt = con.prepareStatement(updateSql);
@@ -225,8 +224,7 @@ public class DB_Access {
 	public static void editUserPhoneNumber(String userID, long phoneNumber) {
 		Connection con = null;
 		PreparedStatement stmt = null;		
-		String tableName = "isandalis_database_dmst.Person";
-		String updateSql = "UPDATE " + tableName + " SET PhoneNumber = ? WHERE UserID = ?;";
+		String updateSql = "UPDATE isandalis_database_dmst.Person SET PhoneNumber = ? WHERE UserID = ?;";
 		try {
 			con = DB_Connection.getConnection();
 		    stmt = con.prepareStatement(updateSql);
@@ -252,8 +250,7 @@ public class DB_Access {
 	public static void editUserAgeCategory(String userID, Age age) {
 		Connection con = null;
 		PreparedStatement stmt = null;		
-		String tableName = "isandalis_database_dmst.Person";
-		String updateSql = "UPDATE " + tableName + " SET AgeCategory = ? WHERE UserID = ?;";
+		String updateSql = "UPDATE isandalis_database_dmst.Person SET AgeCategory = ? WHERE UserID = ?;";
 		try {
 			con = DB_Connection.getConnection();
 		    stmt = con.prepareStatement(updateSql);
@@ -279,8 +276,7 @@ public class DB_Access {
 	public static void editUserPassword(String userID, String password) {
 		Connection con = null;
 		PreparedStatement stmt = null;		
-		String tableName = "isandalis_database_dmst.Person";
-		String updateSql = "UPDATE " + tableName + " SET Password = md5(?) WHERE UserID = ?;";
+		String updateSql = "UPDATE isandalis_database_dmst.Person SET Password = md5(?) WHERE UserID = ?;";
 		try {
 			con = DB_Connection.getConnection();
 		    stmt = con.prepareStatement(updateSql);
@@ -306,7 +302,7 @@ public class DB_Access {
 	public static void register(Business business) {
         Connection con = null;
         PreparedStatement stmt = null;
-        String checkSql = "SELECT * FROM Business WHERE BusinessID = ? OR Email = ?";
+        String checkSql = "SELECT * FROM isandalis_database_dmst.Business WHERE BusinessID = ? OR Email = ?";
         String sql = "INSERT INTO Business (BusinessID, Email, Password, Name, Space, height, BusinessType, ventilation) VALUES (?, ?, md5(?), ?, ?, ?, ?, ?);";   
         try {
             con = DB_Connection.getConnection();
@@ -349,7 +345,7 @@ public class DB_Access {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sqlQuery = "SELECT * FROM Business;";
+		String sqlQuery = "SELECT * FROM isandalis_database_dmst.Business;";
 		try {
             con = DB_Connection.getConnection();
 			stmt = con.prepareStatement(sqlQuery);
@@ -388,7 +384,7 @@ public class DB_Access {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		Business business = null;
-		String sqlQuery = "SELECT * FROM Business WHERE BusinessID=? AND Password=md5(?);";
+		String sqlQuery = "SELECT * FROM isandalis_database_dmst.Business WHERE BusinessID=? AND Password=md5(?);";
         try {
             con = DB_Connection.getConnection();
             stmt = con.prepareStatement(sqlQuery);
@@ -430,7 +426,7 @@ public class DB_Access {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		Business business = null;
-		String sqlQuery = "SELECT * FROM Business WHERE BusinessID = ?;";
+		String sqlQuery = "SELECT * FROM isandalis_database_dmst.Business WHERE BusinessID = ?;";
 		try {
             con = DB_Connection.getConnection();
             stmt = con.prepareStatement(sqlQuery);
@@ -468,9 +464,8 @@ public class DB_Access {
 	 */
 	public static void editBusinessEmail(String businessID, String email) {
 		Connection con = null;
-		PreparedStatement stmt = null;		
-		String tableName = "isandalis_database_dmst.Business";
-		String updateSql = "UPDATE " + tableName + " SET Email = ? WHERE BusinessID = ?;";
+		PreparedStatement stmt = null;
+		String updateSql = "UPDATE isandalis_database_dmst.Business SET Email = ? WHERE BusinessID = ?;";
 		try {
 			con = DB_Connection.getConnection();
 		    stmt = con.prepareStatement(updateSql);
@@ -495,9 +490,8 @@ public class DB_Access {
 	 */
 	public static void editBusinessPassword(String businessID, String password) {
 		Connection con = null;
-		PreparedStatement stmt = null;		
-		String tableName = "isandalis_database_dmst.Business";
-		String updateSql = "UPDATE " + tableName + " SET Password = md5(?) WHERE BusinessID = ?;";
+		PreparedStatement stmt = null;
+		String updateSql = "UPDATE isandalis_database_dmst.Business SET Password = md5(?) WHERE BusinessID = ?;";
 		try {
 			con = DB_Connection.getConnection();
 		    stmt = con.prepareStatement(updateSql);
@@ -522,9 +516,8 @@ public class DB_Access {
 	 */
 	public static void editBusinessSpace(String businessID, double space) {
 		Connection con = null;
-		PreparedStatement stmt = null;		
-		String tableName = "isandalis_database_dmst.Business";
-		String updateSql = "UPDATE " + tableName + " SET Space = ? WHERE BusinessID = ?;";
+		PreparedStatement stmt = null;
+		String updateSql = "UPDATE isandalis_database_dmst.Business SET Space = ? WHERE BusinessID = ?;";
 		try {
 			con = DB_Connection.getConnection();
 		    stmt = con.prepareStatement(updateSql);
@@ -549,9 +542,8 @@ public class DB_Access {
 	 */
 	public static void editBusinessType(String businessID, BusinessType businessType) {
 		Connection con = null;
-		PreparedStatement stmt = null;		
-		String tableName = "isandalis_database_dmst.Business";
-		String updateSql = "UPDATE " + tableName + " SET BusinessType = ? WHERE BusinessID = ?;";
+		PreparedStatement stmt = null;
+		String updateSql = "UPDATE isandalis_database_dmst.Business SET BusinessType = ? WHERE BusinessID = ?;";
 		try {
 			con = DB_Connection.getConnection();
 		    stmt = con.prepareStatement(updateSql);
@@ -576,9 +568,8 @@ public class DB_Access {
 	 */
 	public static void editBusinessVentilationType(String businessID, AER ventilationType) {
 		Connection con = null;
-		PreparedStatement stmt = null;		
-		String tableName = "isandalis_database_dmst.Business";
-		String updateSql = "UPDATE " + tableName + " SET ventilation = ? WHERE BusinessID = ?;";
+		PreparedStatement stmt = null;
+		String updateSql = "UPDATE isandalis_database_dmst.Business SET ventilation = ? WHERE BusinessID = ?;";
 		try {
 			con = DB_Connection.getConnection();
 		    stmt = con.prepareStatement(updateSql);
@@ -636,19 +627,18 @@ public class DB_Access {
 	 */
 	public static void checkOut(String businessID, String userID, Date date) {
 		Connection con = null;
-		PreparedStatement stmt = null;		
-		String tableName = "isandalis_database_dmst.Record";
-		String updateSql = "UPDATE " + tableName + " SET ExitDate = ? WHERE BusinessID = ? AND UserID = ? AND ExitDate IS NULL;";
+		PreparedStatement stmt = null;
+		String updateSql = "UPDATE isandalis_database_dmst.Record SET ExitDate = ? WHERE BusinessID = ? AND UserID = ? AND ExitDate IS NULL;";
 		try {
 			con = DB_Connection.getConnection();
-            stmt = con.prepareStatement(updateSql);
-            stmt.setTimestamp(1, new Timestamp(date.getTime()));
-            stmt.setString(2, businessID);
-            stmt.setString(3, userID);
-            stmt.executeUpdate();
-            System.out.println("CHECK OUT SUCCESSFULL\n");
-            stmt.close();
-            con.close();
+            		stmt = con.prepareStatement(updateSql);
+            		stmt.setTimestamp(1, new Timestamp(date.getTime()));
+            		stmt.setString(2, businessID);
+            		stmt.setString(3, userID);
+            		stmt.executeUpdate();
+            		System.out.println("CHECK OUT SUCCESSFULL\n");
+            		stmt.close();
+            		con.close();
 		} catch (Exception e) {
 			System.out.println("ERROR WHILE CHECKING OUT");
             e.printStackTrace();
@@ -667,11 +657,9 @@ public class DB_Access {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sqlQuery = "SELECT * " +
-						  "FROM isandalis_database_dmst.Record " +
-						  "WHERE Record.BusinessID = " + businessID + ";";
+		String sqlQuery = "SELECT * FROM isandalis_database_dmst.Record WHERE Record.BusinessID = " + businessID + ";";
 		try {
-            con = DB_Connection.getConnection();
+            		con = DB_Connection.getConnection();
 			stmt = con.prepareStatement(sqlQuery);
 			rs = stmt.executeQuery();
 			while(rs.next()) { 
@@ -701,35 +689,34 @@ public class DB_Access {
 	 */
 	public static void editLastRecordsUserID(String businessID, String userID) {
 		Connection con = null;
-		PreparedStatement stmt = null;		
-		String tableName = "isandalis_database_dmst.Record";
-		String sql = "SELECT * FROM " + tableName + " WHERE BusinessID = ?"
-				+ " AND NUM = (SELECT MAX(NUM) FROM " + tableName + " WHERE BusinessID = ?);";
-		String updateSql = "UPDATE " + tableName + " SET UserID = ? WHERE NUM = ?;"; 
+		PreparedStatement stmt = null;
+		String sql = "SELECT * FROM isandalis_database_dmst.Record WHERE BusinessID = ?"
+				+ " AND NUM = (SELECT MAX(NUM) FROM isandalis_database_dmst.Record WHERE BusinessID = ?);";
+		String updateSql = "UPDATE isandalis_database_dmst.Record SET UserID = ? WHERE NUM = ?;"; 
 		try {
 			con = DB_Connection.getConnection();
-            stmt = con.prepareStatement(sql);
-            stmt.setString(1, businessID);
-            stmt.setString(2, businessID);            
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-            	int num = rs.getInt("Record.NUM");
-                rs.close();
-                stmt.close();
-                stmt = con.prepareStatement(updateSql);
-                stmt.setString(1, userID);
-                stmt.setInt(2, num);
-                stmt.executeUpdate();
-               	System.out.println("UPDATE SUCCESSFULL\n");
-               	stmt.close();
-            } else {
-            	System.out.println("AN ERROR HAS OCCURED");
-            }
-            rs.close();
-            con.close();
+            		stmt = con.prepareStatement(sql);
+            		stmt.setString(1, businessID);
+            		stmt.setString(2, businessID);            
+            		ResultSet rs = stmt.executeQuery();
+            		if (rs.next()) {
+            			int num = rs.getInt("Record.NUM");
+                		rs.close();
+                		stmt.close();
+                		stmt = con.prepareStatement(updateSql);
+                		stmt.setString(1, userID);
+                		stmt.setInt(2, num);
+                		stmt.executeUpdate();
+               			System.out.println("UPDATE SUCCESSFULL\n");
+               			stmt.close();
+            		} else {
+            			System.out.println("AN ERROR HAS OCCURED");
+            		}
+            		rs.close();
+            		con.close();
 		} catch (Exception e) {
 			System.out.println("ERROR WHILE UPDATING USER ID ON LAST BUSINESS RECORD");
-            e.printStackTrace();
+            		e.printStackTrace();
 		}
 	}// End of editLastRecordsUserID
 	
@@ -742,18 +729,18 @@ public class DB_Access {
     public static ArrayList<Business> businessesVisited(String userId) {
         ArrayList<Business> stores = new ArrayList<Business>();
         try {
-			for (Business b : getBusinesses()) {
-			    for (Record r : getRecords(b.getBusinessID())) {
-			        if (r.getUserID().equals(userId)) {
-			            stores.add(b);
-			            break;
-			        }
-			    }
-			}
-		} catch (Exception e) {
-			System.out.println("ERROR WHILE FETCHING BUSINESSES VISITED BY SPECIFIC USER");
-			e.printStackTrace();
+		for (Business b : getBusinesses()) {
+		    for (Record r : getRecords(b.getBusinessID())) {
+		        if (r.getUserID().equals(userId)) {
+		            stores.add(b);
+		            break;
+		        }
+		    }
 		}
+	} catch (Exception e) {
+		System.out.println("ERROR WHILE FETCHING BUSINESSES VISITED BY SPECIFIC USER");
+		e.printStackTrace();
+	}
         return stores;
     } //End of businessVisited
     
@@ -784,10 +771,10 @@ public class DB_Access {
     	ArrayList<Record> records = new ArrayList<Record>();
     	String formattedDate = new SimpleDateFormat("yyyy-mm-dd").format(recordtime);
     	Connection con = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		String sqlQuery = "SELECT * FROM isandalis_database_dmst.Record WHERE CAST(EntryDate AS Date)=?;";
-		try {	
+	PreparedStatement stmt = null;
+	ResultSet rs = null;
+	String sqlQuery = "SELECT * FROM isandalis_database_dmst.Record WHERE CAST(EntryDate AS Date)=?;";
+	try {	
             con = DB_Connection.getConnection();
             stmt = con.prepareStatement(sqlQuery);
             stmt.setString(1, formattedDate);
