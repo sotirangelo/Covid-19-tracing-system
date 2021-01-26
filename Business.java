@@ -94,12 +94,13 @@ public class Business {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-  
-    public double getVolume() {
-        return height * space;   
-    }
-    
-
+  	/**
+	*Calculates and returns the volume of a business
+	*/
+   	 public double getVolume() {
+       	         return height * space;   
+         }
+	
 	public String getPassword() {
 		return password;
 	}
@@ -107,29 +108,36 @@ public class Business {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+	/**
+	 *Finds and returns the Exertion of a healthy customer
+	 */
 	public double getHealthyCustExertion() {
 		return businessType.getCustActivity().getIr();
 	}
-	
+	/**
+	 *Finds and returns the Exertion of an infected customer
+	 */
 	public double getInfectedCustExertion() {
 		return businessType.getCustActivity().getErq();
 	}
+	/**
+	 *Finds and returns the Exertion of a healthy employee
+	 */
 	public double getHealthyEmpExertion() {
 		return businessType.getEmplActivity().getIr();
 	}
-	
+	/**
+	 *Finds and returns the Exertion of an infected employee
+	 */
 	public double getInfectedEmpExertion() {
 		return businessType.getEmplActivity().getErq();
 	}
-	
+	/** 
+	 *Calculates and returns the total viral removal rate 
+	 */
 	public double getIVRR() {
 		return (getAER() + 0.24 + 0.63);
-	}	
-	 public double getV() {
-		 return space * height;
-	 }	 
-		 
+	}		 
 	@Override
 	public String toString() {
 		return "Business ID : " + businessID +
