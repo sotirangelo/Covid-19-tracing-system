@@ -117,6 +117,40 @@ public class DB_Access {
 	}//end of register
 	
 	/**
+	 * Add infected person in db.
+	 * 
+	 * @param person InfectedPerson
+	 */
+	public static void addInfected(InfectedPerson person) {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        String checkSql = "SELECT * FROM InfectedPerson WHERE UserID = ?";
+        String sql = "INSERT INTO InfectedPerson (UserID, Propability) VALUES (?, ?);";
+        try {
+            con = DB_Connection.getConnection();
+            stmt = con.prepareStatement(checkSql);
+            stmt.setString(1, person.getUserID());
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                rs.close();
+                stmt.close();
+                System.out.println("UserID already registered as infected.");
+                return; //TODO: Remove
+            }
+            rs.close();
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, person.getUserID());
+            stmt.setDouble(2, person.getPropability());
+            stmt.executeUpdate();
+            stmt.close();
+            con.close();
+        } catch (Exception e) {
+        	System.out.println("ERROR WHILE REGISTERING INFECTED USER");
+            e.printStackTrace();
+        }
+	}//end of infected register
+	
+	/**
 	 * Fetch Users from Database.
 	 *
 	 * @throws Exception, if encounter any error.
@@ -1001,7 +1035,7 @@ public class DB_Access {
     
     public static ArrayList<Record> getBusinessDayRecords(Timestamp recordtime) {
     	ArrayList<Record> records = new ArrayList<Record>();
-    	String formattedDate = new SimpleDateFormat("yyyy-mm-dd").format(recordtime);
+    	String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(recordtime);
     	Connection con = null;
 	PreparedStatement stmt = null;
 	ResultSet rs = null;
