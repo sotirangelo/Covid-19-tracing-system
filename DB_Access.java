@@ -859,15 +859,15 @@ public class DB_Access {
 	} //End of registerTracingUser
 	
 	/**
-	 * This method is used to authenticate a user.
+	 * This method is used to authenticate if a Tracing User exists and is verified.
 	 *
-	 * @param UserID, String
-	 * @param Password, String
-	 * @return User, the Person object
-	 * @throws Exception, if the credentials are not valid
+	 * @param email, String
+	 * @param password, String
+	 * @return ver, boolean
+	 * @throws Exception, if encounter any error
 	 */
 	public static boolean authenticateTracingUser(String email, String password) {
-		boolean ver = true;
+		boolean ver = false;
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
