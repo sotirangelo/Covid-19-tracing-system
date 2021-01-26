@@ -126,7 +126,7 @@ public class DataAnalysis {
 					erq[counter] = 0;
 				} else if (counter <= exit) {
 					erq[counter] = activity;
-					erq[counter] = erq[counter] / (business.getIVRR() * business.getV());
+					erq[counter] = erq[counter] / (business.getIVRR() * business.getVolume());
 					erq[counter] = erq[counter] * (1 - Math.exp(-business.getIVRR() * ((counter / 60.0) - (entry / 60.0))));
 				} else {
 					erq[counter] = erq[counter - 1];
