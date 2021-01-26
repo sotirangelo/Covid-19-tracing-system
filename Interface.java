@@ -115,9 +115,9 @@ public class Interface {
 	 */
 	public static String createPassword() {
 		System.out.print("Please enter a given  password : ");
-	    String passwordhere = SCNR.nextLine();
+		String passwordhere = SCNR.next();
 	    System.out.print("Please re-enter the password to confirm : ");
-	    String confirmhere = SCNR.nextLine();
+	    String confirmhere = SCNR.next();
 
 	    ArrayList<String> errorList = new ArrayList<String>();
 
@@ -126,25 +126,21 @@ public class Interface {
 	        for (String error : errorList) {
 	            System.out.println(error);
 	        }
-
 	        System.out.print("Please enter a given  password : ");
-	        passwordhere = SCNR.nextLine();
+	        passwordhere = SCNR.next();
 	        System.out.print("Please re-enter the password to confirm : ");
-	        confirmhere = SCNR.nextLine();
+	        confirmhere = SCNR.next();
 	    }
 	    System.out.println("your password is: " + passwordhere);
 	    return passwordhere;
 	}
 	public static boolean isValid(String passwordhere, String confirmhere, ArrayList<String> errorList) {
-
 	    Pattern specailCharPatten = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
 	    Pattern UpperCasePatten = Pattern.compile("[A-Z ]");
 	    Pattern lowerCasePatten = Pattern.compile("[a-z ]");
 	    Pattern digitCasePatten = Pattern.compile("[0-9 ]");
 	    errorList.clear();
-
 	    boolean flag=true;
-
 	    if (!passwordhere.equals(confirmhere)) {
 	        errorList.add("password and confirm password does not match");
 	        flag=false;
@@ -169,9 +165,7 @@ public class Interface {
 	        errorList.add("Password must have atleast one digit character !!");
 	        flag=false;
 	    }
-
 	    return flag;
-
 	}
 
 	/**
@@ -343,18 +337,25 @@ public class Interface {
          * @return Exertion Customer's exertion level.
          */
 	public static Exertion exertionType() { //input of customer's exertion type//
-		System.out.println("Εισάγετε το είδος δραστηριότητας του πελάτη: ");
-		System.out.println("Αν κάθεται σε τραπέζι ή σε πάγκο, εισάγετε 0.");
-		System.out.println("Αν είναι όρθιος ή περπατάει, εισάγετε 1.");
+		System.out.println("Εισάγετε το είδος δραστηριότητας πελατών στην επιχειρηση:\n"
+				+ "Αν κάθονται και δεν μιλάνε δυνατά, εισάγετε 0.\n"
+				+ "Αν κάθονται και μιλάνε δυνατά, εισάγετε 1.\n"
+				+ "Αν είναι όρθιοι και δεν μιλάνε δυνατά, εισάγετε 2.\n"
+				+ "Αν είναι όρθιοι και μιλάνε δυνατά, εισάγετε 3.\n"
+				+ "Αν κινούνται ελαφρώς και δεν μιλάνε δυνατά εισάγετε 4.\n"
+				+ "Αν κινούνται ελαφρώς και μιλάνε δυνατά εισάγετε 5.\n"
+				+ "Αν κινούνται πολύ ή γυμνάζομται και δεν μιλάνε δυνατά εισάγετε 6.\n"
+				+ "Αν κινούνται πολύ ή γυμνάζομται και μιλάνε δυνατά εισάγετε 7.\n\n");
 		int custExertion = 0;
 		boolean aa = false;
 		while (aa == false) {
 			try {
             	custExertion = SCNR.nextInt();
-                if (custExertion == 0 || custExertion == 1) {
+                if (custExertion >= 0 && custExertion <= 7) {
                     aa = true;	 
                 } else {
                    	System.out.println("Το είδος δραστηριότητας που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
+                   	SCNR.nextLine();
 		        }
 			}catch (java.util.InputMismatchException e) {
 				System.out.println("Το είδος δραστηριότητας που εισήχθη ήταν λανθασμένο. Παρακαλώ προσπαθήστε ξανά: ");
@@ -363,13 +364,26 @@ public class Interface {
 			}
 		}
 		SCNR.nextLine();
-		if (custExertion == 0) {
-            return Exertion.RESTING;
-		} else {
-            return Exertion.STANDING;
-		}
-		
+		switch (custExertion) {
+			case 0:
+				return Exertion.R_S;
+			case 1:
+				return Exertion.R_L_S;
+			case 2:
+				return Exertion.S_S;
+			case 3:
+				return Exertion.S_L_S;
+			case 4:
+				return Exertion.L_E_S;
+			case 5:
+				return Exertion.L_E_L_S;
+			case 6:
+				return Exertion.H_E_S;
+			default:
+				return Exertion.H_E_L_S;
+		}	
 	}
+	
 	public static AER ventilationType() { //input of business' ventilation type//
 		System.out.println("Εισάγετε το είδος εξαερισμού του καταστήματος: ");
 		System.out.println("Αν έχετε φυσικό εξαερισμό, εισάγετε 0.");
@@ -396,7 +410,6 @@ public class Interface {
 		} else {
             return AER.OPEN;
 		}
-		
 	}
 
 

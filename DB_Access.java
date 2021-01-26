@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Random;
 import java.sql.Date;
 
 /**
@@ -25,26 +26,71 @@ import java.sql.Date;
 public class DB_Access {
 	
 	/**
+	 * Returns a random UserID that doesn't exist in the Database
+	 * 
+	 * @return userID, String (8-digit UserID)
+	 * @throws Exception, if encounter any error.
+	 */
+	public static String findNewUserID() {
+		String userID;
+		int numbers;
+		ArrayList<String> userIDs = new ArrayList<String>();
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sqlQuery = "SELECT UserID FROM isandalis_database_dmst.Person;";
+		try {
+            con = DB_Connection.getConnection();
+			stmt = con.prepareStatement(sqlQuery);
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				userIDs.add(rs.getString("Person.UserID"));
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			System.out.println("ERROR WHILE FETCHING USER-IDs FROM DATABASE");
+            e.printStackTrace();
+		}
+		Random r = new Random();
+		boolean flag = true;
+		do {
+			flag = false;
+			userID = "";
+			numbers = 10000000 + (int)(r.nextFloat() * 89990000);
+			userID += String.valueOf(numbers);
+			for (String x: userIDs) {
+				if (x.equals(userID)) {
+					flag = true;
+					break;
+				}
+			}
+		} while(flag);
+		return userID;
+	} //End of findNewUserID
+	
+	/**
 	 * Register/create new User.
 	 *
 	 * @param user, Person
 	 * @throws Exception, if encounter any error.
 	 */
-	public static void register(Person person) throws Exception {
+	public static void register(Person person) {
         Connection con = null;
         PreparedStatement stmt = null;
-        String checkSql = "SELECT * FROM Person WHERE UserID = ? OR Email = ?";
-        String sql = "INSERT INTO Person (UserID, firstName, lastName, email, PhoneNumber, AgeCategory, Password) VALUES (?, ?, ?, ?, ?, ?, ?);";
+        String checkSql = "SELECT * FROM Person WHERE PhoneNumber = ?";
+        String sql = "INSERT INTO isandalis_database_dmst.Person (UserID, firstName, lastName, email, PhoneNumber, AgeCategory, Password) VALUES (?, ?, ?, ?, ?, ?, md5(?));";
         try {
             con = DB_Connection.getConnection();
             stmt = con.prepareStatement(checkSql);
-            stmt.setString(1, person.getUserID());
-            stmt.setString(2, person.getEmail());
+            stmt.setLong(1, person.getPhoneNumber());
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 rs.close();
                 stmt.close();
-                throw new Exception("UserID or Email already registered");
+                System.out.println("Phone already registered");
+                return;
             }
             rs.close();
             stmt = con.prepareStatement(sql);
@@ -57,14 +103,16 @@ public class DB_Access {
             stmt.setString(7,  person.getPassword());
             stmt.executeUpdate();
             if (person.isEmployee()) {
-            	stmt.executeQuery("INSERT INTO Employee " +
-            	  "(UserID) VALUES " +
-            	  "(" + person.getUserID() + ");");
+            	stmt.executeQuery("INSERT INTO "
+            			+ "isandalis_database_dmst.Employee (UserID) "
+            			+ "VALUES (" + person.getUserID() + ");");
             }
             stmt.close();
             con.close();
+            System.out.println("REGISTRATION SUCCESSFULL");
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+        	System.out.println("ERROR WHILE REGISTERING USER");
+            e.printStackTrace();
         }
 	}//end of register
 	
@@ -74,12 +122,12 @@ public class DB_Access {
 	 * @throws Exception, if encounter any error.
 	 * @return ArrayList<Person>, which contains all the Person objects on the Database.
 	 */
-	public static ArrayList<Person> getUsers() throws Exception {
-		ArrayList<Person> users =  new ArrayList<Person>();
+	public static ArrayList<Person> getUsers() {
+		ArrayList<Person> users = new ArrayList<Person>();
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sqlQuery = "SELECT * FROM Person;";
+		String sqlQuery = "SELECT * FROM isandalis_database_dmst.Person;";
 		try {
             con = DB_Connection.getConnection();
 			stmt = con.prepareStatement(sqlQuery);
@@ -97,10 +145,11 @@ public class DB_Access {
 			rs.close();
 			stmt.close();
 			con.close();
-			return users;
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE FETCHING USERS FROM DATABASE");
+            e.printStackTrace();
 		}
+		return users;
 	} //End of getUsers
 	
 	/**
@@ -111,11 +160,12 @@ public class DB_Access {
 	 * @return User, the Person object
 	 * @throws Exception, if the credentials are not valid
 	 */
-	public static Person authenticateUser(String UserID, String password) throws Exception {
+	public static Person authenticateUser(String UserID, String password) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sqlQuery = "SELECT * FROM Person WHERE UserID=? AND Password=?;";
+		Person user = null;
+		String sqlQuery = "SELECT * FROM isandalis_database_dmst.Person WHERE UserID=? AND Password=md5(?);";
         try {
             con = DB_Connection.getConnection();
             stmt = con.prepareStatement(sqlQuery);
@@ -125,9 +175,9 @@ public class DB_Access {
             if (!rs.next()) {
                 rs.close();
                 stmt.close();
-                throw new Exception("Wrong UserID or password");
+                System.out.println("Wrong UserID or password");
             }
-            Person user = new Person(rs.getString("Person.UserID"),
+            user = new Person(rs.getString("Person.UserID"),
 				rs.getString("Person.firstName"),
 				rs.getString("Person.lastName"),
 				rs.getString("Person.Email"),
@@ -137,10 +187,11 @@ public class DB_Access {
             rs.close();
             stmt.close();
             con.close();
-            return user;
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+        	System.out.println("ERROR WHILE AUTHENTICATING USER");
+            e.printStackTrace();
         }
+        return user;
 	} //End of authenticateUser
 	
 	/**
@@ -150,17 +201,17 @@ public class DB_Access {
 	 * @return User, the Person object
 	 * @throws Exception, if user not found
 	 */
-	public static Person findUser(String UserID) throws Exception {
+	public static Person findUser(String UserID) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sqlQuery = "SELECT * FROM Person WHERE UserID=?;";
+		Person user = null;
+		String sqlQuery = "SELECT * FROM isandalis_database_dmst.Person WHERE UserID=?;";
 		try {
             con = DB_Connection.getConnection();
             stmt = con.prepareStatement(sqlQuery);
             stmt.setString(1, UserID);
             rs = stmt.executeQuery();
-            Person user = null;
             if (!rs.next()) {
             	rs.close();
                 stmt.close();
@@ -177,10 +228,11 @@ public class DB_Access {
             stmt.close();
             con.close();
             user = testUser;
-            return user;
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+        	System.out.println("ERROR WHILE SEARCHING FOR SPECIFIC USER");
+            e.printStackTrace();
         }
+		return user;
 	} //End of findUser
 	
 	/**
@@ -190,11 +242,10 @@ public class DB_Access {
 	 * @param email, String
 	 * @throws Exception
 	 */
-	public static void editUserEmail(String userID, String email) throws Exception {
+	public static void editUserEmail(String userID, String email) {
 		Connection con = null;
 		PreparedStatement stmt = null;		
-		String tableName = "isandalis_database_dmst.Person";
-		String updateSql = "UPDATE " + tableName + " SET Email = ? WHERE UserID = ?;";
+		String updateSql = "UPDATE isandalis_database_dmst.Person SET Email = ? WHERE UserID = ?;";
 		try {
 			con = DB_Connection.getConnection();
 		    stmt = con.prepareStatement(updateSql);
@@ -205,8 +256,8 @@ public class DB_Access {
 		    stmt.close();
 		    con.close();
 		} catch (Exception e) {
-			System.out.println("AN ERROR HAS OCCURED");
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE UPDATING USER EMAIL");
+            e.printStackTrace();
 		}
 	} //End of editUserEmail
 	
@@ -217,11 +268,10 @@ public class DB_Access {
 	 * @param phoneNumber, long
 	 * @throws Exception
 	 */
-	public static void editUserPhoneNumber(String userID, long phoneNumber) throws Exception {
+	public static void editUserPhoneNumber(String userID, long phoneNumber) {
 		Connection con = null;
 		PreparedStatement stmt = null;		
-		String tableName = "isandalis_database_dmst.Person";
-		String updateSql = "UPDATE " + tableName + " SET PhoneNumber = ? WHERE UserID = ?;";
+		String updateSql = "UPDATE isandalis_database_dmst.Person SET PhoneNumber = ? WHERE UserID = ?;";
 		try {
 			con = DB_Connection.getConnection();
 		    stmt = con.prepareStatement(updateSql);
@@ -232,8 +282,8 @@ public class DB_Access {
 		    stmt.close();
 		    con.close();
 		} catch (Exception e) {
-			System.out.println("AN ERROR HAS OCCURED");
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE UPDATING USER PHONE NUMBER");
+            e.printStackTrace();
 		}
 	} //End of editUserPhoneNumber
 	
@@ -244,11 +294,10 @@ public class DB_Access {
 	 * @param age, Age (Enumeration)
 	 * @throws Exception
 	 */
-	public static void editUserAgeCategory(String userID, Age age) throws Exception {
+	public static void editUserAgeCategory(String userID, Age age) {
 		Connection con = null;
 		PreparedStatement stmt = null;		
-		String tableName = "isandalis_database_dmst.Person";
-		String updateSql = "UPDATE " + tableName + " SET AgeCategory = ? WHERE UserID = ?;";
+		String updateSql = "UPDATE isandalis_database_dmst.Person SET AgeCategory = ? WHERE UserID = ?;";
 		try {
 			con = DB_Connection.getConnection();
 		    stmt = con.prepareStatement(updateSql);
@@ -259,8 +308,8 @@ public class DB_Access {
 		    stmt.close();
 		    con.close();
 		} catch (Exception e) {
-			System.out.println("AN ERROR HAS OCCURED");
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE UPDATING USER AGE CATEGORY");
+            e.printStackTrace();
 		}
 	} //End of editUserAgeCategory
 	
@@ -271,11 +320,10 @@ public class DB_Access {
 	 * @param password, String
 	 * @throws Exception
 	 */
-	public static void editUserPassword(String userID, String password) throws Exception {
+	public static void editUserPassword(String userID, String password) {
 		Connection con = null;
 		PreparedStatement stmt = null;		
-		String tableName = "isandalis_database_dmst.Person";
-		String updateSql = "UPDATE " + tableName + " SET Password = ? WHERE UserID = ?;";
+		String updateSql = "UPDATE isandalis_database_dmst.Person SET Password = md5(?) WHERE UserID = ?;";
 		try {
 			con = DB_Connection.getConnection();
 		    stmt = con.prepareStatement(updateSql);
@@ -286,10 +334,55 @@ public class DB_Access {
 		    stmt.close();
 		    con.close();
 		} catch (Exception e) {
-			System.out.println("AN ERROR HAS OCCURED");
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE UPDATING USER PASSWORD");
+            e.printStackTrace();
 		}
 	} //End of editUserAgeCategory
+	
+	/**
+	 * Returns a random BusinessID that doesn't exist in the Database
+	 * 
+	 * @return businessID, String (8-digit BusinessID)
+	 * @throws Exception, if encounter any error.
+	 */
+	public static String findNewBusinessID() {
+		String businessID;
+		int numbers;
+		ArrayList<String> businessIDs = new ArrayList<String>();
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sqlQuery = "SELECT BusinessID FROM isandalis_database_dmst.Business;";
+		try {
+            con = DB_Connection.getConnection();
+			stmt = con.prepareStatement(sqlQuery);
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				businessIDs.add(rs.getString("Business.BusinessID"));
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			System.out.println("ERROR WHILE FETCHING BUSINESS-IDs FROM DATABASE");
+            e.printStackTrace();
+		}
+		Random r = new Random();
+		boolean flag = true;
+		do {
+			flag = false;
+			businessID = "";
+			numbers = 10000000 + (int)(r.nextFloat() * 89990000);
+			businessID += String.valueOf(numbers);
+			for (String x: businessIDs) {
+				if (x.equals(businessID)) {
+					flag = true;
+					break;
+				}
+			}
+		} while(flag);
+		return businessID;
+	} //End of findNewBusinessID
 	
 	/**
 	 * Register/create new Business.
@@ -297,21 +390,21 @@ public class DB_Access {
 	 * @param business, Business
 	 * @throws Exception, if encounter any error.
 	 */
-	public static void register(Business business) throws Exception {
+	public static void register(Business business) {
         Connection con = null;
         PreparedStatement stmt = null;
-        String checkSql = "SELECT * FROM Business WHERE BusinessID = ? OR Email = ?";
-        String sql = "INSERT INTO Business (BusinessID, Email, Password, Name, Space, BusinessType, ventilation) VALUES (?, ?, ?, ?, ?, ?, ?);";   
+        String checkSql = "SELECT * FROM isandalis_database_dmst.Business WHERE Email = ?";
+        String sql = "INSERT INTO Business (BusinessID, Email, Password, Name, Space, height, BusinessType, ventilation) VALUES (?, ?, md5(?), ?, ?, ?, ?, ?);";   
         try {
             con = DB_Connection.getConnection();
             stmt = con.prepareStatement(checkSql);
-            stmt.setString(1, business.getBusinessID());
-            stmt.setString(2, business.getEmail());
+            stmt.setString(1, business.getEmail());
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 rs.close();
                 stmt.close();
-                throw new Exception("BusinessID or Email already registered");
+                System.out.println("Email already registered");
+                return;
             }
             rs.close();
             stmt = con.prepareStatement(sql);
@@ -320,13 +413,16 @@ public class DB_Access {
             stmt.setString(3,  business.getPassword());
             stmt.setString(4, business.getName());
             stmt.setDouble(5, business.getSpace());
-            stmt.setString(6, business.getBusinessType().name());
-            stmt.setString(7,  business.getVentilation().name());
+            stmt.setDouble(6, business.getHeight());
+            stmt.setString(7, business.getBusinessType().name());
+            stmt.setString(8,  business.getVentilation().name());
             stmt.executeUpdate();
             stmt.close();
             con.close();    
+            System.out.println("REGISTRATION SUCCESSFULL");
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+        	System.out.println("ERROR WHILE REGISTERING BUSINESS");
+            e.printStackTrace();
         }
 	}//end of register
 	
@@ -336,12 +432,12 @@ public class DB_Access {
 	 * @return ArrayList<Business>, which contains all the Business objects on the Database.
 	 * @throws Exception, if encounter any error.
 	 */
-	public static ArrayList<Business> getBusinesses() throws Exception {
+	public static ArrayList<Business> getBusinesses() {
 		ArrayList<Business> businesses =  new ArrayList<Business>();
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sqlQuery = "SELECT * FROM Business;";
+		String sqlQuery = "SELECT * FROM isandalis_database_dmst.Business;";
 		try {
             con = DB_Connection.getConnection();
 			stmt = con.prepareStatement(sqlQuery);
@@ -351,7 +447,8 @@ public class DB_Access {
 					rs.getString("Business.Email"),
 					rs.getString("Business.Password"),
 					rs.getString("Business.Name"),
-					rs.getLong("Business.Space"),
+					rs.getDouble("Business.Space"),
+					rs.getDouble("Business.height"),
 					BusinessType.valueOf(rs.getString("Business.BusinessType")),
 					AER.valueOf(rs.getString("Business.ventilation")));
 				businesses.add(business);
@@ -359,10 +456,11 @@ public class DB_Access {
 			rs.close();
 			stmt.close();
 			con.close();
-			return businesses;
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE FETCHING BUSINESSES");
+            e.printStackTrace();
 		}
+		return businesses;
 	} //End of getBusinesses
 	
 	/**
@@ -373,11 +471,12 @@ public class DB_Access {
 	 * @return business, the Business object
 	 * @throws Exception, if the credentials are not valid
 	 */
-	public static Business authenticateBusiness(String BusinessID, String password) throws Exception {
+	public static Business authenticateBusiness(String BusinessID, String password) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sqlQuery = "SELECT * FROM Business WHERE BusinessID=? AND Password=?;";
+		Business business = null;
+		String sqlQuery = "SELECT * FROM isandalis_database_dmst.Business WHERE BusinessID=? AND Password=md5(?);";
         try {
             con = DB_Connection.getConnection();
             stmt = con.prepareStatement(sqlQuery);
@@ -387,22 +486,24 @@ public class DB_Access {
             if (!rs.next()) {
                 rs.close();
                 stmt.close();
-                throw new Exception("Wrong BusinessID or password");
+                System.out.println("Wrong BusinessID or password");
             }
-            Business business = new Business(rs.getString("Business.BusinessID"),
+            business = new Business(rs.getString("Business.BusinessID"),
 					rs.getString("Business.Email"),
 					rs.getString("Business.Password"),
 					rs.getString("Business.Name"),
-					rs.getLong("Business.Space"),
+					rs.getDouble("Business.Space"),
+					rs.getDouble("Business.height"),
 					BusinessType.valueOf(rs.getString("Business.BusinessType")),
-					AER.valueOf(rs.getString("Business.AER")));
+					AER.valueOf(rs.getString("Business.ventilation")));
             rs.close();
             stmt.close();
             con.close();
-            return business;
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+        	System.out.println("ERROR WHILE AUTHENTICATING BUSINESS");
+            e.printStackTrace();
         }
+        return business;
 	} //End of authenticateBusiness
 	
 	/**
@@ -412,38 +513,38 @@ public class DB_Access {
 	 * @return business, the Business object
 	 * @throws Exception, if user not found
 	 */
-	public static Business findBusiness(String businessID) throws Exception {
+	public static Business findBusiness(String businessID) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sqlQuery = "SELECT * FROM Business WHERE BusinessID=?;";
+		Business business = null;
+		String sqlQuery = "SELECT * FROM isandalis_database_dmst.Business WHERE BusinessID = ?;";
 		try {
             con = DB_Connection.getConnection();
             stmt = con.prepareStatement(sqlQuery);
             stmt.setString(1, businessID);
             rs = stmt.executeQuery();
-            Business business = null;
             if (!rs.next()) {
             	rs.close();
                 stmt.close();
-                return business;
             }
             Business testBusiness = new Business(rs.getString("Business.BusinessID"),
 					rs.getString("Business.Email"),
 					rs.getString("Business.Password"),
 					rs.getString("Business.Name"),
-					rs.getLong("Business.Space"),
+					rs.getDouble("Business.Space"),
+					rs.getDouble("Business.height"),
 					BusinessType.valueOf(rs.getString("Business.BusinessType")),
-					AER.valueOf(rs.getString("Business.AER")));
+					AER.valueOf(rs.getString("Business.ventilation")));
             rs.close();
             stmt.close();
             con.close();
             business = testBusiness;
-            return business;
-
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+        	System.out.println("ERROR WHILE SEARCHING FOR A SPECIFIC BUSINESS");
+            e.printStackTrace();
         }
+		return business;
 	} //End of findBusiness
 	
 	/**
@@ -453,11 +554,10 @@ public class DB_Access {
 	 * @param email, String
 	 * @throws Exception
 	 */
-	public static void editBusinessEmail(String businessID, String email) throws Exception {
+	public static void editBusinessEmail(String businessID, String email) {
 		Connection con = null;
-		PreparedStatement stmt = null;		
-		String tableName = "isandalis_database_dmst.Business";
-		String updateSql = "UPDATE " + tableName + " SET Email = ? WHERE BusinessID = ?;";
+		PreparedStatement stmt = null;
+		String updateSql = "UPDATE isandalis_database_dmst.Business SET Email = ? WHERE BusinessID = ?;";
 		try {
 			con = DB_Connection.getConnection();
 		    stmt = con.prepareStatement(updateSql);
@@ -468,8 +568,8 @@ public class DB_Access {
 		    stmt.close();
 		    con.close();
 		} catch (Exception e) {
-			System.out.println("AN ERROR HAS OCCURED");
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE UPDATING BUSINESS EMAIL");
+            e.printStackTrace();
 		}
 	} //End of editBusinessEmail
 	
@@ -480,11 +580,10 @@ public class DB_Access {
 	 * @param password, String
 	 * @throws Exception
 	 */
-	public static void editBusinessPassword(String businessID, String password) throws Exception {
+	public static void editBusinessPassword(String businessID, String password) {
 		Connection con = null;
-		PreparedStatement stmt = null;		
-		String tableName = "isandalis_database_dmst.Business";
-		String updateSql = "UPDATE " + tableName + " SET Password = ? WHERE BusinessID = ?;";
+		PreparedStatement stmt = null;
+		String updateSql = "UPDATE isandalis_database_dmst.Business SET Password = md5(?) WHERE BusinessID = ?;";
 		try {
 			con = DB_Connection.getConnection();
 		    stmt = con.prepareStatement(updateSql);
@@ -495,8 +594,8 @@ public class DB_Access {
 		    stmt.close();
 		    con.close();
 		} catch (Exception e) {
-			System.out.println("AN ERROR HAS OCCURED");
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE UPDATING BUSINESS PASSWORD");
+            e.printStackTrace();
 		}
 	} //End of editBusinessPassword
 	
@@ -507,11 +606,10 @@ public class DB_Access {
 	 * @param space, double
 	 * @throws Exception
 	 */
-	public static void editBusinessSpace(String businessID, double space) throws Exception {
+	public static void editBusinessSpace(String businessID, double space) {
 		Connection con = null;
-		PreparedStatement stmt = null;		
-		String tableName = "isandalis_database_dmst.Business";
-		String updateSql = "UPDATE " + tableName + " SET Space = ? WHERE BusinessID = ?;";
+		PreparedStatement stmt = null;
+		String updateSql = "UPDATE isandalis_database_dmst.Business SET Space = ? WHERE BusinessID = ?;";
 		try {
 			con = DB_Connection.getConnection();
 		    stmt = con.prepareStatement(updateSql);
@@ -522,8 +620,8 @@ public class DB_Access {
 		    stmt.close();
 		    con.close();
 		} catch (Exception e) {
-			System.out.println("AN ERROR HAS OCCURED");
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE UPDATING BUSINESS FLOOR AREA");
+            e.printStackTrace();
 		}
 	} //End of editBusinesssSpace
 	
@@ -534,11 +632,10 @@ public class DB_Access {
 	 * @param businessType, BusinessType (Enumeration)
 	 * @throws Exception
 	 */
-	public static void editBusinessType(String businessID, BusinessType businessType) throws Exception {
+	public static void editBusinessType(String businessID, BusinessType businessType) {
 		Connection con = null;
-		PreparedStatement stmt = null;		
-		String tableName = "isandalis_database_dmst.Business";
-		String updateSql = "UPDATE " + tableName + " SET BusinessType = ? WHERE BusinessID = ?;";
+		PreparedStatement stmt = null;
+		String updateSql = "UPDATE isandalis_database_dmst.Business SET BusinessType = ? WHERE BusinessID = ?;";
 		try {
 			con = DB_Connection.getConnection();
 		    stmt = con.prepareStatement(updateSql);
@@ -549,8 +646,8 @@ public class DB_Access {
 		    stmt.close();
 		    con.close();
 		} catch (Exception e) {
-			System.out.println("AN ERROR HAS OCCURED");
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE UPDATING BUSINESS TYPE");
+            e.printStackTrace();
 		}
 	} //End of editBusinesssType
 	
@@ -561,11 +658,10 @@ public class DB_Access {
 	 * @param ventilationType, AER (Enumeration)
 	 * @throws Exception
 	 */
-	public static void editBusinessVentilationType(String businessID, AER ventilationType) throws Exception {
+	public static void editBusinessVentilationType(String businessID, AER ventilationType) {
 		Connection con = null;
-		PreparedStatement stmt = null;		
-		String tableName = "isandalis_database_dmst.Business";
-		String updateSql = "UPDATE " + tableName + " SET ventilation = ? WHERE BusinessID = ?;";
+		PreparedStatement stmt = null;
+		String updateSql = "UPDATE isandalis_database_dmst.Business SET ventilation = ? WHERE BusinessID = ?;";
 		try {
 			con = DB_Connection.getConnection();
 		    stmt = con.prepareStatement(updateSql);
@@ -576,8 +672,8 @@ public class DB_Access {
 		    stmt.close();
 		    con.close();
 		} catch (Exception e) {
-			System.out.println("AN ERROR HAS OCCURED");
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE UPDATING BUSINESS VENTILATION TYPE");
+            e.printStackTrace();
 		}
 	} //End of editBusinesssVentilationType
 	
@@ -590,7 +686,7 @@ public class DB_Access {
 	 * @param maskType, Mask (enum)
 	 * @throws Exception
 	 */
-	public static void checkIn (String businessID, String userID, java.util.Date date, Mask maskType) throws Exception {
+	public static void checkIn (String businessID, String userID, java.util.Date date, Mask maskType) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		String sql = "INSERT INTO isandalis_database_dmst.Record (UserID, MaskType,"
@@ -606,8 +702,10 @@ public class DB_Access {
             stmt.executeUpdate();
             stmt.close();
             con.close();
+            System.out.println("CHECK IN SUCCESSFULL\n");
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE CHECKING IN");
+            e.printStackTrace();
 		}
 	} //End of checkIn
 	
@@ -619,23 +717,23 @@ public class DB_Access {
 	 * @param date, java.util.Date
 	 * @throws Exception
 	 */
-	public static void checkOut(String businessID, String userID, Date date) throws Exception {
+	public static void checkOut(String businessID, String userID, Date date) {
 		Connection con = null;
-		PreparedStatement stmt = null;		
-		String tableName = "isandalis_database_dmst.Record";
-		String updateSql = "UPDATE " + tableName + " SET ExitDate = ? WHERE BusinessID = ? AND UserID = ? AND ExitDate IS NULL;";
+		PreparedStatement stmt = null;
+		String updateSql = "UPDATE isandalis_database_dmst.Record SET ExitDate = ? WHERE BusinessID = ? AND UserID = ? AND ExitDate IS NULL;";
 		try {
 			con = DB_Connection.getConnection();
-            stmt = con.prepareStatement(updateSql);
-            stmt.setTimestamp(1, new Timestamp(date.getTime()));
-            stmt.setString(2, businessID);
-            stmt.setString(3, userID);
-            stmt.executeUpdate();
-            System.out.println("CHECK OUT SUCCESSFULL\n");
-            stmt.close();
-            con.close();
+            		stmt = con.prepareStatement(updateSql);
+            		stmt.setTimestamp(1, new Timestamp(date.getTime()));
+            		stmt.setString(2, businessID);
+            		stmt.setString(3, userID);
+            		stmt.executeUpdate();
+            		System.out.println("CHECK OUT SUCCESSFULL\n");
+            		stmt.close();
+            		con.close();
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE CHECKING OUT");
+            e.printStackTrace();
 		}
 	} //End of checkOut
 
@@ -646,16 +744,14 @@ public class DB_Access {
 	 * @return list, ArrayList<Record>
 	 * @throws Exception
 	 */	
-	public static ArrayList<Record> getRecords(String businessID) throws Exception {
+	public static ArrayList<Record> getRecords(String businessID) {
 		ArrayList<Record> list = new ArrayList<Record>();
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sqlQuery = "SELECT * " +
-						  "FROM isandalis_database_dmst.Record " +
-						  "WHERE Record.BusinessID = " + businessID + ";";
+		String sqlQuery = "SELECT * FROM isandalis_database_dmst.Record WHERE Record.BusinessID = " + businessID + ";";
 		try {
-            con = DB_Connection.getConnection();
+            		con = DB_Connection.getConnection();
 			stmt = con.prepareStatement(sqlQuery);
 			rs = stmt.executeQuery();
 			while(rs.next()) { 
@@ -669,11 +765,11 @@ public class DB_Access {
 			rs.close();
 			stmt.close();
 			con.close();
-			return list;
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE FETCHING RECORDS");
+            e.printStackTrace();
 		}
-		
+		return list;
 	} //End of getRecords
 	
 	/**
@@ -683,39 +779,179 @@ public class DB_Access {
 	 * @param userID, String
 	 * @throws Exception 
 	 */
-	public static void editLastRecordsUserID(String businessID, String userID) throws Exception {
+	public static void editLastRecordsUserID(String businessID, String userID) {
 		Connection con = null;
-		PreparedStatement stmt = null;		
-		String tableName = "isandalis_database_dmst.Record";
-		String sql = "SELECT * FROM " + tableName + " WHERE BusinessID = ?"
-				+ " AND NUM = (SELECT MAX(NUM) FROM " + tableName + " WHERE BusinessID = ?);";
-		String updateSql = "UPDATE " + tableName + " SET UserID = ? WHERE NUM = ?;"; 
+		PreparedStatement stmt = null;
+		String sql = "SELECT * FROM isandalis_database_dmst.Record WHERE BusinessID = ?"
+				+ " AND NUM = (SELECT MAX(NUM) FROM isandalis_database_dmst.Record WHERE BusinessID = ?);";
+		String updateSql = "UPDATE isandalis_database_dmst.Record SET UserID = ? WHERE NUM = ?;"; 
 		try {
 			con = DB_Connection.getConnection();
-            stmt = con.prepareStatement(sql);
-            stmt.setString(1, businessID);
-            stmt.setString(2, businessID);            
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-            	int num = rs.getInt("Record.NUM");
-                rs.close();
-                stmt.close();
-                stmt = con.prepareStatement(updateSql);
-                stmt.setString(1, userID);
-                stmt.setInt(2, num);
-                stmt.executeUpdate();
-               	System.out.println("UPDATE SUCCESSFULL\n");
-               	stmt.close();
-            } else {
-            	System.out.println("AN ERROR HAS OCCURED");
-            }
-            rs.close();
-            con.close();
+            		stmt = con.prepareStatement(sql);
+            		stmt.setString(1, businessID);
+            		stmt.setString(2, businessID);            
+            		ResultSet rs = stmt.executeQuery();
+            		if (rs.next()) {
+            			int num = rs.getInt("Record.NUM");
+                		rs.close();
+                		stmt.close();
+                		stmt = con.prepareStatement(updateSql);
+                		stmt.setString(1, userID);
+                		stmt.setInt(2, num);
+                		stmt.executeUpdate();
+               			System.out.println("UPDATE SUCCESSFULL\n");
+               			stmt.close();
+            		} else {
+            			System.out.println("AN ERROR HAS OCCURED");
+            		}
+            		rs.close();
+            		con.close();
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			System.out.println("ERROR WHILE UPDATING USER ID ON LAST BUSINESS RECORD");
+            		e.printStackTrace();
 		}
 	}// End of editLastRecordsUserID
-
+	
+	/**
+	 * Register/create new Tracing User. It will need to be manually verified, because this account will have access to the personal information of all Users and Businesses
+	 *
+	 * @param password, String
+	 * @param firstName, String
+	 * @param lastName, String
+	 * @param email, String
+	 * @param phoneNum, long
+	 * @throws Exception, if encounter any error.
+	 */
+	public static void registerTracingUser(String password, String firstName, String lastName, String email, long phoneNum) {
+		Connection con = null;
+        PreparedStatement stmt = null;
+        String checkSql = "SELECT * FROM isandalis_database_dmst.TracingUser WHERE PhoneNumber = ? OR Email = ?";
+        String sql = "INSERT INTO isandalis_database_dmst.TracingUser (ID, Password, firstName, lastName, email, PhoneNumber, Verified) VALUES (?, md5(?), ?, ?, ?, ?, ?);";
+        try {
+            con = DB_Connection.getConnection();
+            stmt = con.prepareStatement(checkSql);
+            stmt.setLong(1, phoneNum);
+            stmt.setString(2,  email);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                rs.close();
+                stmt.close();
+                System.out.println("Phone or Email already registered");
+                return;
+            }
+            rs.close();
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, findNewTracingID());
+            stmt.setString(2, password);
+            stmt.setString(3, firstName);
+            stmt.setString(4, lastName);
+            stmt.setString(5, email);
+            stmt.setLong(6, phoneNum);
+            stmt.setBoolean(7,  false);
+            stmt.executeUpdate();
+            stmt.close();
+            con.close();
+            System.out.println("REGISTRATION SUCCESSFULL");
+        } catch (Exception e) {
+        	System.out.println("ERROR WHILE REGISTERING TRACING USER");
+            e.printStackTrace();
+        }
+	} //End of registerTracingUser
+	
+	/**
+	 * This method is used to authenticate a user.
+	 *
+	 * @param UserID, String
+	 * @param Password, String
+	 * @return User, the Person object
+	 * @throws Exception, if the credentials are not valid
+	 */
+	public static boolean authenticateTracingUser(String email, String password) {
+		boolean ver = true;
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sqlQuery = "SELECT * FROM isandalis_database_dmst.TracingUser WHERE Email=? AND Password=md5(?);";
+        try {
+        	boolean isVerified = false;
+            con = DB_Connection.getConnection();
+            stmt = con.prepareStatement(sqlQuery);
+            stmt.setString(1, email);
+            stmt.setString(2, password);
+            rs = stmt.executeQuery();
+            if (!rs.next()) {
+                rs.close();
+                stmt.close();
+                con.close();
+                System.out.println("Wrong UserID or password");
+                return false;
+            } else {
+            	isVerified = rs.getBoolean("TracingUser.Verified");
+            }
+            if (!isVerified) {
+            	rs.close();
+            	stmt.close();
+            	con.close();
+            	System.out.println("USER NOT VERIFIED YET");
+            	return false;
+            }
+            System.out.println("USER IS VERIFIED");
+            rs.close();
+            stmt.close();
+            con.close();
+            ver = true;
+        } catch (Exception e) {
+        	System.out.println("ERROR WHILE AUTHENTICATING USER");
+            e.printStackTrace();
+        }
+        return ver;
+	} //End of authenticateTracingUser
+	
+	/**
+	 * Returns a random TracingUserID that doesn't exist in the Database
+	 * 
+	 * @return tracingID, String (8-digit TracingUserID)
+	 * @throws Exception, if encounter any error.
+	 */
+	public static String findNewTracingID() {
+		String tracingID;
+		int numbers;
+		ArrayList<String> tracingIDs = new ArrayList<String>();
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sqlQuery = "SELECT ID FROM isandalis_database_dmst.TracingUser;";
+		try {
+            con = DB_Connection.getConnection();
+			stmt = con.prepareStatement(sqlQuery);
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				tracingIDs.add(rs.getString("TracingUser.ID"));
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (Exception e) {
+			System.out.println("ERROR WHILE FETCHING TRACING-IDs FROM DATABASE");
+            e.printStackTrace();
+		}
+		Random r = new Random();
+		boolean flag = true;
+		do {
+			flag = false;
+			tracingID = "";
+			numbers = 10000000 + (int)(r.nextFloat() * 89990000);
+			tracingID += String.valueOf(numbers);
+			for (String x: tracingIDs) {
+				if (x.equals(tracingID)) {
+					flag = true;
+					break;
+				}
+			}
+		} while(flag);
+		return tracingID;
+	} //End of findNewTracingID
+	
     /**
      * Get list of Businesses visited by User.
      *
@@ -725,18 +961,18 @@ public class DB_Access {
     public static ArrayList<Business> businessesVisited(String userId) {
         ArrayList<Business> stores = new ArrayList<Business>();
         try {
-			for (Business b : getBusinesses()) {
-			    for (Record r : getRecords(b.getBusinessID())) {
-			        if (r.getUserID().equals(userId)) {
-			            stores.add(b);
-			            break;
-			        }
-			    }
-			}
-		} catch (Exception e) {
-			System.out.println("AN ERROR HAS OCCURED: ");
-			e.printStackTrace();
+		for (Business b : getBusinesses()) {
+		    for (Record r : getRecords(b.getBusinessID())) {
+		        if (r.getUserID().equals(userId)) {
+		            stores.add(b);
+		            break;
+		        }
+		    }
 		}
+	} catch (Exception e) {
+		System.out.println("ERROR WHILE FETCHING BUSINESSES VISITED BY SPECIFIC USER");
+		e.printStackTrace();
+	}
         return stores;
     } //End of businessVisited
     
@@ -747,7 +983,7 @@ public class DB_Access {
      * @param business, Business
      * @return record, Record
      */
-    public static Record getPersonsRecord(Person person, Business business) throws NullPointerException {
+    public static Record getPersonsRecord(Person person, Business business) {
         ArrayList<Record> records ;
 		try {
 			records = getRecords(business.getBusinessID());
@@ -757,7 +993,7 @@ public class DB_Access {
             }
         }
 		} catch (Exception e) {
-			System.out.println("AN ERROR HAS OCCURED: ");
+			System.out.println("ERROR WHILE FETCHING RECORDS OF A SPECIFIC USER");
 			e.printStackTrace();
 		}
         return null;
@@ -767,10 +1003,10 @@ public class DB_Access {
     	ArrayList<Record> records = new ArrayList<Record>();
     	String formattedDate = new SimpleDateFormat("yyyy-mm-dd").format(recordtime);
     	Connection con = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		String sqlQuery = "SELECT * FROM Record WHERE CAST(EntryDate AS Date)=?;";
-		try {	
+	PreparedStatement stmt = null;
+	ResultSet rs = null;
+	String sqlQuery = "SELECT * FROM isandalis_database_dmst.Record WHERE CAST(EntryDate AS Date)=?;";
+	try {	
             con = DB_Connection.getConnection();
             stmt = con.prepareStatement(sqlQuery);
             stmt.setString(1, formattedDate);
@@ -779,7 +1015,8 @@ public class DB_Access {
             	Record record = new Record(rs.getString("Record.UserID"),
             			Mask.valueOf(rs.getString("Record.MaskType")),
 						rs.getTimestamp("Record.EntryDate"),
-						rs.getTimestamp("Record.ExitDate"));
+						rs.getTimestamp("Record.ExitDate"),
+            			rs.getString("Record.BusinessID"));
             	records.add(record);
             }
             rs.close();
@@ -795,7 +1032,7 @@ public class DB_Access {
     	Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sqlQuery = "SELECT * FROM InfectedPerson WHERE UserID=" + UserID + ";";
+		String sqlQuery = "SELECT * FROM isandalis_database_dmst.InfectedPerson WHERE UserID=" + UserID + ";";
 
 		try {
 
