@@ -144,6 +144,8 @@ public class Business {
 				", Business Name :" + name +
 				", Email : " + email +
 				", Floor Area : " + space +
-				" m2, Business Type : " + businessType;
+				" m2, Ceiling Height : " + height +
+				" m, Business Type : " + businessType +
+				"Ventilation Type : " + ventilation.name();
 	}
 }

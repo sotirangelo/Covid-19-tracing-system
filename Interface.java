@@ -115,9 +115,9 @@ public class Interface {
 	 */
 	public static String createPassword() {
 		System.out.print("Please enter a given  password : ");
-	    String passwordhere = SCNR.nextLine();
+		String passwordhere = SCNR.next();
 	    System.out.print("Please re-enter the password to confirm : ");
-	    String confirmhere = SCNR.nextLine();
+	    String confirmhere = SCNR.next();
 
 	    ArrayList<String> errorList = new ArrayList<String>();
 
@@ -126,25 +126,21 @@ public class Interface {
 	        for (String error : errorList) {
 	            System.out.println(error);
 	        }
-
 	        System.out.print("Please enter a given  password : ");
-	        passwordhere = SCNR.nextLine();
+	        passwordhere = SCNR.next();
 	        System.out.print("Please re-enter the password to confirm : ");
-	        confirmhere = SCNR.nextLine();
+	        confirmhere = SCNR.next();
 	    }
 	    System.out.println("your password is: " + passwordhere);
 	    return passwordhere;
 	}
 	public static boolean isValid(String passwordhere, String confirmhere, ArrayList<String> errorList) {
-
 	    Pattern specailCharPatten = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
 	    Pattern UpperCasePatten = Pattern.compile("[A-Z ]");
 	    Pattern lowerCasePatten = Pattern.compile("[a-z ]");
 	    Pattern digitCasePatten = Pattern.compile("[0-9 ]");
 	    errorList.clear();
-
 	    boolean flag=true;
-
 	    if (!passwordhere.equals(confirmhere)) {
 	        errorList.add("password and confirm password does not match");
 	        flag=false;
@@ -169,9 +165,7 @@ public class Interface {
 	        errorList.add("Password must have atleast one digit character !!");
 	        flag=false;
 	    }
-
 	    return flag;
-
 	}
 
 	/**
