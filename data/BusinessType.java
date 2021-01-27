@@ -1,3 +1,4 @@
+package data;
 /**
  * Business Types
  * This enumeration represents the different public-space/business types.

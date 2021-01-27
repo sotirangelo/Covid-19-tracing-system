@@ -1,3 +1,4 @@
+package data;
 /**
  * Exertion/Activity.
  * This enumeration represents the types of exertion that people make.

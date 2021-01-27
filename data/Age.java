@@ -1,3 +1,4 @@
+package data;
 /**
  * Customer's age group.
  * This enumeration represents the customer's age group that can be used.

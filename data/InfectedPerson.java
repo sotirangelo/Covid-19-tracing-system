@@ -1,3 +1,4 @@
+package data;
 
 //implements Comparable
 public class InfectedPerson extends Person { 

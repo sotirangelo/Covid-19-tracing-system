@@ -1,8 +1,7 @@
-/*
- * DB_Access
- *
- * Copyright (not) 2020 Javavirus
- */
+package database;
+
+import data.*;
+import data.Record;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,7 +22,7 @@ import java.sql.Date;
  * 
  */
 
-public class DB_Access {
+public class Access {
 	
 	/**
 	 * Returns a random UserID that doesn't exist in the Database
@@ -40,7 +39,7 @@ public class DB_Access {
 		ResultSet rs = null;
 		String sqlQuery = "SELECT UserID FROM isandalis_database_dmst.Person;";
 		try {
-            con = DB_Connection.getConnection();
+            con = Connect.getConnection();
 			stmt = con.prepareStatement(sqlQuery);
 			rs = stmt.executeQuery();
 			while(rs.next()) {
@@ -82,7 +81,7 @@ public class DB_Access {
         String checkSql = "SELECT * FROM Person WHERE PhoneNumber = ?";
         String sql = "INSERT INTO isandalis_database_dmst.Person (UserID, firstName, lastName, email, PhoneNumber, AgeCategory, Password) VALUES (?, ?, ?, ?, ?, ?, md5(?));";
         try {
-            con = DB_Connection.getConnection();
+            con = Connect.getConnection();
             stmt = con.prepareStatement(checkSql);
             stmt.setLong(1, person.getPhoneNumber());
             ResultSet rs = stmt.executeQuery();
@@ -127,7 +126,7 @@ public class DB_Access {
         String checkSql = "SELECT * FROM InfectedPerson WHERE UserID = ?";
         String sql = "INSERT INTO InfectedPerson (UserID, Propability) VALUES (?, ?);";
         try {
-            con = DB_Connection.getConnection();
+            con = Connect.getConnection();
             stmt = con.prepareStatement(checkSql);
             stmt.setString(1, person.getUserID());
             ResultSet rs = stmt.executeQuery();
@@ -163,7 +162,7 @@ public class DB_Access {
 		ResultSet rs = null;
 		String sqlQuery = "SELECT * FROM isandalis_database_dmst.Person;";
 		try {
-            con = DB_Connection.getConnection();
+            con = Connect.getConnection();
 			stmt = con.prepareStatement(sqlQuery);
 			rs = stmt.executeQuery();
 			while(rs.next()) {		
@@ -201,7 +200,7 @@ public class DB_Access {
 		Person user = null;
 		String sqlQuery = "SELECT * FROM isandalis_database_dmst.Person WHERE UserID=? AND Password=md5(?);";
         try {
-            con = DB_Connection.getConnection();
+            con = Connect.getConnection();
             stmt = con.prepareStatement(sqlQuery);
             stmt.setString(1, UserID);
             stmt.setString(2, password);
@@ -242,7 +241,7 @@ public class DB_Access {
 		Person user = null;
 		String sqlQuery = "SELECT * FROM isandalis_database_dmst.Person WHERE UserID=?;";
 		try {
-            con = DB_Connection.getConnection();
+            con = Connect.getConnection();
             stmt = con.prepareStatement(sqlQuery);
             stmt.setString(1, UserID);
             rs = stmt.executeQuery();
@@ -281,7 +280,7 @@ public class DB_Access {
 		PreparedStatement stmt = null;		
 		String updateSql = "UPDATE isandalis_database_dmst.Person SET Email = ? WHERE UserID = ?;";
 		try {
-			con = DB_Connection.getConnection();
+			con = Connect.getConnection();
 		    stmt = con.prepareStatement(updateSql);
 		    stmt.setString(1, email);
 		    stmt.setString(2,userID);
@@ -307,7 +306,7 @@ public class DB_Access {
 		PreparedStatement stmt = null;		
 		String updateSql = "UPDATE isandalis_database_dmst.Person SET PhoneNumber = ? WHERE UserID = ?;";
 		try {
-			con = DB_Connection.getConnection();
+			con = Connect.getConnection();
 		    stmt = con.prepareStatement(updateSql);
 		    stmt.setLong(1, phoneNumber);
 		    stmt.setString(2,userID);
@@ -333,7 +332,7 @@ public class DB_Access {
 		PreparedStatement stmt = null;		
 		String updateSql = "UPDATE isandalis_database_dmst.Person SET AgeCategory = ? WHERE UserID = ?;";
 		try {
-			con = DB_Connection.getConnection();
+			con = Connect.getConnection();
 		    stmt = con.prepareStatement(updateSql);
 		    stmt.setString(1, age.name());
 		    stmt.setString(2,userID);
@@ -359,7 +358,7 @@ public class DB_Access {
 		PreparedStatement stmt = null;		
 		String updateSql = "UPDATE isandalis_database_dmst.Person SET Password = md5(?) WHERE UserID = ?;";
 		try {
-			con = DB_Connection.getConnection();
+			con = Connect.getConnection();
 		    stmt = con.prepareStatement(updateSql);
 		    stmt.setString(1, password);
 		    stmt.setString(2,userID);
@@ -388,7 +387,7 @@ public class DB_Access {
 		ResultSet rs = null;
 		String sqlQuery = "SELECT BusinessID FROM isandalis_database_dmst.Business;";
 		try {
-            con = DB_Connection.getConnection();
+            con = Connect.getConnection();
 			stmt = con.prepareStatement(sqlQuery);
 			rs = stmt.executeQuery();
 			while(rs.next()) {
@@ -430,7 +429,7 @@ public class DB_Access {
         String checkSql = "SELECT * FROM isandalis_database_dmst.Business WHERE Email = ?";
         String sql = "INSERT INTO Business (BusinessID, Email, Password, Name, Space, height, BusinessType, ventilation) VALUES (?, ?, md5(?), ?, ?, ?, ?, ?);";   
         try {
-            con = DB_Connection.getConnection();
+            con = Connect.getConnection();
             stmt = con.prepareStatement(checkSql);
             stmt.setString(1, business.getEmail());
             ResultSet rs = stmt.executeQuery();
@@ -473,7 +472,7 @@ public class DB_Access {
 		ResultSet rs = null;
 		String sqlQuery = "SELECT * FROM isandalis_database_dmst.Business;";
 		try {
-            con = DB_Connection.getConnection();
+            con = Connect.getConnection();
 			stmt = con.prepareStatement(sqlQuery);
 			rs = stmt.executeQuery();
 			while(rs.next()) {			
@@ -512,7 +511,7 @@ public class DB_Access {
 		Business business = null;
 		String sqlQuery = "SELECT * FROM isandalis_database_dmst.Business WHERE BusinessID=? AND Password=md5(?);";
         try {
-            con = DB_Connection.getConnection();
+            con = Connect.getConnection();
             stmt = con.prepareStatement(sqlQuery);
             stmt.setString(1, BusinessID);
             stmt.setString(2, password);
@@ -554,7 +553,7 @@ public class DB_Access {
 		Business business = null;
 		String sqlQuery = "SELECT * FROM isandalis_database_dmst.Business WHERE BusinessID = ?;";
 		try {
-            con = DB_Connection.getConnection();
+            con = Connect.getConnection();
             stmt = con.prepareStatement(sqlQuery);
             stmt.setString(1, businessID);
             rs = stmt.executeQuery();
@@ -593,7 +592,7 @@ public class DB_Access {
 		PreparedStatement stmt = null;
 		String updateSql = "UPDATE isandalis_database_dmst.Business SET Email = ? WHERE BusinessID = ?;";
 		try {
-			con = DB_Connection.getConnection();
+			con = Connect.getConnection();
 		    stmt = con.prepareStatement(updateSql);
 		    stmt.setString(1, email);
 		    stmt.setString(2,businessID);
@@ -619,7 +618,7 @@ public class DB_Access {
 		PreparedStatement stmt = null;
 		String updateSql = "UPDATE isandalis_database_dmst.Business SET Password = md5(?) WHERE BusinessID = ?;";
 		try {
-			con = DB_Connection.getConnection();
+			con = Connect.getConnection();
 		    stmt = con.prepareStatement(updateSql);
 		    stmt.setString(1, password);
 		    stmt.setString(2,businessID);
@@ -645,7 +644,7 @@ public class DB_Access {
 		PreparedStatement stmt = null;
 		String updateSql = "UPDATE isandalis_database_dmst.Business SET Space = ? WHERE BusinessID = ?;";
 		try {
-			con = DB_Connection.getConnection();
+			con = Connect.getConnection();
 		    stmt = con.prepareStatement(updateSql);
 		    stmt.setDouble(1, space);
 		    stmt.setString(2, businessID);
@@ -671,7 +670,7 @@ public class DB_Access {
 		PreparedStatement stmt = null;
 		String updateSql = "UPDATE isandalis_database_dmst.Business SET BusinessType = ? WHERE BusinessID = ?;";
 		try {
-			con = DB_Connection.getConnection();
+			con = Connect.getConnection();
 		    stmt = con.prepareStatement(updateSql);
 		    stmt.setString(1, businessType.name());
 		    stmt.setString(2, businessID);
@@ -697,7 +696,7 @@ public class DB_Access {
 		PreparedStatement stmt = null;
 		String updateSql = "UPDATE isandalis_database_dmst.Business SET ventilation = ? WHERE BusinessID = ?;";
 		try {
-			con = DB_Connection.getConnection();
+			con = Connect.getConnection();
 		    stmt = con.prepareStatement(updateSql);
 		    stmt.setString(1, ventilationType.name());
 		    stmt.setString(2, businessID);
@@ -726,7 +725,7 @@ public class DB_Access {
 		String sql = "INSERT INTO isandalis_database_dmst.Record (UserID, MaskType,"
 				+ " EntryDate, ExitDate, BusinessID) VALUES (?, ?, ?, ?, ?);";
 		try {
-			con = DB_Connection.getConnection();
+			con = Connect.getConnection();
 			stmt = con.prepareStatement(sql);
             stmt.setString(1, userID);
             stmt.setString(2, maskType.name());
@@ -756,7 +755,7 @@ public class DB_Access {
 		PreparedStatement stmt = null;
 		String updateSql = "UPDATE isandalis_database_dmst.Record SET ExitDate = ? WHERE BusinessID = ? AND UserID = ? AND ExitDate IS NULL;";
 		try {
-			con = DB_Connection.getConnection();
+			con = Connect.getConnection();
             		stmt = con.prepareStatement(updateSql);
             		stmt.setTimestamp(1, new Timestamp(date.getTime()));
             		stmt.setString(2, businessID);
@@ -785,7 +784,7 @@ public class DB_Access {
 		ResultSet rs = null;
 		String sqlQuery = "SELECT * FROM isandalis_database_dmst.Record WHERE Record.BusinessID = " + businessID + ";";
 		try {
-            		con = DB_Connection.getConnection();
+            		con = Connect.getConnection();
 			stmt = con.prepareStatement(sqlQuery);
 			rs = stmt.executeQuery();
 			while(rs.next()) { 
@@ -820,7 +819,7 @@ public class DB_Access {
 				+ " AND NUM = (SELECT MAX(NUM) FROM isandalis_database_dmst.Record WHERE BusinessID = ?);";
 		String updateSql = "UPDATE isandalis_database_dmst.Record SET UserID = ? WHERE NUM = ?;"; 
 		try {
-			con = DB_Connection.getConnection();
+			con = Connect.getConnection();
             		stmt = con.prepareStatement(sql);
             		stmt.setString(1, businessID);
             		stmt.setString(2, businessID);            
@@ -862,7 +861,7 @@ public class DB_Access {
         String checkSql = "SELECT * FROM isandalis_database_dmst.TracingUser WHERE PhoneNumber = ? OR Email = ?";
         String sql = "INSERT INTO isandalis_database_dmst.TracingUser (ID, Password, firstName, lastName, email, PhoneNumber, Verified) VALUES (?, md5(?), ?, ?, ?, ?, ?);";
         try {
-            con = DB_Connection.getConnection();
+            con = Connect.getConnection();
             stmt = con.prepareStatement(checkSql);
             stmt.setLong(1, phoneNum);
             stmt.setString(2,  email);
@@ -908,7 +907,7 @@ public class DB_Access {
 		String sqlQuery = "SELECT * FROM isandalis_database_dmst.TracingUser WHERE Email=? AND Password=md5(?);";
         try {
         	boolean isVerified = false;
-            con = DB_Connection.getConnection();
+            con = Connect.getConnection();
             stmt = con.prepareStatement(sqlQuery);
             stmt.setString(1, email);
             stmt.setString(2, password);
@@ -956,7 +955,7 @@ public class DB_Access {
 		ResultSet rs = null;
 		String sqlQuery = "SELECT ID FROM isandalis_database_dmst.TracingUser;";
 		try {
-            con = DB_Connection.getConnection();
+            con = Connect.getConnection();
 			stmt = con.prepareStatement(sqlQuery);
 			rs = stmt.executeQuery();
 			while(rs.next()) {
@@ -1041,7 +1040,7 @@ public class DB_Access {
 	ResultSet rs = null;
 	String sqlQuery = "SELECT * FROM isandalis_database_dmst.Record WHERE CAST(EntryDate AS Date)=?;";
 	try {	
-            con = DB_Connection.getConnection();
+            con = Connect.getConnection();
             stmt = con.prepareStatement(sqlQuery);
             stmt.setString(1, formattedDate);
             rs = stmt.executeQuery();
@@ -1070,7 +1069,7 @@ public class DB_Access {
 
 		try {
 
-            con = DB_Connection.getConnection();
+            con = Connect.getConnection();
 			stmt = con.prepareStatement(sqlQuery);
 			rs = stmt.executeQuery();
 			return rs.next();

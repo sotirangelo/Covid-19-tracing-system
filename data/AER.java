@@ -1,3 +1,4 @@
+package data;
 public enum AER {
 	
     NATURAL(0.35, "Natural Ventilation"),

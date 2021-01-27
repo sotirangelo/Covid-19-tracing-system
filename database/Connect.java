@@ -1,9 +1,11 @@
+package database;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
-public class DB_Connection {
+public class Connect {
 
 	/* Database connection settings, change dbName, dbusername, dbpassword */
 	

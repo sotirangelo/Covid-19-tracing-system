@@ -1,3 +1,4 @@
+package test;
 /*
  * Interface
  *
@@ -13,6 +14,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.regex.Pattern;
+
+import data.AER;
+import data.Age;
+import data.BusinessType;
+import data.Exertion;
+import data.Mask;
+
 import java.util.regex.Matcher;  
 
 /**

@@ -1,3 +1,4 @@
+package data;
 /**
  * Mask types used.
  * This enumeration represents the types of mask that can be used.
