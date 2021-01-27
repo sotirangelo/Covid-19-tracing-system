@@ -9,20 +9,22 @@
  */
 public enum BusinessType {
 	//TODO fix restaurant and bar capacity
-	RESTAURANT(-1, "Restaurant"),
-	BAR(-1, "Bar"),
-	OFFICE(10, "Office"),
-	STORE(8, "Store"),
-	MARKET(15, "Market");
+	RESTAURANT(Exertion.R_S, Exertion.L_E_S, "Restaurant"),
+	BAR(Exertion.R_L_S, Exertion.S_L_S, "Bar"),
+	OFFICE(Exertion.R_S, Exertion.S_S, "Office"),
+	STORE(Exertion.L_E_S, Exertion.S_S, "Store"),
+	MARKET(Exertion.L_E_S, Exertion.S_S, "Market");
 
 	private final String type;
 
 	/** Square metres distance per person */
-	private final int capacity;
+	private final Exertion customerActivity;
+	private final Exertion employeeActivity;
 
-	private BusinessType(int capacity, String type) {
+	private BusinessType(Exertion customerActivity, Exertion employeeActivity, String type) {
 		this.type = type;
-		this.capacity = capacity;
+		this.customerActivity = customerActivity;
+		this.employeeActivity = employeeActivity;
 	}
 
 	@Override
@@ -30,14 +32,12 @@ public enum BusinessType {
 		return type;
 	}
 
-	/** Capacity according to business type.
-	 * This method returns the capacity of a business type,
-	 * expressed in square metres per person.
-	 *
-	 * @return int Square metres
-	 */
-	public int getCapacity() {
-		return capacity;
+	public Exertion getCustActivity() {
+		return customerActivity;
+	}
+	
+	public Exertion getEmplActivity() {
+		return employeeActivity;
 	}
 }
 

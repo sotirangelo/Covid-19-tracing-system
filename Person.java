@@ -23,7 +23,11 @@ public class Person {
 	private long phoneNumber;
 	private Age ageCategory;
 	private String password;
+	private boolean employee;
 	
+	/**
+	 * Customer Constructor
+	 */ //TODO: Fix constructor javadoc
 	public Person(String userID, String firstName, String lastName, String email, long phoneNumber, Age ageCategory, String password) {
 		this.userID = userID;
 		this.firstName = firstName;
@@ -32,7 +36,23 @@ public class Person {
 		this.phoneNumber = phoneNumber;
 		this.ageCategory = ageCategory;
 		this.password = password;
+		this.employee = false;
 	}
+	
+	/** Employee Constructor
+	 *
+	 */ //XXX: Fix it
+	public Person(String userID, String firstName, String lastName, String email, long phoneNumber, Age ageCategory, String password, boolean isEmployee) {
+		this.userID = userID;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.ageCategory = ageCategory;
+		this.password = password;
+		this.employee = employee;
+	}
+
 	
 	public String getUserID() {
 		return userID;
@@ -76,6 +96,9 @@ public class Person {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public boolean isEmployee() {
+		return employee;
+	}	
 	@Override
 	public String toString() {
 		return "User ID : " + userID +
