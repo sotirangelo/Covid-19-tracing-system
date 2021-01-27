@@ -28,7 +28,9 @@ public class DataAnalysis {
 		ArrayList<InfectedPerson> allInfected = new ArrayList<InfectedPerson>();
 		ArrayList<Business> covidstores = removeDuplicateBusinesses(DB_Access.businessesVisited(infected.getUserID()));
 		for (Business b : covidstores) {
-			allInfected.addAll(calculatePI(infected, b));
+			System.out.println(infected.getFirstName() + " has been to: " + b.getName());
+			ArrayList<InfectedPerson> temp = calculatePI(infected, b);
+			allInfected.addAll(temp);
 		}
 		return allInfected;
 	}
@@ -48,95 +50,68 @@ public class DataAnalysis {
 			}
 		}
 	}
-/*
-	public static double[] calculateErq(InfectedPerson infected, Business store) { //TODO: Add necessary methods/fields
-		var erq = new double[];
-        	var activity = getActivity(infected, store);
-		Record r = DB_Access.getPersonsRecord(infected, store);
-		int operationMinutes = getOperationMinutes(); //TODO: For each business (start record & end record)
-		int infectedEntry; //TODO
-		int infectedExit; //TODO
-		double IVRR;
-		double V;
-		for (i = 0; i < operationMinutes ; i++) {
-			if (i < infectedEntry) {
-				erq[i] = 0;
-			} else if (i <= infectedExit) {
-				erq[i] = (activity.getErq() / (IVRR * V)) * (1 - Math.exp((IVRR * -1) * (i - infectedEntry)));
-			} else {
-				erq[i] = erq[i - 1] * Math.exp((IVRR * -1) * (i - infectedExit));
-			}
-		}
-	}
 	
-	public static ArrayList<InfectedPerson> calculatePI(InfectedPerson infected, Business business) { //TODO: Add necessary methods/fields
-		var records = DB_Access.getRecords(business.getBusinessID());
-		ArrayList<InfectedPerson> output = new ArrayList<InfectedPerson>();
-		double[] erq = calculateErq(infected, business);
-		for (Record r : records) { //TODO: Get only useful records
-			double p = 0;
-			for (int i = r.getEntry() ; i < erq.length ; i++) {
-				if (i <= r.getExit()) {
-					p += erq[i] * ((i / 60) - ((i - 1) / 60));		
-				}
-			}
-			p *= business.getIR();
-			if (p > 0) {
-				output.add((InfectedPerson) r.getPerson()); //TODO: Fix Infected Person casing
-			}
-		}
-	}
-*/
-	public static ArrayList<InfectedPerson> calculatePI(InfectedPerson infected, Business business) {
+	public static ArrayList<InfectedPerson> calculatePI(InfectedPerson infected, Business business) { //TODO CHANGE TO BIGDECIMAL INSTEAD OF DOUBLE
 		ArrayList<InfectedPerson> infectedPeople = new ArrayList<InfectedPerson>();
 		Record covidrecord = DB_Access.getPersonsRecord(infected, business); //ONLY NEED FIRST RECORD (IN CASE OF MULTIPLE)
 		var records = DB_Access.getBusinessDayRecords((Timestamp) covidrecord.getEntryDate());
 		double[] erq = calculateTotalErq(covidrecord);
+		System.out.println("Where he came into contact with: ");
+		int count = 0;
 		for (Record r : records) { // Iterate day's records...
+			count++;
+			System.out.println("Record " + count);
 			if (DB_Access.isUserIDInfected(r.getUserID()) == false) { //...ignoring already infected
-				double p = 0;
-				for (int i = getEntryMinute(r) ; i < erq.length ; i++) {
-					if (i <= getExitMinute(r)) {
-						p += erq[i] * ((i / 60) - ((i - 1) / 60));		
-					}
+				double[] p = new double[getExitMinute(r)]; //erq.length
+				for (int i = 0; i < p.length; i++) { //XXX: Fill p with zeros
+					p[i] = 0;
 				}
-				try {
-				Person temp = DB_Access.findUser(r.getUserID());//TODO: Fix Exception Handling	
-				p *= getActivity(temp, business);
-				if (p > 0) {
+				for (int i = getEntryMinute(r) ; i < p.length ; i++) {
+					if (i == 0) {//in order to use i - 1
+						continue;
+					}
 					
-					infectedPeople.add(new InfectedPerson(temp, p));
+					p[i] = erq[i] * ((i / 60.0) - ((i - 1) / 60.0)); // include sum of previous p's 
+				}
+				Person temp = DB_Access.findUser(r.getUserID());
+				double sum = 0;
+				for (int j = getEntryMinute(r); j < p.length; j++) {//XXX: j = getEntryMinute() instead of 0
+					sum += p[j];
+				}
+				p[p.length - 1] = sum * getActivity(temp, business);
+				p[p.length - 1] = 1 - Math.exp(-p[p.length - 1]);
+				System.out.println("End p: " + p[p.length - 1]);
+				double percentage = p[p.length - 1] * 100;
+				System.out.println(temp.getFirstName() + ": " + String.format("%.2f", percentage) + "%\n");
+				if (p[p.length - 1] * 100 > 0.05) {
+					
+					infectedPeople.add(new InfectedPerson(temp, p[erq.length - 1] * 100));//XXX: ADDING INFECTED ONE BY ONE IS SLOW
+					System.out.println("Adding: " + temp.getFirstName());
 				}		
-					} catch (Exception e) {
-						e.printStackTrace();
-					} 
 			}
 		}
 		return infectedPeople;
 	}
-	
+
 	public static double[] calculateTotalErq(Record covidrecord) {
 		double[] totalerq = new double[(int) getBusinessDayDuration(covidrecord).toMinutes()];
-		for (int i = 0; i < 0; i++) { //XXX: Fill totalerq with zeros
+		System.out.println("totalerq.length: " + totalerq.length);
+		for (int i = 0; i < totalerq.length; i++) { //XXX: Fill totalerq with zeros
 			totalerq[i] = 0;
 		}
 		ArrayList<Record> dayrecords = DB_Access.getBusinessDayRecords((Timestamp) covidrecord.getEntryDate());
 		for (Record r : dayrecords) {
-			try {
 				if (DB_Access.isUserIDInfected(r.getUserID())) {
 					double[] erq = calculateErq(r);
 					for (int i = 0; i < erq.length; i++) {
 						totalerq[i] += erq[i];
 					}
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		}
 		return totalerq;
 		
-	}
-	
+	}	
+
 	private static double[] calculateErq (Record record) {
 		Business business = DB_Access.findBusiness(record.getBusinessID());
 		double activity = getActivity(DB_Access.findUser(record.getUserID()), business);
@@ -144,17 +119,27 @@ public class DataAnalysis {
 		double[] erq = new double[(int) businessDayDuration.toMinutes()];	
 		int entry = getEntryMinute(record);
 		int exit = getExitMinute(record);
-		for (int counter = 0; counter <= (int) businessDayDuration.toMinutes(); counter++) {
-			if (counter < entry) {
-				erq[counter] = 0;
-			} else if (counter < exit) {
-				erq[counter] = (activity / (business.getIVRR() * business.getV())) * (1 - Math.exp((business.getIVRR() * -1) * (counter - entry)));
-			} else {
-				erq[counter] = erq[counter - 1] * Math.exp((business.getIVRR() * -1) * (counter - exit));
+		System.out.println("EXIT: " + exit + " DATE: " + record.getExitDate());
+		try {
+			for (int counter = 0; counter < (int) businessDayDuration.toMinutes(); counter++) {	
+				if (counter < entry) {
+					erq[counter] = 0;
+				} else if (counter <= exit) {
+					erq[counter] = activity;
+					erq[counter] = erq[counter] / (business.getIVRR() * business.getVolume());
+					erq[counter] = erq[counter] * (1 - Math.exp(-business.getIVRR() * ((counter / 60.0) - (entry / 60.0))));
+				} else {
+					erq[counter] = erq[counter - 1];
+				}
 			}
-		}
+			for (int counter = exit + 1; counter < (int) businessDayDuration.toMinutes(); counter++) {
+				erq[counter] = erq[counter] * Math.exp(-business.getIVRR() * ((counter / 60.0) - (exit / 60.0)));
+			}
+		} catch (ArithmeticException e) {
+			System.out.println("calculateErq numbers problem");
+			e.printStackTrace();
+		}		
 		return erq;
-			
 	}
 	
 	public static LocalDateTime convertToLocalDateTime(Date dateToConvert) {
@@ -190,8 +175,7 @@ public class DataAnalysis {
 	private static Duration getBusinessDayDuration(Record record) {
 		Record start = getStartRecord(record.getEntryDate()); //start of business hours
 		Record end = getLastRecord(record.getEntryDate()); //end of business hours		
-		Business business = DB_Access.findBusiness(start.getBusinessID());
-		LocalDateTime startTime= convertToLocalDateTime(start.getEntryDate());//TODO: convertToLocalDateTime(Date dateToConvert)
+		LocalDateTime startTime= convertToLocalDateTime(start.getEntryDate());
 		LocalDateTime endTime = convertToLocalDateTime(end.getExitDate());
 		Duration businessDayDuration = Duration.between(startTime, endTime);
 		return businessDayDuration;

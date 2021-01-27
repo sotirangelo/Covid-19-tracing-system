@@ -1,5 +1,5 @@
 /*
-z * JUnit_Test_Methods
+ * JUnit_Test_Methods
  *
  * Copyright (not) 2020 Javavirus
  */
@@ -422,15 +422,12 @@ class JUnit_Test_Methods {
 					SCNR.nextLine();
 					System.out.println("Enter userID, to create InfectedPerson:");
 					String x = SCNR.nextLine();
-					InfectedPerson y = null;
-					try {
-						y = new InfectedPerson(DB_Access.findUser(x), 1);
-						System.out.println("Found user: " + y.getFirstName() + " with id: " + x);
-						//DB_Access.addInfected(y);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					InfectedPerson y = new InfectedPerson(DB_Access.findUser(x), 1);
+					System.out.println("Found user: " + y.getFirstName() + " with id: " + x);
+					DB_Access.addInfected(y);
+					System.out.println("Searching for infected");
 					ArrayList<InfectedPerson> inf = DataAnalysis.contactTracing(y);
+					System.out.println("Search complete");
 					System.out.println("List of possibly infected:");
 					for (InfectedPerson p : inf) {
 						System.out.println(p);
@@ -472,3 +469,4 @@ class JUnit_Test_Methods {
 		SCNR.close();
 	}
 }
+
