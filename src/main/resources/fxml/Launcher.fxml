@@ -9,18 +9,17 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LauncherController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LauncherController">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="430.0">
          <left>
             <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="225.0" style="-fx-background-color: #E96151;" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="lbl1AppName" layoutX="3.0" layoutY="169.0" prefHeight="46.0" prefWidth="219.0" text="Javavirus® Covid19 Tracing App " textFill="WHITE">
+                  <Label fx:id="lbl1AppName" layoutX="3.0" layoutY="151.0" prefHeight="46.0" prefWidth="219.0" text="Javavirus® Covid19 Tracing App " textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lbl2Welcome" layoutX="78.0" layoutY="152.0" prefHeight="17.0" prefWidth="71.0" text="Welcome to" textFill="WHITE" />
                   <ImageView fitHeight="103.0" fitWidth="103.0" layoutX="61.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@/images/Javavirus Logo.png" />

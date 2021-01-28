@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="339.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.EmployeeLoginController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="339.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.EmployeeLoginController">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="339.0" prefWidth="552.0">
          <left>
@@ -46,7 +46,7 @@
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Button>
-                  <Label fx:id="lbl3CustomerID" layoutX="43.0" layoutY="124.0" text="Employee ID">
+                  <Label fx:id="lbl3Email" layoutX="43.0" layoutY="124.0" text="Email">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -56,7 +56,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txt1CustomerID" layoutX="129.0" layoutY="120.0" promptText="XXXXXXXX" />
+                  <TextField fx:id="txt1Email" layoutX="129.0" layoutY="120.0" promptText="XXXXXXXX" />
                   <PasswordField fx:id="passCustomerPass" layoutX="129.0" layoutY="175.0" promptText="*****" />
                   <Label fx:id="labelStatusLogIn1" layoutX="138.0" layoutY="103.0" prefHeight="17.0" prefWidth="65.0" />
                   <Label fx:id="lbl2Status" layoutX="109.0" layoutY="59.0" prefHeight="17.0" prefWidth="111.0" text="Validation Status">

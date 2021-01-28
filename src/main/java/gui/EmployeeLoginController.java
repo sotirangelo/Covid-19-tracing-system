@@ -45,7 +45,7 @@ public class EmployeeLoginController {
 	/* Text */
 	
 	@FXML
-	private TextField txt1CustomerID;
+	private TextField txt1Email;
 	
 	/* Password */
 	
@@ -64,12 +64,12 @@ public class EmployeeLoginController {
 	
 	
 			
-	public boolean validateEmployeeID() {
-		Pattern EmployeeIDpattern = Pattern.compile("^[0-9]{8}$");
-		Matcher EmployeeIDmat;
+	public boolean validateEmail() {
+		Pattern Emailpattern = Pattern.compile("^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$");
+		Matcher Emailmat;
 			do {
-				EmployeeIDmat = EmployeeIDpattern.matcher(txt1CustomerID.getText());
-	        if(EmployeeIDmat.matches()){
+				Emailmat = Emailpattern.matcher(txt1Email.getText());
+	        if(Emailmat.matches()){
 	            lbl2Status.setTextFill(Color.GREEN);
 	            lbl2Status.setText("Validation Successful");
 	            return true;
@@ -78,7 +78,7 @@ public class EmployeeLoginController {
 		         lbl2Status.setText("Validation Failed");
 		         return false;
 	        }
-		} while(!EmployeeIDmat.matches());
+		} while(!Emailmat.matches());
 	
 	}
 
@@ -90,7 +90,7 @@ public class EmployeeLoginController {
 
 	public void ValidateOnAction(ActionEvent event) {
 		lbl2Status.setText("Validation Status");
-		if (validateEmployeeID()) {
+		if (validateEmail()) {
 			createOutput();
 		}
 	}
