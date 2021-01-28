@@ -1,4 +1,4 @@
-package gui;
+package application;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,7 +22,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class BusinessSignUpController implements Initializable {
+public class BusinessEdit implements Initializable {
 	/* Labels */
 	
 	@FXML
@@ -147,7 +147,7 @@ public class BusinessSignUpController implements Initializable {
 				labelVer1.setTextFill(Color.RED);
 	        	labelVer1.setText("Incorrect");
 	        	RegStatus.setTextFill(Color.RED);
-	        	RegStatus.setText("Registration Failed");
+	        	RegStatus.setText("Edit Failed");
 		         return false;
 			}
 		} while (!BussIdMatcher.matches());
@@ -166,7 +166,7 @@ public class BusinessSignUpController implements Initializable {
 				labelVer2.setTextFill(Color.RED);
 				labelVer2.setText("Incorrect");
 				RegStatus.setTextFill(Color.RED);
-				RegStatus.setText("Registration Failed");
+				RegStatus.setText("Edit Failed");
 				return false;
 			}
 		} while (!BusNameMat.matches());
@@ -186,7 +186,7 @@ public class BusinessSignUpController implements Initializable {
 				labelVer3.setTextFill(Color.RED);
 				labelVer3.setText("Incorrect");
 				RegStatus.setTextFill(Color.RED);
-				RegStatus.setText("Registration Failed");
+				RegStatus.setText("Edit Failed");
 				return false;
 			}
 		} while (!BspaceMat.matches());
@@ -205,7 +205,7 @@ public class BusinessSignUpController implements Initializable {
 				labelVer4.setTextFill(Color.RED);
 				labelVer4.setText("Incorrect");
 				RegStatus.setTextFill(Color.RED);
-				RegStatus.setText("Registration Failed");
+				RegStatus.setText("Edit Failed");
 				return false;
 			}
 		} while (!BHeightMat.matches());
@@ -224,7 +224,7 @@ public class BusinessSignUpController implements Initializable {
 				labelVer6.setTextFill(Color.RED);
 				labelVer6.setText("Incorrect");
 				RegStatus.setTextFill(Color.RED);
-				RegStatus.setText("Registration Failed");
+				RegStatus.setText("Edit Failed");
 				return false;
 			}
 		} while(!EmailMat.matches());
@@ -235,15 +235,15 @@ public class BusinessSignUpController implements Initializable {
 	
 	
 
-	public void BusinessSignUp(ActionEvent event) throws Exception {
-		Stage businessSignUpStage = new Stage();
-		Parent root = FXMLLoader.load(getClass().getResource("/application/BusinessSignUp.fxml"));
+	public void BusinessEdit(ActionEvent event) throws Exception {
+		Stage businessEditStage = new Stage();
+		Parent root = FXMLLoader.load(getClass().getResource("/gui/BusinessEdit.fxml"));
 		Scene scene = new Scene(root,384,189);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		businessSignUpStage.getIcons().add(new Image("/application/Javavirus GUI images/Javavirus Logo.png"));
-		businessSignUpStage.setTitle("Javavirus® Covid19 Tracing App - Business Sign Up");
-		businessSignUpStage.setScene(scene);
-		businessSignUpStage.show();
+		businessEditStage.getIcons().add(new Image("/gui/Javavirus GUI images/Javavirus Logo.png"));
+		businessEditStage.setTitle("Javavirus® Covid19 Tracing App - Business Sign Up");
+		businessEditStage.setScene(scene);
+		businessEditStage.show();
 	}
 
 	
@@ -270,7 +270,7 @@ public class BusinessSignUpController implements Initializable {
 		validateEmail();
 		if (validateBusid() && validateBname() && validateBspace() && validateHeight() && validateEmail()) {
 			RegStatus.setTextFill(Color.GREEN);
-			RegStatus.setText("Registration Succesful");
+			RegStatus.setText("Edit Succesful");
 		}
 		
 	}

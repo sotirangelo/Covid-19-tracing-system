@@ -1,4 +1,4 @@
-package gui;
+package application;
 
 import java.net.URL;
 import java.util.ArrayList;

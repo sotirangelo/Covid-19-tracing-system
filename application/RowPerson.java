@@ -1,4 +1,4 @@
-package gui;
+package application;
  
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;

@@ -1,4 +1,4 @@
-package gui;
+package application;
 
 //implements Comparable
 public class InfectedPerson extends Person { 
