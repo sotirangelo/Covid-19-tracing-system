@@ -29,9 +29,6 @@ public class BusinessEdit implements Initializable {
 	private Label lbl1Title;
 	
 	@FXML
-	private Label lbl2BusinessID;
-	
-	@FXML
 	private Label lbl3Name;
 	
 	@FXML
@@ -133,25 +130,7 @@ public class BusinessEdit implements Initializable {
 	
 	
 	
-	
-	public boolean validateBusid() {
-		Pattern BussIdpattern = Pattern.compile("^[0-9]{8}$");
-		Matcher BussIdMatcher;
-		do {
-			BussIdMatcher = BussIdpattern.matcher(txt1ID.getText());
-			if (BussIdMatcher.matches()) {
-				 labelVer1.setTextFill(Color.GREEN);
-		         labelVer1.setText("Okay");
-		         return true;
-			} else {
-				labelVer1.setTextFill(Color.RED);
-	        	labelVer1.setText("Incorrect");
-	        	RegStatus.setTextFill(Color.RED);
-	        	RegStatus.setText("Edit Failed");
-		         return false;
-			}
-		} while (!BussIdMatcher.matches());
-	}
+
 	
 	public boolean validateBname() {
 		Pattern Busnamepattern = Pattern.compile("(?i)[a-z]([- ',.a-z]{0,23}[a-z])");
@@ -174,7 +153,7 @@ public class BusinessEdit implements Initializable {
 	}
 	
 	public boolean validateBspace() {
-		Pattern BusSpacepatt = Pattern.compile("^[0-9]{1,6}-{0}$");
+		Pattern BusSpacepatt = Pattern.compile("^[+]?(([1-9]\\d*)|0)(\\.\\d+)?");
 		Matcher BspaceMat;
 		do {
 			BspaceMat = BusSpacepatt.matcher(txt3Space.getText());
@@ -193,7 +172,7 @@ public class BusinessEdit implements Initializable {
 	}
 	
 	public boolean validateHeight () {
-		Pattern BHeightPatt = Pattern.compile("^[0-9]{1,4}-{0}$");
+		Pattern BHeightPatt = Pattern.compile("^[+]?(([1-9]\\d*)|0)(\\.\\d+)?");
 		Matcher BHeightMat;
 		do {
 			BHeightMat = BHeightPatt.matcher(txt4Height.getText());
@@ -241,7 +220,7 @@ public class BusinessEdit implements Initializable {
 		Scene scene = new Scene(root,384,189);
 		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 		businessEditStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
-		businessEditStage.setTitle("Javavirus� Covid19 Tracing App - Business Sign Up");
+		businessEditStage.setTitle("Javavirus Covid19 Tracing App - Business Sign Up");
 		businessEditStage.setScene(scene);
 		businessEditStage.show();
 	}
@@ -263,12 +242,11 @@ public class BusinessEdit implements Initializable {
 	}
 	
 	public void SignUpButtonOnAction1() {
-		validateBusid();
 		validateBname();
 		validateBspace();
 		validateHeight();
 		validateEmail();
-		if (validateBusid() && validateBname() && validateBspace() && validateHeight() && validateEmail()) {
+		if (validateBname() && validateBspace() && validateHeight() && validateEmail()) {
 			RegStatus.setTextFill(Color.GREEN);
 			RegStatus.setText("Edit Succesful");
 		}

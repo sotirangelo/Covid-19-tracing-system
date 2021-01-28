@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="482.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.EmployeeSignUpController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="482.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.EmployeeSignUpController">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="482.0">
          <left>
@@ -26,7 +26,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lbl9CustomerSignUp" layoutX="69.0" layoutY="327.0" prefHeight="20.0" prefWidth="120.0" text="Employee Sign Up" textFill="WHITE">
+                  <Label fx:id="lbl9CustomerSignUp" layoutX="66.0" layoutY="327.0" prefHeight="20.0" prefWidth="127.0" text="EODY User Sign Up" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -42,17 +42,12 @@
          <right>
             <AnchorPane prefHeight="495.0" prefWidth="247.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="lbl3FirstName" layoutX="64.0" layoutY="126.0" prefHeight="18.0" prefWidth="62.0" text="First Name">
+                  <Label fx:id="lbl3FirstName" layoutX="64.0" layoutY="199.0" prefHeight="18.0" prefWidth="62.0" text="First Name">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lbl4LastName" layoutX="65.0" layoutY="200.0" text="Last Name">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lbl5UserID" layoutX="66.0" layoutY="271.0" prefHeight="18.0" prefWidth="59.0" text="Tracing ID">
+                  <Label fx:id="lbl4LastName" layoutX="65.0" layoutY="271.0" text="Last Name">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -67,28 +62,22 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lbl2RegistrationStatus" layoutX="67.0" layoutY="69.0" prefHeight="17.0" prefWidth="133.0" text="Registration Status">
+                  <Label fx:id="lbl2RegistrationStatus" layoutX="72.0" layoutY="100.0" prefHeight="17.0" prefWidth="133.0" text="Registration Status">
                      <font>
                         <Font name="System Italic" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txt1FirstName" layoutX="65.0" layoutY="144.0" promptText="e.g Georgios" />
-                  <TextField fx:id="txt2LastName" layoutX="64.0" layoutY="216.0" promptText="e.g Papadopoulos" />
-                  <TextField fx:id="txt3UserID" layoutX="64.0" layoutY="288.0" promptText="XXXXXXXX" />
+                  <TextField fx:id="txt1FirstName" layoutX="65.0" layoutY="216.0" promptText="e.g Georgios" />
+                  <TextField fx:id="txt2LastName" layoutX="64.0" layoutY="288.0" promptText="e.g Papadopoulos" />
                   <TextField fx:id="txt4Email" layoutX="65.0" layoutY="356.0" promptText="e.g geopap@gmail.com" />
                   <TextField fx:id="txt5PhoneNumber" layoutX="64.0" layoutY="425.0" promptText="XXXXXXXXXX" />
                   <Button fx:id="btn1Register" layoutX="80.0" layoutY="548.0" mnemonicParsing="false" onAction="#SignUpButtonOnAction" style="-fx-background-color: #E96151;" text="Sign Up" textFill="WHITE" />
-                  <Label fx:id="lbl10FirstNameStatus" layoutX="139.0" layoutY="125.0" prefHeight="4.0" prefWidth="73.0">
+                  <Label fx:id="lbl10FirstNameStatus" layoutX="140.0" layoutY="198.0" prefHeight="17.0" prefWidth="73.0">
                      <font>
                         <Font name="System Italic" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lbl11LastNameStatus" layoutX="139.0" layoutY="200.0" prefHeight="17.0" prefWidth="74.0">
-                     <font>
-                        <Font name="System Italic" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lbl12UserIDStatus" layoutX="125.0" layoutY="274.0" prefHeight="17.0" prefWidth="73.0">
+                  <Label fx:id="lbl11LastNameStatus" layoutX="139.0" layoutY="271.0" prefHeight="17.0" prefWidth="74.0">
                      <font>
                         <Font name="System Italic" size="12.0" />
                      </font>
@@ -104,12 +93,6 @@
                      </font>
                   </Label>
                   <ImageView fitHeight="29.0" fitWidth="47.0" layoutX="14.0" layoutY="127.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="41.0" fitWidth="60.0" layoutX="8.0" layoutY="208.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="29.0" fitWidth="27.0" layoutX="25.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@/images/PersonID.png" />
-                     </image>
-                  </ImageView>
                   <ImageView fitHeight="28.0" fitWidth="29.0" layoutX="24.0" layoutY="355.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@/images/Email.png" />
@@ -120,12 +103,12 @@
                         <Image url="@/images/Phone.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="20.0" fitWidth="21.0" layoutX="27.0" layoutY="145.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="20.0" fitWidth="21.0" layoutX="27.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@/images/PersonName.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="28.0" fitWidth="38.0" layoutX="20.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="28.0" fitWidth="38.0" layoutX="20.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@/images/Person Icon.png.png" />
                      </image>

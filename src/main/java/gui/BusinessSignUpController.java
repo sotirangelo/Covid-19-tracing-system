@@ -5,6 +5,9 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import data.AER;
+import data.Business;
+import data.BusinessType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,9 +30,6 @@ public class BusinessSignUpController implements Initializable {
 	
 	@FXML
 	private Label lbl1Title;
-	
-	@FXML
-	private Label lbl2BusinessID;
 	
 	@FXML
 	private Label lbl3Name;
@@ -82,6 +82,9 @@ public class BusinessSignUpController implements Initializable {
 	@FXML
 	private Label RegStatus;
 	
+	@FXML 
+	private Label RegStatus1;
+	
 	/* Buttons */
 	
 	@FXML
@@ -91,12 +94,7 @@ public class BusinessSignUpController implements Initializable {
 	private Button btn2Close;
 	
 	
-	
-	
 	/* Text Fields */
-	
-	@FXML
-	private TextField txt1ID;
 	
 	@FXML
 	private TextField txt2Name;
@@ -108,19 +106,13 @@ public class BusinessSignUpController implements Initializable {
 	private TextField txt4Height;
 	
 	@FXML
-	private TextField txt5Type;
-	
-	@FXML
 	private TextField txt6Email;
-	
-	@FXML
-	private TextField txt7AER;
 	
 	
 	/* Password Fields */
 	
 	@FXML
-	private PasswordField pass1Email;
+	private PasswordField pass1Pass;
 	
 	
 	/* ComboBoxes */
@@ -130,28 +122,6 @@ public class BusinessSignUpController implements Initializable {
 	
 	@FXML
 	private ComboBox<String> comb2;
-	
-	
-	
-	
-	public boolean validateBusid() {
-		Pattern BussIdpattern = Pattern.compile("^[0-9]{8}$");
-		Matcher BussIdMatcher;
-		do {
-			BussIdMatcher = BussIdpattern.matcher(txt1ID.getText());
-			if (BussIdMatcher.matches()) {
-				 labelVer1.setTextFill(Color.GREEN);
-		         labelVer1.setText("Okay");
-		         return true;
-			} else {
-				labelVer1.setTextFill(Color.RED);
-	        	labelVer1.setText("Incorrect");
-	        	RegStatus.setTextFill(Color.RED);
-	        	RegStatus.setText("Registration Failed");
-		         return false;
-			}
-		} while (!BussIdMatcher.matches());
-	}
 	
 	public boolean validateBname() {
 		Pattern Busnamepattern = Pattern.compile("(?i)[a-z]([- ',.a-z]{0,23}[a-z])");
@@ -174,7 +144,7 @@ public class BusinessSignUpController implements Initializable {
 	}
 	
 	public boolean validateBspace() {
-		Pattern BusSpacepatt = Pattern.compile("^[0-9]{1,6}-{0}$");
+		Pattern BusSpacepatt = Pattern.compile("^[+]?(([1-9]\\d*)|0)(\\.\\d+)?");
 		Matcher BspaceMat;
 		do {
 			BspaceMat = BusSpacepatt.matcher(txt3Space.getText());
@@ -193,7 +163,7 @@ public class BusinessSignUpController implements Initializable {
 	}
 	
 	public boolean validateHeight () {
-		Pattern BHeightPatt = Pattern.compile("^[0-9]{1,4}-{0}$");
+		Pattern BHeightPatt = Pattern.compile("^[+]?(([1-9]\\d*)|0)(\\.\\d+)?");
 		Matcher BHeightMat;
 		do {
 			BHeightMat = BHeightPatt.matcher(txt4Height.getText());
@@ -230,10 +200,6 @@ public class BusinessSignUpController implements Initializable {
 		} while(!EmailMat.matches());
 		
 	}
-	
-	
-	
-	
 
 	public void BusinessSignUp(ActionEvent event) throws Exception {
 		Stage businessSignUpStage = new Stage();
@@ -241,7 +207,7 @@ public class BusinessSignUpController implements Initializable {
 		Scene scene = new Scene(root,384,189);
 		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 		businessSignUpStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
-		businessSignUpStage.setTitle("Javavirus� Covid19 Tracing App - Business Sign Up");
+		businessSignUpStage.setTitle("Javavirus Covid19 Tracing App - Business Sign Up");
 		businessSignUpStage.setScene(scene);
 		businessSignUpStage.show();
 	}
@@ -256,25 +222,30 @@ public class BusinessSignUpController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		ObservableList<String> list = FXCollections.observableArrayList("Restaurant", "Bar" , "Office", "Store", "Market");
+		ObservableList<String> list = FXCollections.observableArrayList("RESTAURANT", "BAR" , "OFFICE", "STORE", "MARKET");
 		comb1.setItems(list);
-		ObservableList<String> list1 = FXCollections.observableArrayList("Natural", "Open");
+		ObservableList<String> list1 = FXCollections.observableArrayList("NATURAL", "OPEN");
 		comb2.setItems(list1);
 	}
 	
 	public void SignUpButtonOnAction1() {
-		validateBusid();
 		validateBname();
 		validateBspace();
 		validateHeight();
 		validateEmail();
-		if (validateBusid() && validateBname() && validateBspace() && validateHeight() && validateEmail()) {
+		if (validateBname() && validateBspace() && validateHeight() && validateEmail()) {
+			String businessID = database.Access.findNewBusinessID();
+			Business business = new Business(businessID, txt6Email.getText(), pass1Pass.getText(),
+					txt2Name.getText(), Double.parseDouble(txt3Space.getText()), Double.parseDouble(txt4Height.getText()), 
+					BusinessType.valueOf(comb1.getSelectionModel().getSelectedItem().toString()), 
+					AER.valueOf(comb2.getSelectionModel().getSelectedItem().toString()));
+			database.Access.register(business);
 			RegStatus.setTextFill(Color.GREEN);
-			RegStatus.setText("Registration Succesful");
+			RegStatus.setText("Registration Successful.");
+			RegStatus1.setTextFill(Color.GREEN);
+			RegStatus1.setText("Your BusinessID is: " + businessID + ".");
 		}
 		
 	}
 	
-	
-
 }

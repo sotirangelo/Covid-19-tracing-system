@@ -1,4 +1,17 @@
-package data;
+package application;
+
+
+/**
+ * Customer's age group.
+ * This enumeration represents the customer's age group that can be used.
+ * Each age group is defined by an efficiency metre, ranging from 0 to 3, depending on the mask type.
+ * (higher means more vulnerable against COVID-19)
+ *
+ * @version 0.1 26 Nov 2020
+ * @author Serafeim
+ */
+ 
+ 
 /**
  * Customer's age group.
  * This enumeration represents the customer's age group that can be used.

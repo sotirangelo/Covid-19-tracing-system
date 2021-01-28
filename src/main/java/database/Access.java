@@ -79,7 +79,7 @@ public class Access {
         Connection con = null;
         PreparedStatement stmt = null;
         String checkSql = "SELECT * FROM Person WHERE PhoneNumber = ?";
-        String sql = "INSERT INTO isandalis_database_dmst.Person (UserID, firstName, lastName, email, PhoneNumber, AgeCategory, Password) VALUES (?, ?, ?, ?, ?, ?, md5(?));";
+        String sql = "INSERT INTO isandalis_database_dmst.Person (UserID, firstName, lastName, email, PhoneNumber, Password) VALUES (?, ?, ?, ?, ?, md5(?));";
         try {
             con = Connect.getConnection();
             stmt = con.prepareStatement(checkSql);
@@ -98,14 +98,8 @@ public class Access {
             stmt.setString(3, person.getLastName());
             stmt.setString(4, person.getEmail());
             stmt.setLong(5, person.getPhoneNumber());
-            stmt.setString(6, person.getAgeCategory().name());
-            stmt.setString(7,  person.getPassword());
+            stmt.setString(6,  person.getPassword());
             stmt.executeUpdate();
-            if (person.isEmployee()) {
-            	stmt.executeQuery("INSERT INTO "
-            			+ "isandalis_database_dmst.Employee (UserID) "
-            			+ "VALUES (" + person.getUserID() + ");");
-            }
             stmt.close();
             con.close();
             System.out.println("REGISTRATION SUCCESSFULL");
@@ -171,7 +165,6 @@ public class Access {
 					rs.getString("Person.lastName"),
 					rs.getString("Person.Email"),
 					rs.getLong("Person.PhoneNumber"),
-					Age.valueOf(rs.getString("Person.AgeCategory")),
 					rs.getString("Person.Password"));
 				users.add(user);
 			}
@@ -209,17 +202,18 @@ public class Access {
                 rs.close();
                 stmt.close();
                 System.out.println("Wrong UserID or password");
+                return null;
             }
             user = new Person(rs.getString("Person.UserID"),
 				rs.getString("Person.firstName"),
 				rs.getString("Person.lastName"),
 				rs.getString("Person.Email"),
 				rs.getLong("Person.PhoneNumber"),
-				Age.valueOf(rs.getString("Person.AgeCategory")),
 				rs.getString("Person.Password"));
             rs.close();
             stmt.close();
             con.close();
+            System.out.println("LOG IN SUCCESSFULL");
         } catch (Exception e) {
         	System.out.println("ERROR WHILE AUTHENTICATING USER");
             e.printStackTrace();
@@ -255,7 +249,6 @@ public class Access {
 					rs.getString("Person.lastName"),
 					rs.getString("Person.Email"),
 					rs.getLong("Person.PhoneNumber"),
-					Age.valueOf(rs.getString("Person.AgeCategory")),
 					rs.getString("Person.Password"));
             rs.close();
             stmt.close();
@@ -319,32 +312,6 @@ public class Access {
             e.printStackTrace();
 		}
 	} //End of editUserPhoneNumber
-	
-	/**
-	 * Updates existing User's Age Category with the given one
-	 * 
-	 * @param userID, String
-	 * @param age, Age (Enumeration)
-	 * @throws Exception
-	 */
-	public static void editUserAgeCategory(String userID, Age age) {
-		Connection con = null;
-		PreparedStatement stmt = null;		
-		String updateSql = "UPDATE isandalis_database_dmst.Person SET AgeCategory = ? WHERE UserID = ?;";
-		try {
-			con = Connect.getConnection();
-		    stmt = con.prepareStatement(updateSql);
-		    stmt.setString(1, age.name());
-		    stmt.setString(2,userID);
-		    stmt.executeUpdate();
-		    System.out.println("AGE CATEGORY UPDATED SUCCESSFULLY");
-		    stmt.close();
-		    con.close();
-		} catch (Exception e) {
-			System.out.println("ERROR WHILE UPDATING USER AGE CATEGORY");
-            e.printStackTrace();
-		}
-	} //End of editUserAgeCategory
 	
 	/**
 	 * Updates existing User's Password with the given one
@@ -532,9 +499,9 @@ public class Access {
             rs.close();
             stmt.close();
             con.close();
+            System.out.println("LOG IN SUCCESSFULL");
         } catch (Exception e) {
         	System.out.println("ERROR WHILE AUTHENTICATING BUSINESS");
-            e.printStackTrace();
         }
         return business;
 	} //End of authenticateBusiness
@@ -719,9 +686,10 @@ public class Access {
 	 * @param maskType, Mask (enum)
 	 * @throws Exception
 	 */
-	public static void checkIn (String businessID, String userID, java.util.Date date, Mask maskType) {
+	public static boolean checkIn (String businessID, String userID, java.util.Date date, Mask maskType) {
 		Connection con = null;
 		PreparedStatement stmt = null;
+		boolean success = false;
 		String sql = "INSERT INTO isandalis_database_dmst.Record (UserID, MaskType,"
 				+ " EntryDate, ExitDate, BusinessID) VALUES (?, ?, ?, ?, ?);";
 		try {
@@ -735,11 +703,13 @@ public class Access {
             stmt.executeUpdate();
             stmt.close();
             con.close();
+            success = true;
             System.out.println("CHECK IN SUCCESSFULL\n");
 		} catch (Exception e) {
 			System.out.println("ERROR WHILE CHECKING IN");
             e.printStackTrace();
 		}
+		return success;
 	} //End of checkIn
 	
 	/**
@@ -750,9 +720,10 @@ public class Access {
 	 * @param date, java.util.Date
 	 * @throws Exception
 	 */
-	public static void checkOut(String businessID, String userID, Date date) {
+	public static boolean checkOut(String businessID, String userID, Date date) {
 		Connection con = null;
 		PreparedStatement stmt = null;
+		boolean success = false;
 		String updateSql = "UPDATE isandalis_database_dmst.Record SET ExitDate = ? WHERE BusinessID = ? AND UserID = ? AND ExitDate IS NULL;";
 		try {
 			con = Connect.getConnection();
@@ -764,10 +735,12 @@ public class Access {
             		System.out.println("CHECK OUT SUCCESSFULL\n");
             		stmt.close();
             		con.close();
+            		success = true;
 		} catch (Exception e) {
 			System.out.println("ERROR WHILE CHECKING OUT");
             e.printStackTrace();
 		}
+		return success;
 	} //End of checkOut
 
 	/**

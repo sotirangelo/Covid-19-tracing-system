@@ -3,10 +3,12 @@ package gui;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import data.Person;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -46,10 +48,7 @@ import javafx.stage.Stage;
 		private Label lbl10FirstNameStatus;
 		
 		@FXML
-		private Label lbl11LastNameStatus;
-		
-		@FXML
-		private Label lbl12UserIDStatus;
+		private Label lbl11LastNameStatus;	
 		
 		@FXML
 		private Label lbl13EmailStatus;
@@ -59,9 +58,10 @@ import javafx.stage.Stage;
 		
 		@FXML
 		private Label lbl15AgeStatus;
-			
-	
 		
+		@FXML
+		private Label lbl3RegistrationStatus;
+			
 		/* Buttons */
 		
 		@FXML
@@ -69,10 +69,7 @@ import javafx.stage.Stage;
 		
 		@FXML
 		private Button btn2Close;
-		
-		
-		
-		
+			
 		/* Text Fields */
 		
 		@FXML
@@ -82,103 +79,75 @@ import javafx.stage.Stage;
 		private TextField txt2LastName;
 		
 		@FXML
-		private TextField txt3UserID;
-		
-		@FXML
 		private TextField txt4Email;
 		
 		@FXML
 		private TextField txt5PhoneNumber;
 		
 		@FXML
-		private TextField txt6Age;
+		private PasswordField txtPass;
 		
-		
-		
-		public void SignUpButtonOnAction() {	
+		public void SignUpButtonOnAction() {
 			validateFirstName();
 			validateLastName();
-			validateUserID();
 			validateEmail();
 			validatePhoneNumber();
-			validateAge();
-			if (validateFirstName() && validateLastName() && validateUserID() && validateEmail() 
-				&& validatePhoneNumber() && validateAge()) {
+			String userID = database.Access.findNewUserID();
+			if (validateFirstName() && validateLastName() && validateEmail() && validatePhoneNumber()) {
+				Person user = new Person(userID, txt1FirstName.getText(), txt2LastName.getText(),
+						txt4Email.getText(), Long.parseLong(txt5PhoneNumber.getText()), txtPass.getText());
 				lbl2RegistrationStatus.setTextFill(Color.GREEN);
-				lbl2RegistrationStatus.setText("Registration Succesful");
-				/*
-				Stage customerSignUpStage = (Stage) btn1Register.getScene().getWindow();
-				customerSignUpStage.close();
-				*/
+				lbl2RegistrationStatus.setText("Registration Succesfful.");
+				lbl3RegistrationStatus.setTextFill(Color.GREEN);
+				lbl3RegistrationStatus.setText("Your UserID is: " + userID + ".");
+				database.Access.register(user);
 			}
 		}
 		
 			
-			public boolean validateFirstName() {
-			Pattern FirstNamepattern = Pattern.compile("(?i)[a-z]([- ',.a-z]{0,23}[a-z])");
-			Matcher FirstNamemat;
+		public boolean validateFirstName() {
+		Pattern FirstNamepattern = Pattern.compile("(?i)[a-z]([- ',.a-z]{0,23}[a-z])");
+		Matcher FirstNamemat;
+			do {
+			FirstNamemat = FirstNamepattern.matcher(txt1FirstName.getText());
+	        if(FirstNamemat.matches()){
+	            lbl10FirstNameStatus.setTextFill(Color.GREEN);
+	            lbl10FirstNameStatus.setText("Okay");
+	            return true;
+	        } else {
+	        	lbl10FirstNameStatus.setTextFill(Color.RED);
+	        	lbl10FirstNameStatus.setText("Incorrect");
+	        	lbl2RegistrationStatus.setTextFill(Color.RED);
+	        	lbl2RegistrationStatus.setText("Registration Failed");
+	        	return false;
+	        }
+			} while(!FirstNamemat.matches());
+		}
+			
+			
+		public boolean validateLastName() {
+			Pattern LastNamepattern = Pattern.compile("(?i)[a-z]([- ',.a-z]{0,23}[a-z])");
+			Matcher LastNamemat;
 				do {
-				FirstNamemat = FirstNamepattern.matcher(txt1FirstName.getText());
-		        if(FirstNamemat.matches()){
-		            lbl10FirstNameStatus.setTextFill(Color.GREEN);
-		            lbl10FirstNameStatus.setText("Okay");
+				LastNamemat = LastNamepattern.matcher(txt2LastName.getText());
+		        if(LastNamemat.matches()){
+		            lbl11LastNameStatus.setTextFill(Color.GREEN);
+		            lbl11LastNameStatus.setText("Okay");
 		            return true;
 		        } else {
-		        	lbl10FirstNameStatus.setTextFill(Color.RED);
-		        	lbl10FirstNameStatus.setText("Incorrect");
+		        	lbl11LastNameStatus.setTextFill(Color.RED);
+		        	lbl11LastNameStatus.setText("Incorrect");
 		        	lbl2RegistrationStatus.setTextFill(Color.RED);
 		        	lbl2RegistrationStatus.setText("Registration Failed");
 		        	return false;
 		        }
-			} while(!FirstNamemat.matches());
+			} while(!LastNamemat.matches());
 			}
-			
-			
-			public boolean validateLastName() {
-				Pattern LastNamepattern = Pattern.compile("(?i)[a-z]([- ',.a-z]{0,23}[a-z])");
-				Matcher LastNamemat;
-					do {
-					LastNamemat = LastNamepattern.matcher(txt2LastName.getText());
-			        if(LastNamemat.matches()){
-			            lbl11LastNameStatus.setTextFill(Color.GREEN);
-			            lbl11LastNameStatus.setText("Okay");
-			            return true;
-			        } else {
-			        	lbl11LastNameStatus.setTextFill(Color.RED);
-			        	lbl11LastNameStatus.setText("Incorrect");
-			        	lbl2RegistrationStatus.setTextFill(Color.RED);
-			        	lbl2RegistrationStatus.setText("Registration Failed");
-			        	return false;
-			        }
-				} while(!LastNamemat.matches());
-				}
-			
-			
-			public boolean validateUserID() {
-				Pattern UserIDpattern = Pattern.compile("^[0-9]{8}$");
-				Matcher UserIDmat;
-					do {
-						UserIDmat = UserIDpattern.matcher(txt3UserID.getText());
-			        if(UserIDmat.matches()){
-			            lbl12UserIDStatus.setTextFill(Color.GREEN);
-			            lbl12UserIDStatus.setText("Okay");
-			            return true;
-			        } else {
-			        	lbl12UserIDStatus.setTextFill(Color.RED);
-			        	lbl12UserIDStatus.setText("Incorrect");
-			        	lbl2RegistrationStatus.setTextFill(Color.RED);
-			        	lbl2RegistrationStatus.setText("Registration Failed");
-			        	return false;
-			        }
-				} while(!UserIDmat.matches());
-				}
-			
-			
 		
-			public boolean validateEmail() {
-				Pattern Emailpattern = Pattern.compile("^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$");
-				Matcher Emailmat;
-					do {
+		public boolean validateEmail() {
+			Pattern Emailpattern = Pattern.compile("^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$");
+			Matcher Emailmat;
+				do {
 					Emailmat = Emailpattern.matcher(txt4Email.getText());
 			        if(Emailmat.matches()){
 			            lbl13EmailStatus.setTextFill(Color.GREEN);
@@ -193,63 +162,30 @@ import javafx.stage.Stage;
 			        }
 				} while(!Emailmat.matches());
 				}
-	
-			
-			public boolean validatePhoneNumber() {
-				Pattern PhoneNumberpattern = Pattern.compile("^[0-9]{10}$");
-				Matcher PhoneNumat;
-				do {
-					PhoneNumat = PhoneNumberpattern.matcher(txt5PhoneNumber.getText());
-					if(PhoneNumat.matches()) {
-						lbl14PhoneNumberStatus.setTextFill(Color.GREEN);
-						lbl14PhoneNumberStatus.setText("Okay");
-						return true;
-					} else {
-						lbl14PhoneNumberStatus.setTextFill(Color.RED);
-						lbl14PhoneNumberStatus.setText("Incorrect");
-						lbl2RegistrationStatus.setTextFill(Color.RED);
-						lbl2RegistrationStatus.setText("Registration Failed");
-						return false;
-						
-					}
-				} while(!PhoneNumat.matches());
-			}
-			
-			public boolean validateAge() {
-				Pattern Agepattern = Pattern.compile("^[1-9][0-9]?$|^100$");
-				Matcher Agemat;
-					do {
-						Agemat = Agepattern.matcher(txt6Age.getText());
-			        if(Agemat.matches()){
-			            lbl15AgeStatus.setTextFill(Color.GREEN);
-			            lbl15AgeStatus.setText("Okay");
-			            return true;
-			        } else {
-			        	lbl15AgeStatus.setTextFill(Color.RED);
-			        	lbl15AgeStatus.setText("Incorrect");
-			        	lbl2RegistrationStatus.setTextFill(Color.RED);
-			        	lbl2RegistrationStatus.setText("Registration Failed");
-			        	return false;
-			        }
-				} while(!Agemat.matches());
-				}
-		
-		
 
-		
+			
+		public boolean validatePhoneNumber() {
+			Pattern PhoneNumberpattern = Pattern.compile("^[0-9]{10}$");
+			Matcher PhoneNumat;
+			do {
+				PhoneNumat = PhoneNumberpattern.matcher(txt5PhoneNumber.getText());
+				if(PhoneNumat.matches()) {
+					lbl14PhoneNumberStatus.setTextFill(Color.GREEN);
+					lbl14PhoneNumberStatus.setText("Okay");
+					return true;
+				} else {
+					lbl14PhoneNumberStatus.setTextFill(Color.RED);
+					lbl14PhoneNumberStatus.setText("Incorrect");
+					lbl2RegistrationStatus.setTextFill(Color.RED);
+					lbl2RegistrationStatus.setText("Registration Failed");
+					return false;		
+				}
+			} while(!PhoneNumat.matches());
+		}
 		
 		public void closeButtonOnAction(ActionEvent event) {
 			Stage customerSignUpStage = (Stage) btn2Close.getScene().getWindow();
 			customerSignUpStage.close();
 		}
-		
-		
-		
-		}
-	
-
-	
-
-
-
-
+				
+}

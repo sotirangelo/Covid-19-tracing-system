@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -28,8 +29,6 @@ public class CustomerEdit {
 		@FXML
 		private Label lbl4LastName;
 		
-		@FXML
-		private Label lbl5UserID;
 		
 		@FXML
 		private Label lbl6Email;
@@ -38,7 +37,7 @@ public class CustomerEdit {
 		private Label lbl7PhoneNumber;
 		
 		@FXML
-		private Label lbl8Age;
+		private Label lbl8Password;
 		
 		@FXML
 		private Label lbl9CustomerSignUp;
@@ -58,8 +57,6 @@ public class CustomerEdit {
 		@FXML
 		private Label lbl14PhoneNumberStatus;
 		
-		@FXML
-		private Label lbl15AgeStatus;
 			
 	
 		
@@ -81,38 +78,32 @@ public class CustomerEdit {
 		
 		@FXML
 		private TextField txt2LastName;
-		
-		@FXML
-		private TextField txt3UserID;
-		
+			
 		@FXML
 		private TextField txt4Email;
 		
 		@FXML
 		private TextField txt5PhoneNumber;
 		
+	
+		
+		/* Password Field */
+		
 		@FXML
-		private TextField txt6Age;
+		private PasswordField pass1UserPassword;
 		
 		
 		
 		public void SignUpButtonOnAction() {	
 			validateFirstName();
 			validateLastName();
-			validateUserID();
 			validateEmail();
 			validatePhoneNumber();
-			validateAge();
-			if (validateFirstName() && validateLastName() && validateUserID() && validateEmail() && validatePhoneNumber() && validateAge()) {
+			if (validateFirstName() && validateLastName() && validateEmail() && validatePhoneNumber()) {
 				lbl2EditStatus.setTextFill(Color.GREEN);
 				lbl2EditStatus.setText("Edit Succesful");
-				/*
-				Stage customerSignUpStage = (Stage) btn1Register.getScene().getWindow();
-				customerSignUpStage.close();
-				*/
 			}
 		}
-		
 			
 			public boolean validateFirstName() {
 			Pattern FirstNamepattern = Pattern.compile("(?i)[a-z]([- ',.a-z]{0,23}[a-z])");
@@ -153,27 +144,7 @@ public class CustomerEdit {
 				} while(!LastNamemat.matches());
 				}
 			
-			
-			public boolean validateUserID() {
-				Pattern UserIDpattern = Pattern.compile("^[0-9]{8}$");
-				Matcher UserIDmat;
-					do {
-						UserIDmat = UserIDpattern.matcher(txt3UserID.getText());
-			        if(UserIDmat.matches()){
-			            lbl12UserIDStatus.setTextFill(Color.GREEN);
-			            lbl12UserIDStatus.setText("Okay");
-			            return true;
-			        } else {
-			        	lbl12UserIDStatus.setTextFill(Color.RED);
-			        	lbl12UserIDStatus.setText("Incorrect");
-			        	lbl2EditStatus.setTextFill(Color.RED);
-			        	lbl2EditStatus.setText("Edit Failed");
-			        	return false;
-			        }
-				} while(!UserIDmat.matches());
-				}
-			
-			
+
 		
 			public boolean validateEmail() {
 				Pattern Emailpattern = Pattern.compile("^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$");
@@ -214,28 +185,6 @@ public class CustomerEdit {
 				} while(!PhoneNumat.matches());
 			}
 			
-			public boolean validateAge() {
-				Pattern Agepattern = Pattern.compile("^[1-9][0-9]?$|^100$");
-				Matcher Agemat;
-					do {
-						Agemat = Agepattern.matcher(txt6Age.getText());
-			        if(Agemat.matches()){
-			            lbl15AgeStatus.setTextFill(Color.GREEN);
-			            lbl15AgeStatus.setText("Okay");
-			            return true;
-			        } else {
-			        	lbl15AgeStatus.setTextFill(Color.RED);
-			        	lbl15AgeStatus.setText("Incorrect");
-			        	lbl2EditStatus.setTextFill(Color.RED);
-			        	lbl2EditStatus.setText("Edit Failed");
-			        	return false;
-			        }
-				} while(!Agemat.matches());
-				}
-		
-		
-
-		
 		
 			public void exitButtonOnAction(ActionEvent event) {
 				Stage customerEditStage = (Stage) btn2Close.getScene().getWindow();

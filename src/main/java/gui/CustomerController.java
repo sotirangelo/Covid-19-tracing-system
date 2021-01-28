@@ -1,10 +1,13 @@
 package gui;
 
 	import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import data.Mask;
+import data.Person;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -42,37 +45,29 @@ import javafx.stage.Stage;
 		@FXML
 		private Label lbl6UserLogInStatus;
 		
-		
-	
-	
-		
 		/* Buttons */
 		
 		@FXML
-		private Button btn1LogIn;
+		private Button btnCheckIn;
 		
 		@FXML
-		private Button btn2SignUp;
+		private Button btnCheckOut;
 		
 		@FXML
 		private Button btn3Exit;
 		
 		@FXML
 		private Button btn4Edit;
-		
-		
+				
 		/* Text Fields */
 		
 		@FXML
-		private TextField txt1UserID;
-		
+		private TextField txt1UserID;		
 		
 		// Combobox
 		
 		@FXML
 		private ComboBox<String> comb1;
-		
-		
 
 		public void exitButtonOnAction(ActionEvent event) {
 			Stage customerStage = (Stage) btn3Exit.getScene().getWindow();
@@ -96,7 +91,7 @@ import javafx.stage.Stage;
 			Parent root = FXMLLoader.load(getClass().getResource("/fxml/CustomerPasswordEdit.fxml"));
 			Scene scene = new Scene(root,552,339);
 			scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
-			customerPassEditStage.setTitle("Javavirus� Covid19 Tracing App - Customer Edit Account (Validation)");
+			customerPassEditStage.setTitle("Javavirus Covid19 Tracing App - User Account Edit (Validation)");
 			customerPassEditStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
 			customerPassEditStage.setScene(scene);
 			customerPassEditStage.show();
@@ -111,7 +106,7 @@ import javafx.stage.Stage;
 			Parent root = FXMLLoader.load(getClass().getResource("/fxml/CustomerSignUp.fxml"));
 			Scene scene = new Scene(root,482,600);
 			scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
-			customerSignUpStage.setTitle("Javavirus� Covid19 Tracing App - Customer Sign Up");
+			customerSignUpStage.setTitle("Javavirus Covid19 Tracing App - User Sign Up");
 			customerSignUpStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
 			customerSignUpStage.setScene(scene);
 			customerSignUpStage.show();
@@ -120,38 +115,77 @@ import javafx.stage.Stage;
 			}
 		}	
 		
-		
-		public void LogInButtonOnAction(ActionEvent event) {
-		lbl6UserLogInStatus.setText("Record Status");
-		validateUserID();
+		private String businessID = BusinessController.businessID;
+		private String userID;
+		private Mask maskType;
+		private Date getDate() {
+			Date dateNow = new Date();
+			return dateNow;
 		}
 		
-		
-		public void validateUserID() {
-		Pattern UserIDpattern = Pattern.compile("^[0-9]{8}$");
-		Matcher UserIDmat;
-			do {
-			UserIDmat = UserIDpattern.matcher(txt1UserID.getText());
-	        if(UserIDmat.matches()){
-	            lbl6UserLogInStatus.setTextFill(Color.GREEN);
-	            lbl6UserLogInStatus.setText("Record Successful");
-	            break;
+		public void CheckInButtonOnAction(ActionEvent event) {
+			lbl6UserLogInStatus.setText("Record Status");
+			if (validateUserID()) {
+				java.util.Date utilDate = getDate();
+				if (database.Access.checkIn(businessID, userID, utilDate, maskType)) {
+					lbl6UserLogInStatus.setTextFill(Color.GREEN);
+					lbl6UserLogInStatus.setText("Check-in Successful");
+				} else {
+					lbl6UserLogInStatus.setTextFill(Color.RED);
+	        		lbl6UserLogInStatus.setText("Check-in Failed");
+				}
 	        } else {
-	        	 lbl6UserLogInStatus.setTextFill(Color.RED);
-		         lbl6UserLogInStatus.setText("Record Failed");
-		         break;
-	        }
-		} while(!UserIDmat.matches());
-	
-	}
-		
-		public void initialize(URL url, ResourceBundle rb) {
-			ObservableList<String> list = FXCollections.observableArrayList("None", "Fabric", "Medical","Respirator");
-			comb1.setItems(list);
+	        		lbl6UserLogInStatus.setTextFill(Color.RED);
+	        		lbl6UserLogInStatus.setText("Check-in Failed");
+	       	}
 		}
-	}
 		
-	
-	
-
-
+		public void CheckOutButtonOnAction(ActionEvent event) {
+			lbl6UserLogInStatus.setText("Record Status");
+			if (validateUserID()) {
+				java.util.Date utilDate = getDate();
+				java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+				if (database.Access.checkOut(businessID, userID, sqlDate)) {
+					lbl6UserLogInStatus.setTextFill(Color.GREEN);
+					lbl6UserLogInStatus.setText("Check-out Successful");
+				} else {
+					lbl6UserLogInStatus.setTextFill(Color.RED);
+	        		lbl6UserLogInStatus.setText("Check-out Failed");
+				}
+	        } else {
+	        		lbl6UserLogInStatus.setTextFill(Color.RED);
+	        		lbl6UserLogInStatus.setText("Check-out Failed");
+	       	}
+		}
+		
+		public boolean validateUserID() {
+			Pattern UserIDpattern = Pattern.compile("^[0-9]{8}$");
+			Matcher UserIDmat;
+			boolean match;
+			boolean authenticate = false;
+			userID = txt1UserID.getText();
+			maskType = Mask.valueOf(comb1.getSelectionModel().getSelectedItem().toString());
+			do {
+				UserIDmat = UserIDpattern.matcher(txt1UserID.getText());
+	        	if(UserIDmat.matches()){
+	        		match = true;
+	        		break;
+	        	} else {
+	        		match = false;
+	        		break;
+	        	}
+			} while(!UserIDmat.matches());
+			if (match) {
+				Person user = database.Access.findUser(userID);
+				if (user != null) {
+					authenticate = true;
+				}
+			}
+			return (match && authenticate);
+		}
+		
+	public void initialize(URL url, ResourceBundle rb) {
+		ObservableList<String> list = FXCollections.observableArrayList("NONE", "FABRIC", "MEDICAL", "RESPIRATOR");
+		comb1.setItems(list);
+	}
+}
