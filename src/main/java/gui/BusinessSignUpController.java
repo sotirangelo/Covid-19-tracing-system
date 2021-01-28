@@ -32,9 +32,6 @@ public class BusinessSignUpController implements Initializable {
 	private Label lbl1Title;
 	
 	@FXML
-	private Label lbl2BusinessID;
-	
-	@FXML
 	private Label lbl3Name;
 	
 	@FXML
@@ -95,9 +92,6 @@ public class BusinessSignUpController implements Initializable {
 	
 	
 	/* Text Fields */
-	
-	@FXML
-	private TextField txt1ID;
 	
 	@FXML
 	private TextField txt2Name;
@@ -232,6 +226,7 @@ public class BusinessSignUpController implements Initializable {
 	}
 	
 	public void SignUpButtonOnAction1() {
+
 		if (validateBname() && validateBspace() && validateHeight() && validateEmail()) {
 			Business business = new Business(database.Access.findNewBusinessID(), txt6Email.getText(), pass1Pass.getText(),
 					txt2Name.getText(), Double.parseDouble(txt3Space.getText()), Double.parseDouble(txt4Height.getText()), 
