@@ -12,8 +12,6 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 
-import database.Access;
-
 /**
  * Analysis of data (temporarily from arraylists).
  * This class consists exclusively of static methods and fields.
@@ -29,7 +27,7 @@ public class DataAnalysis {
 	
 	public static ArrayList<InfectedPerson> contactTracing(InfectedPerson infected) {
 		ArrayList<InfectedPerson> allInfected = new ArrayList<InfectedPerson>();
-		ArrayList<Business> covidstores = removeDuplicateBusinesses(Access.businessesVisited(infected.getUserID()));
+		ArrayList<Business> covidstores = removeDuplicateBusinesses(database.Access.businessesVisited(infected.getUserID()));
 		for (Business b : covidstores) {
 			System.out.println(infected.getFirstName() + " has been to: " + b.getName());
 			ArrayList<InfectedPerson> temp = calculatePI(infected, b);
@@ -56,15 +54,15 @@ public class DataAnalysis {
 	
 	public static ArrayList<InfectedPerson> calculatePI(InfectedPerson infected, Business business) { //TODO CHANGE TO BIGDECIMAL INSTEAD OF DOUBLE
 		ArrayList<InfectedPerson> infectedPeople = new ArrayList<InfectedPerson>();
-		Record covidrecord = Access.getPersonsRecord(infected, business); //ONLY NEED FIRST RECORD (IN CASE OF MULTIPLE)
-		var records = Access.getBusinessDayRecords((Timestamp) covidrecord.getEntryDate());
+		Record covidrecord = database.Access.getPersonsRecord(infected, business); //ONLY NEED FIRST RECORD (IN CASE OF MULTIPLE)
+		var records = database.Access.getBusinessDayRecords((Timestamp) covidrecord.getEntryDate());
 		double[] erq = calculateTotalErq(covidrecord);
 		System.out.println("Where he came into contact with: ");
 		int count = 0;
 		for (Record r : records) { // Iterate day's records...
 			count++;
 			System.out.println("Record " + count);
-			if (Access.isUserIDInfected(r.getUserID()) == false) { //...ignoring already infected
+			if (database.Access.isUserIDInfected(r.getUserID()) == false) { //...ignoring already infected
 				double[] p = new double[getExitMinute(r)]; //erq.length
 				for (int i = 0; i < p.length; i++) { //XXX: Fill p with zeros
 					p[i] = 0;
@@ -76,7 +74,7 @@ public class DataAnalysis {
 					
 					p[i] = erq[i] * ((i / 60.0) - ((i - 1) / 60.0)); // include sum of previous p's 
 				}
-				Person temp = Access.findUser(r.getUserID());
+				Person temp = database.Access.findUser(r.getUserID());
 				double sum = 0;
 				for (int j = getEntryMinute(r); j < p.length; j++) {//XXX: j = getEntryMinute() instead of 0
 					sum += p[j];
@@ -102,9 +100,9 @@ public class DataAnalysis {
 		for (int i = 0; i < totalerq.length; i++) { //XXX: Fill totalerq with zeros
 			totalerq[i] = 0;
 		}
-		ArrayList<Record> dayrecords = Access.getBusinessDayRecords((Timestamp) covidrecord.getEntryDate());
+		ArrayList<Record> dayrecords = database.Access.getBusinessDayRecords((Timestamp) covidrecord.getEntryDate());
 		for (Record r : dayrecords) {
-				if (Access.isUserIDInfected(r.getUserID())) {
+				if (database.Access.isUserIDInfected(r.getUserID())) {
 					double[] erq = calculateErq(r);
 					for (int i = 0; i < erq.length; i++) {
 						totalerq[i] += erq[i];
@@ -116,8 +114,8 @@ public class DataAnalysis {
 	}	
 
 	private static double[] calculateErq (Record record) {
-		Business business = Access.findBusiness(record.getBusinessID());
-		double activity = getActivity(Access.findUser(record.getUserID()), business);
+		Business business = database.Access.findBusiness(record.getBusinessID());
+		double activity = getActivity(database.Access.findUser(record.getUserID()), business);
 		Duration businessDayDuration = getBusinessDayDuration(record);
 		double[] erq = new double[(int) businessDayDuration.toMinutes()];	
 		int entry = getEntryMinute(record);
@@ -185,7 +183,7 @@ public class DataAnalysis {
 	}
 	
 	private static Record getStartRecord(Date date) {
-		ArrayList<Record> dayrecords = Access.getBusinessDayRecords((Timestamp) date);//record1.getEntryDate
+		ArrayList<Record> dayrecords = database.Access.getBusinessDayRecords((Timestamp) date);//record1.getEntryDate
 		Record start = null;
 		for (int i = 0; i < dayrecords.size(); i++) {
 			if (i == 0) {
@@ -200,7 +198,7 @@ public class DataAnalysis {
 	}
 	
 	private static Record getLastRecord(Date date) {
-		ArrayList<Record> dayrecords = Access.getBusinessDayRecords((Timestamp) date);//record1.getEntryDate
+		ArrayList<Record> dayrecords = database.Access.getBusinessDayRecords((Timestamp) date);//record1.getEntryDate
 		Record end = null;
 		for (int i = 0; i < dayrecords.size(); i++) {
 			if (i == 0) {

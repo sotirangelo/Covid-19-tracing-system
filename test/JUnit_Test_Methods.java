@@ -10,19 +10,8 @@ import java.util.Date;
 import java.util.Scanner;
 import org.junit.jupiter.api.Test;
 
-import data.AER;
-import data.Age;
-import data.Business;
-import data.BusinessType;
-import data.DataAnalysis;
-import data.Exertion;
-import data.InfectedPerson;
-import data.Mask;
-import data.Person;
+import data.*;
 import data.Record;
-import database.Access;
-import database.Connect;
-
 /**
  * This class consists exclusively of static methods and fields.
  * Its purpose is to test most of the methods in this project using JUnit.
@@ -61,9 +50,9 @@ class JUnit_Test_Methods {
 					+ "11. getDate();\n"
 					+ "12. getExitDate(Date entryDate, int minutesInStore);\n"
 					+ "13. createPassword();\n\n"
-					+ "DB_Connection.java\n\n"
+					+ "database.Connection.java\n\n"
 					+ "14. getConnection();\n\n"
-					+ "Access\n\n"
+					+ "database.Access.java\n\n"
 					+ "15. register(Person person);\n"
 					+ "16. getUsers();\n"
 					+ "17. findUser(UserID);\n"
@@ -134,7 +123,7 @@ class JUnit_Test_Methods {
 					break;
 				case 9:
 					System.out.println("Trying to get new userID:");
-					userID = Access.findNewUserID();
+					userID = database.Access.findNewUserID();
 					System.out.println("New UserID: " + userID);
 					break;
 				case 10:
@@ -157,7 +146,7 @@ class JUnit_Test_Methods {
 				case 14:
 					System.out.println("Trying to establish connection with MySQL Database:\n");
 					try {
-						Connect.getConnection();
+						database.Connect.getConnection();
 						System.out.println("CONNECTION SUCCESSFUL\n");
 					} catch (Exception e) {
 						System.out.println("AN ERROR HAS OCCURED:");
@@ -166,20 +155,20 @@ class JUnit_Test_Methods {
 					break;
 				case 15:
 					System.out.println("First, create a Person object:");
-					Person person = new Person(Access.findNewUserID(), Interface.firstNameInput(),
+					Person person = new Person(database.Access.findNewUserID(), Interface.firstNameInput(),
 							Interface.lastNameInput(), Interface.emailInput(), Interface.custPhoneNum(),
 							Interface.ageGroup(), Interface.createPassword());
 					try {
-						Access.register(person);
+						database.Access.register(person);
 					} catch (Exception e) {
-						System.out.println("AN ERROR HAS OCCURED DURING 'Access.register(person)' :");
+						System.out.println("AN ERROR HAS OCCURED DURING 'database.Access.register(person)' :");
 						e.printStackTrace();
 					}
 					break;
 				case 16:
 					System.out.println("Trying to fetch Person objects from Database:");
 					try {
-						ArrayList<Person> users = Access.getUsers();
+						ArrayList<Person> users = database.Access.getUsers();
 						int length = users.size();
 						for (int i = 0; i < length; i++) {
 							System.out.println(users.get(i).toString());
@@ -194,7 +183,7 @@ class JUnit_Test_Methods {
 					System.out.println("Give the UserID: ");
 					userID = Interface.userIDInput(0);
 					try {
-						Person per = Access.findUser(userID);
+						Person per = database.Access.findUser(userID);
 						System.out.println(per.toString() + "\n");
 					} catch (Exception e) {
 						System.out.println("AN ERROR HAS OCCURED");
@@ -207,7 +196,7 @@ class JUnit_Test_Methods {
 					System.out.println("Type your password: ");
 					String pass = SCNR.next();
 					try {
-						Person pers = Access.authenticateUser(userID, pass);
+						Person pers = database.Access.authenticateUser(userID, pass);
 						System.out.println(pers.toString() + "\n");
 					} catch (Exception e) {
 						System.out.println("AN ERROR HAS OCCURED");
@@ -216,20 +205,20 @@ class JUnit_Test_Methods {
 					break;
 				case 19:
 					System.out.println("First, create a Business object:");
-					business = new Business(Access.findNewBusinessID(), Interface.emailInput(),
+					business = new Business(database.Access.findNewBusinessID(), Interface.emailInput(),
 							Interface.createPassword(), Interface.businessNameInput(),
 							Interface.floorAreaInput(), Interface.heigthInput(), Interface.inputBusinessType(), Interface.ventilationType());
 					try {
-						Access.register(business);
+						database.Access.register(business);
 					} catch (Exception e) {
-						System.out.println("AN ERROR HAS OCCURED DURING 'Access.register(business)' :");
+						System.out.println("AN ERROR HAS OCCURED DURING 'database.Access.register(business)' :");
 						e.printStackTrace();
 					}
 					break;
 				case 20:
 					System.out.println("Trying to fetch Business objects from Database:");
 					try {
-						ArrayList<Business> businesses = Access.getBusinesses();
+						ArrayList<Business> businesses = database.Access.getBusinesses();
 						int length = businesses.size();
 						for (int i = 0; i < length; i++) {
 							System.out.println(businesses.get(i).toString());
@@ -243,7 +232,7 @@ class JUnit_Test_Methods {
 					System.out.println("Give the BusinessID: ");
 					businessID = Interface.userIDInput(1);
 					try {
-						Business bsness = Access.findBusiness(businessID);
+						Business bsness = database.Access.findBusiness(businessID);
 						System.out.println(bsness.toString() + "\n");
 					} catch (Exception e) {
 						System.out.println("AN ERROR HAS OCCURED");
@@ -256,7 +245,7 @@ class JUnit_Test_Methods {
 					System.out.println("Type your password: ");
 					password = SCNR.next();
 					try {
-						Business busn = Access.authenticateBusiness(businessID, password);
+						Business busn = database.Access.authenticateBusiness(businessID, password);
 						System.out.println(busn.toString() + "\n");
 					} catch (Exception e) {
 						System.out.println("AN ERROR HAS OCCURED");
@@ -265,7 +254,7 @@ class JUnit_Test_Methods {
 					break;
 				case 23:
 					System.out.println("Trying to get new businessID:");
-					businessID = Access.findNewBusinessID();
+					businessID = database.Access.findNewBusinessID();
 					System.out.println("New BusinessID: " + businessID);
 					break;
 				case 24:
@@ -275,7 +264,7 @@ class JUnit_Test_Methods {
 					java.util.Date utilDate = Interface.getDate();
 					System.out.println("\nTrying to insert CheckIn into Database:");
 					try {
-						Access.checkIn(businessID, userID, utilDate, mask);
+						database.Access.checkIn(businessID, userID, utilDate, mask);
 						System.out.println("CHECK IN SUCCESSFULL\n");
 					} catch (Exception e) {
 					}
@@ -287,7 +276,7 @@ class JUnit_Test_Methods {
 					java.sql.Date sqlDate1 = new java.sql.Date(utilDate1.getTime());
 					System.out.println("\nTrying to insert CheckOut into Database:");
 					try {
-						Access.checkOut(businessID, userID, sqlDate1);
+						database.Access.checkOut(businessID, userID, sqlDate1);
 					} catch (Exception e) {
 						System.out.println("AN ERROR HAS OCCURED");
 						e.printStackTrace();
@@ -296,7 +285,7 @@ class JUnit_Test_Methods {
 				case 26:
 					businessID = Interface.userIDInput(1);
 					try {
-						ArrayList<Record> recordsList = Access.getRecords(businessID);
+						ArrayList<Record> recordsList = database.Access.getRecords(businessID);
 						for (Record rec : recordsList) {
 							System.out.println(rec.toString());
 						}
@@ -308,10 +297,10 @@ class JUnit_Test_Methods {
 					userID = Interface.userIDInput(0);
 					email = Interface.emailInput();
 					try {
-						user = Access.findUser(userID);
+						user = database.Access.findUser(userID);
 						System.out.println("Old Email: " + user.getEmail());
-						Access.editUserEmail(userID, email);
-						user = Access.findUser(userID);
+						database.Access.editUserEmail(userID, email);
+						user = database.Access.findUser(userID);
 						System.out.println("New Email: " + user.getEmail());
 					} catch (Exception e) {
 					}
@@ -320,10 +309,10 @@ class JUnit_Test_Methods {
 					userID = Interface.userIDInput(0);
 					phoneNum = Interface.custPhoneNum();
 					try {
-						user = Access.findUser(userID);
+						user = database.Access.findUser(userID);
 						System.out.println("Old Phone Number: " + user.getPhoneNumber());
-						Access.editUserPhoneNumber(userID, phoneNum);
-						user = Access.findUser(userID);
+						database.Access.editUserPhoneNumber(userID, phoneNum);
+						user = database.Access.findUser(userID);
 						System.out.println("New Phone Number: " + user.getPhoneNumber());
 					} catch (Exception e) {
 					}
@@ -332,10 +321,10 @@ class JUnit_Test_Methods {
 					userID = Interface.userIDInput(0);
 					Age age = Interface.ageGroup();
 					try {
-						user = Access.findUser(userID);
+						user = database.Access.findUser(userID);
 						System.out.println("Old Age Group: " + user.getAgeCategory());
-						Access.editUserAgeCategory(userID, age);
-						user = Access.findUser(userID);
+						database.Access.editUserAgeCategory(userID, age);
+						user = database.Access.findUser(userID);
 						System.out.println("New Age Group: " + user.getAgeCategory());
 					} catch (Exception e) {
 					}
@@ -344,7 +333,7 @@ class JUnit_Test_Methods {
 					userID = Interface.userIDInput(0);
 					password = Interface.createPassword();
 					try {
-						Access.editUserPassword(userID, password);
+						database.Access.editUserPassword(userID, password);
 					} catch (Exception e) {
 					}
 					break;
@@ -352,10 +341,10 @@ class JUnit_Test_Methods {
 					businessID = Interface.userIDInput(1);
 					email = Interface.emailInput();
 					try {
-						business = Access.findBusiness(businessID);
+						business = database.Access.findBusiness(businessID);
 						System.out.println("Old Email: " + business.getEmail());
-						Access.editBusinessEmail(businessID, email);
-						business = Access.findBusiness(businessID);
+						database.Access.editBusinessEmail(businessID, email);
+						business = database.Access.findBusiness(businessID);
 						System.out.println("New Email: " + business.getEmail());
 					} catch (Exception e) {
 					}
@@ -364,10 +353,10 @@ class JUnit_Test_Methods {
 					businessID = Interface.userIDInput(1);
 					password = Interface.createPassword();
 					try {
-						business = Access.findBusiness(businessID);
+						business = database.Access.findBusiness(businessID);
 						System.out.println("Old Password: " + business.getPassword());
-						Access.editBusinessPassword(businessID, password);
-						business = Access.findBusiness(businessID);
+						database.Access.editBusinessPassword(businessID, password);
+						business = database.Access.findBusiness(businessID);
 						System.out.println("New Password: " + business.getPassword());
 					} catch (Exception e) {
 					}
@@ -376,10 +365,10 @@ class JUnit_Test_Methods {
 					businessID = Interface.userIDInput(1);
 					double space = Interface.floorAreaInput();
 					try {
-						business = Access.findBusiness(businessID);
+						business = database.Access.findBusiness(businessID);
 						System.out.println("Old Floor Area: " + business.getSpace());
-						Access.editBusinessSpace(businessID, space);
-						business = Access.findBusiness(businessID);
+						database.Access.editBusinessSpace(businessID, space);
+						business = database.Access.findBusiness(businessID);
 						System.out.println("New Floor Area: " + business.getSpace());
 					} catch (Exception e) {
 					}
@@ -388,10 +377,10 @@ class JUnit_Test_Methods {
 					businessID = Interface.userIDInput(1);
 					BusinessType businesstype = Interface.inputBusinessType();
 					try {
-						business = Access.findBusiness(businessID);
+						business = database.Access.findBusiness(businessID);
 						System.out.println("Old Business Type: " + business.getBusinessType());
-						Access.editBusinessType(businessID, businesstype);
-						business = Access.findBusiness(businessID);
+						database.Access.editBusinessType(businessID, businesstype);
+						business = database.Access.findBusiness(businessID);
 						System.out.println("New Business Type: " + business.getBusinessType());
 					} catch (Exception e) {
 					}
@@ -400,10 +389,10 @@ class JUnit_Test_Methods {
 					businessID = Interface.userIDInput(1);
 					AER ventilation = Interface.ventilationType();
 					try {
-						business = Access.findBusiness(businessID);
+						business = database.Access.findBusiness(businessID);
 						System.out.println("Old Ventilation Type: " + business.getVentilation());
-						Access.editBusinessVentilationType(businessID, ventilation);
-						business = Access.findBusiness(businessID);
+						database.Access.editBusinessVentilationType(businessID, ventilation);
+						business = database.Access.findBusiness(businessID);
 						System.out.println("New Ventilation Type: " + business.getVentilation());
 					} catch (Exception e) {
 					}
@@ -413,17 +402,17 @@ class JUnit_Test_Methods {
 					userID = Interface.userIDInput(0);
 					try {
 						System.out.println("\nTrying to edit last Record of given businessID:");
-						Access.editLastRecordsUserID(businessID, userID);
+						database.Access.editLastRecordsUserID(businessID, userID);
 					} catch (Exception e) {
 					}
 					break;
 				case 37:
 					userID = Interface.userIDInput(0);
 					try {
-						ArrayList<Business> listX = Access.businessesVisited(userID);
+						ArrayList<Business> listX = database.Access.businessesVisited(userID);
 						int length = listX.size();
 						System.out.println("Number of BuSsinesses visited: " + length);
-						System.out.println("Businesses Visited by " + Access.findUser(userID).getLastName() + ":");
+						System.out.println("Businesses Visited by " + database.Access.findUser(userID).getLastName() + ":");
 						for (Business businessX : listX) {
 							System.out.println(businessX.toString());
 						}
@@ -436,9 +425,9 @@ class JUnit_Test_Methods {
 					SCNR.nextLine();
 					System.out.println("Enter userID, to create InfectedPerson:");
 					String x = SCNR.nextLine();
-					InfectedPerson y = new InfectedPerson(Access.findUser(x), 1);
+					InfectedPerson y = new InfectedPerson(database.Access.findUser(x), 1);
 					System.out.println("Found user: " + y.getFirstName() + " with id: " + x);
-					Access.addInfected(y);
+					database.Access.addInfected(y);
 					System.out.println("Searching for infected");
 					ArrayList<InfectedPerson> inf = DataAnalysis.contactTracing(y);
 					System.out.println("Search complete");
@@ -454,14 +443,14 @@ class JUnit_Test_Methods {
 					email = Interface.emailInput();
 					phoneNum = Interface.custPhoneNum();
 					try {
-						Access.registerTracingUser(password, firstname, lastname, email, phoneNum);
+						database.Access.registerTracingUser(password, firstname, lastname, email, phoneNum);
 					} catch (Exception e) { }
 					break;
 				case 41:
 					email = Interface.emailInput();
 					password = SCNR.next();
 					try {
-						boolean isVer = Access.authenticateTracingUser(email, password);
+						boolean isVer = database.Access.authenticateTracingUser(email, password);
 						System.out.println("User Verified Status: " + isVer);
 					} catch (Exception e) { }
 			}
