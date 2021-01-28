@@ -82,7 +82,7 @@ public class BusinessSignUpController implements Initializable {
 	@FXML
 	private Label RegStatus;
 	
-	@FXML
+	@FXML 
 	private Label RegStatus1;
 	
 	/* Buttons */
@@ -241,13 +241,11 @@ public class BusinessSignUpController implements Initializable {
 					AER.valueOf(comb2.getSelectionModel().getSelectedItem().toString()));
 			database.Access.register(business);
 			RegStatus.setTextFill(Color.GREEN);
-			RegStatus.setText("Registration Successfull. YOUR BUSINESS ID IS: " + businessID);
+			RegStatus.setText("Registration Successfull.");
 			RegStatus1.setTextFill(Color.GREEN);
 			RegStatus1.setText("Your BusinessID is: " + businessID + ".");
 		}
 		
 	}
 	
-	
-
 }

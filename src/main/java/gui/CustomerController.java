@@ -42,10 +42,6 @@ import javafx.stage.Stage;
 		@FXML
 		private Label lbl6UserLogInStatus;
 		
-		
-	
-	
-		
 		/* Buttons */
 		
 		@FXML
@@ -59,20 +55,16 @@ import javafx.stage.Stage;
 		
 		@FXML
 		private Button btn4Edit;
-		
-		
+				
 		/* Text Fields */
 		
 		@FXML
-		private TextField txt1UserID;
-		
+		private TextField txt1UserID;		
 		
 		// Combobox
 		
 		@FXML
 		private ComboBox<String> comb1;
-		
-		
 
 		public void exitButtonOnAction(ActionEvent event) {
 			Stage customerStage = (Stage) btn3Exit.getScene().getWindow();
@@ -132,31 +124,25 @@ import javafx.stage.Stage;
 		}
 		
 		
-		public void validateUserID() {
-		Pattern UserIDpattern = Pattern.compile("^[0-9]{8}$");
-		Matcher UserIDmat;
-			do {
-			UserIDmat = UserIDpattern.matcher(txt1UserID.getText());
-	        if(UserIDmat.matches()){
-	            lbl6UserLogInStatus.setTextFill(Color.GREEN);
-	            lbl6UserLogInStatus.setText("Check-in Successful");
-	            break;
+	public void validateUserID() {
+	Pattern UserIDpattern = Pattern.compile("^[0-9]{8}$");
+	Matcher UserIDmat;
+		do {
+		UserIDmat = UserIDpattern.matcher(txt1UserID.getText());
+	       if(UserIDmat.matches()){
+	    	   lbl6UserLogInStatus.setTextFill(Color.GREEN);
+	           lbl6UserLogInStatus.setText("Check-in Successful");
+	           break;
 	        } else {
-	        	 lbl6UserLogInStatus.setTextFill(Color.RED);
-		         lbl6UserLogInStatus.setText("Check-in Failed");
-		         break;
+	        	lbl6UserLogInStatus.setTextFill(Color.RED);
+		        lbl6UserLogInStatus.setText("Check-in Failed");
+		        break;
 	        }
 		} while(!UserIDmat.matches());
-	
 	}
 		
-		public void initialize(URL url, ResourceBundle rb) {
-			ObservableList<String> list = FXCollections.observableArrayList("None", "Fabric", "Medical","Respirator");
-			comb1.setItems(list);
-		}
+	public void initialize(URL url, ResourceBundle rb) {
+		ObservableList<String> list = FXCollections.observableArrayList("NONE", "FABRIC", "MEDICAL", "RESPIRATOR");
+		comb1.setItems(list);
 	}
-		
-	
-	
-
-
+}

@@ -86,8 +86,12 @@ public class EmployeeSignUpController {
 		validateLastName();
 		validateEmail();
 		validatePhoneNumber();
+<<<<<<< HEAD
 		if (validateFirstName() && validateLastName() && validateEmail() 
 			&& validatePhoneNumber()) {
+=======
+		if (validateFirstName() && validateLastName() && validateEmail() && validatePhoneNumber()) {
+>>>>>>> branch 'maven' of https://github.com/sotirangelo/Covid-19-tracing-system.git
 			lbl2RegistrationStatus.setTextFill(Color.GREEN);
 			lbl2RegistrationStatus.setText("Registration Succesful");
 			/*
@@ -137,6 +141,10 @@ public class EmployeeSignUpController {
 			} while(!LastNamemat.matches());
 			}
 		
+<<<<<<< HEAD
+=======
+		
+>>>>>>> branch 'maven' of https://github.com/sotirangelo/Covid-19-tracing-system.git
 	
 		public boolean validateEmail() {
 			Pattern Emailpattern = Pattern.compile("^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$");
