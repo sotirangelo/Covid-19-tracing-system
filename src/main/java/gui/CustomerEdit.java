@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -36,7 +37,7 @@ public class CustomerEdit {
 		private Label lbl7PhoneNumber;
 		
 		@FXML
-		private Label lbl8Age;
+		private Label lbl8Password;
 		
 		@FXML
 		private Label lbl9CustomerSignUp;
@@ -56,8 +57,6 @@ public class CustomerEdit {
 		@FXML
 		private Label lbl14PhoneNumberStatus;
 		
-		@FXML
-		private Label lbl15AgeStatus;
 			
 	
 		
@@ -86,8 +85,12 @@ public class CustomerEdit {
 		@FXML
 		private TextField txt5PhoneNumber;
 		
+	
+		
+		/* Password Field */
+		
 		@FXML
-		private TextField txt6Age;
+		private PasswordField pass1UserPassword;
 		
 		
 		
@@ -96,8 +99,7 @@ public class CustomerEdit {
 			validateLastName();
 			validateEmail();
 			validatePhoneNumber();
-			validateAge();
-			if (validateFirstName() && validateLastName() && validateEmail() && validatePhoneNumber() && validateAge()) {
+			if (validateFirstName() && validateLastName() && validateEmail() && validatePhoneNumber()) {
 				lbl2EditStatus.setTextFill(Color.GREEN);
 				lbl2EditStatus.setText("Edit Succesful");
 			}
@@ -183,28 +185,6 @@ public class CustomerEdit {
 				} while(!PhoneNumat.matches());
 			}
 			
-			public boolean validateAge() {
-				Pattern Agepattern = Pattern.compile("^[1-9][0-9]?$|^100$");
-				Matcher Agemat;
-					do {
-						Agemat = Agepattern.matcher(txt6Age.getText());
-			        if(Agemat.matches()){
-			            lbl15AgeStatus.setTextFill(Color.GREEN);
-			            lbl15AgeStatus.setText("Okay");
-			            return true;
-			        } else {
-			        	lbl15AgeStatus.setTextFill(Color.RED);
-			        	lbl15AgeStatus.setText("Incorrect");
-			        	lbl2EditStatus.setTextFill(Color.RED);
-			        	lbl2EditStatus.setText("Edit Failed");
-			        	return false;
-			        }
-				} while(!Agemat.matches());
-				}
-		
-		
-
-		
 		
 			public void exitButtonOnAction(ActionEvent event) {
 				Stage customerEditStage = (Stage) btn2Close.getScene().getWindow();
