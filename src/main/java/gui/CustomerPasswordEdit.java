@@ -69,7 +69,7 @@ public class CustomerPasswordEdit {
 			UserIDmat = UserIDpattern.matcher(txt1CustomerID.getText());
 	        if(UserIDmat.matches()){
 	            lbl2Status.setTextFill(Color.GREEN);
-	            lbl2Status.setText("Validation Successful");
+	            lbl2Status.setText("Validation Successfull");
 	            createCustomerEdit();
 	            match = true;
 	            break;

@@ -686,9 +686,10 @@ public class Access {
 	 * @param maskType, Mask (enum)
 	 * @throws Exception
 	 */
-	public static void checkIn (String businessID, String userID, java.util.Date date, Mask maskType) {
+	public static boolean checkIn (String businessID, String userID, java.util.Date date, Mask maskType) {
 		Connection con = null;
 		PreparedStatement stmt = null;
+		boolean success = false;
 		String sql = "INSERT INTO isandalis_database_dmst.Record (UserID, MaskType,"
 				+ " EntryDate, ExitDate, BusinessID) VALUES (?, ?, ?, ?, ?);";
 		try {
@@ -702,11 +703,13 @@ public class Access {
             stmt.executeUpdate();
             stmt.close();
             con.close();
+            success = true;
             System.out.println("CHECK IN SUCCESSFULL\n");
 		} catch (Exception e) {
 			System.out.println("ERROR WHILE CHECKING IN");
             e.printStackTrace();
 		}
+		return success;
 	} //End of checkIn
 	
 	/**
@@ -717,9 +720,10 @@ public class Access {
 	 * @param date, java.util.Date
 	 * @throws Exception
 	 */
-	public static void checkOut(String businessID, String userID, Date date) {
+	public static boolean checkOut(String businessID, String userID, Date date) {
 		Connection con = null;
 		PreparedStatement stmt = null;
+		boolean success = false;
 		String updateSql = "UPDATE isandalis_database_dmst.Record SET ExitDate = ? WHERE BusinessID = ? AND UserID = ? AND ExitDate IS NULL;";
 		try {
 			con = Connect.getConnection();
@@ -731,10 +735,12 @@ public class Access {
             		System.out.println("CHECK OUT SUCCESSFULL\n");
             		stmt.close();
             		con.close();
+            		success = true;
 		} catch (Exception e) {
 			System.out.println("ERROR WHILE CHECKING OUT");
             e.printStackTrace();
 		}
+		return success;
 	} //End of checkOut
 
 	/**

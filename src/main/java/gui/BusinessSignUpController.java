@@ -229,7 +229,10 @@ public class BusinessSignUpController implements Initializable {
 	}
 	
 	public void SignUpButtonOnAction1() {
-
+		validateBname();
+		validateBspace();
+		validateHeight();
+		validateEmail();
 		if (validateBname() && validateBspace() && validateHeight() && validateEmail()) {
 			String businessID = database.Access.findNewBusinessID();
 			Business business = new Business(businessID, txt6Email.getText(), pass1Pass.getText(),
@@ -238,7 +241,7 @@ public class BusinessSignUpController implements Initializable {
 					AER.valueOf(comb2.getSelectionModel().getSelectedItem().toString()));
 			database.Access.register(business);
 			RegStatus.setTextFill(Color.GREEN);
-			RegStatus.setText("Registration Successfull.");
+			RegStatus.setText("Registration Successful.");
 			RegStatus1.setTextFill(Color.GREEN);
 			RegStatus1.setText("Your BusinessID is: " + businessID + ".");
 		}

@@ -93,7 +93,7 @@ import javafx.stage.Stage;
 				Person user = new Person(userID, txt1FirstName.getText(), txt2LastName.getText(),
 						txt4Email.getText(), Long.parseLong(txt5PhoneNumber.getText()), txtPass.getText());
 				lbl2RegistrationStatus.setTextFill(Color.GREEN);
-				lbl2RegistrationStatus.setText("Registration Succesffull.");
+				lbl2RegistrationStatus.setText("Registration Succesfful.");
 				lbl3RegistrationStatus.setTextFill(Color.GREEN);
 				lbl3RegistrationStatus.setText("Your UserID is: " + userID + ".");
 				database.Access.register(user);

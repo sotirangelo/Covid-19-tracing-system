@@ -1,10 +1,13 @@
 package gui;
 
 	import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import data.Mask;
+import data.Person;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -112,29 +115,74 @@ import javafx.stage.Stage;
 			}
 		}	
 		
-		
-		public void CheckInButtonOnAction(ActionEvent event) {
-		lbl6UserLogInStatus.setText("Record Status");
-		validateUserID();
+		private String businessID = BusinessController.businessID;
+		private String userID;
+		private Mask maskType;
+		private Date getDate() {
+			Date dateNow = new Date();
+			return dateNow;
 		}
 		
-		
-	public void validateUserID() {
-	Pattern UserIDpattern = Pattern.compile("^[0-9]{8}$");
-	Matcher UserIDmat;
-		do {
-		UserIDmat = UserIDpattern.matcher(txt1UserID.getText());
-	       if(UserIDmat.matches()){
-	    	   lbl6UserLogInStatus.setTextFill(Color.GREEN);
-	           lbl6UserLogInStatus.setText("Check-in Successful");
-	           break;
+		public void CheckInButtonOnAction(ActionEvent event) {
+			lbl6UserLogInStatus.setText("Record Status");
+			if (validateUserID()) {
+				java.util.Date utilDate = getDate();
+				if (database.Access.checkIn(businessID, userID, utilDate, maskType)) {
+					lbl6UserLogInStatus.setTextFill(Color.GREEN);
+					lbl6UserLogInStatus.setText("Check-in Successful");
+				} else {
+					lbl6UserLogInStatus.setTextFill(Color.RED);
+	        		lbl6UserLogInStatus.setText("Check-in Failed");
+				}
 	        } else {
-	        	lbl6UserLogInStatus.setTextFill(Color.RED);
-		        lbl6UserLogInStatus.setText("Check-in Failed");
-		        break;
-	        }
-		} while(!UserIDmat.matches());
-	}
+	        		lbl6UserLogInStatus.setTextFill(Color.RED);
+	        		lbl6UserLogInStatus.setText("Check-in Failed");
+	       	}
+		}
+		
+		public void CheckOutButtonOnAction(ActionEvent event) {
+			lbl6UserLogInStatus.setText("Record Status");
+			if (validateUserID()) {
+				java.util.Date utilDate = getDate();
+				java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+				if (database.Access.checkOut(businessID, userID, sqlDate)) {
+					lbl6UserLogInStatus.setTextFill(Color.GREEN);
+					lbl6UserLogInStatus.setText("Check-out Successful");
+				} else {
+					lbl6UserLogInStatus.setTextFill(Color.RED);
+	        		lbl6UserLogInStatus.setText("Check-out Failed");
+				}
+	        } else {
+	        		lbl6UserLogInStatus.setTextFill(Color.RED);
+	        		lbl6UserLogInStatus.setText("Check-out Failed");
+	       	}
+		}
+		
+		public boolean validateUserID() {
+			Pattern UserIDpattern = Pattern.compile("^[0-9]{8}$");
+			Matcher UserIDmat;
+			boolean match;
+			boolean authenticate = false;
+			userID = txt1UserID.getText();
+			maskType = Mask.valueOf(comb1.getSelectionModel().getSelectedItem().toString());
+			do {
+				UserIDmat = UserIDpattern.matcher(txt1UserID.getText());
+	        	if(UserIDmat.matches()){
+	        		match = true;
+	        		break;
+	        	} else {
+	        		match = false;
+	        		break;
+	        	}
+			} while(!UserIDmat.matches());
+			if (match) {
+				Person user = database.Access.findUser(userID);
+				if (user != null) {
+					authenticate = true;
+				}
+			}
+			return (match && authenticate);
+		}
 		
 	public void initialize(URL url, ResourceBundle rb) {
 		ObservableList<String> list = FXCollections.observableArrayList("NONE", "FABRIC", "MEDICAL", "RESPIRATOR");

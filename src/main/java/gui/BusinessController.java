@@ -51,11 +51,6 @@ public class BusinessController {
 		@FXML
 		private Label lbl7Welcome;
 		
-		
-		
-		
-		
-	
 		/* Buttons */
 		
 		@FXML
@@ -70,12 +65,10 @@ public class BusinessController {
 		@FXML
 		private Button btn4Exit;
 		
-		
 		/* Text Fields */
 		
 		@FXML
 		private TextField txt1BusinessID;
-		
 		
 		/* Password Fields */
 		
@@ -86,12 +79,15 @@ public class BusinessController {
 		
 		private Business business = null;
 		
+		public static String businessID;
+		
 		public void btn3SignInOnAction(ActionEvent event) {
 			label6Status.setText("Login Status");
 			if (validateSignInId()) {
 				((Node)event.getSource()).getScene().getWindow().hide();
 				label6Status.setTextFill(Color.GREEN);
 				label6Status.setText("Login Successful");
+				businessID = business.getBusinessID();
 				try {
 					Stage launcherStage = new Stage();
 					launcherStage.initModality(Modality.APPLICATION_MODAL);
