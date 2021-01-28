@@ -55,7 +55,7 @@ public class DataAnalysis {
 	public static ArrayList<InfectedPerson> calculatePI(InfectedPerson infected, Business business) { //TODO CHANGE TO BIGDECIMAL INSTEAD OF DOUBLE
 		ArrayList<InfectedPerson> infectedPeople = new ArrayList<InfectedPerson>();
 		Record covidrecord = database.Access.getPersonsRecord(infected, business); //ONLY NEED FIRST RECORD (IN CASE OF MULTIPLE)
-		var records = database.Access.getBusinessDayRecords((Timestamp) covidrecord.getEntryDate());
+		ArrayList<Record> records = database.Access.getBusinessDayRecords((Timestamp) covidrecord.getEntryDate());
 		double[] erq = calculateTotalErq(covidrecord);
 		System.out.println("Where he came into contact with: ");
 		int count = 0;
