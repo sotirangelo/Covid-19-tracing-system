@@ -228,13 +228,14 @@ public class BusinessSignUpController implements Initializable {
 	public void SignUpButtonOnAction1() {
 
 		if (validateBname() && validateBspace() && validateHeight() && validateEmail()) {
-			Business business = new Business(database.Access.findNewBusinessID(), txt6Email.getText(), pass1Pass.getText(),
+			String businessID = database.Access.findNewBusinessID();
+			Business business = new Business(businessID, txt6Email.getText(), pass1Pass.getText(),
 					txt2Name.getText(), Double.parseDouble(txt3Space.getText()), Double.parseDouble(txt4Height.getText()), 
 					BusinessType.valueOf(comb1.getSelectionModel().getSelectedItem().toString()), 
 					AER.valueOf(comb2.getSelectionModel().getSelectedItem().toString()));
 			database.Access.register(business);
 			RegStatus.setTextFill(Color.GREEN);
-			RegStatus.setText("Registration Successfull");
+			RegStatus.setText("Registration Successfull. YOUR BUSINESS ID IS: " + businessID);
 		}
 		
 	}

@@ -79,7 +79,7 @@ public class Access {
         Connection con = null;
         PreparedStatement stmt = null;
         String checkSql = "SELECT * FROM Person WHERE PhoneNumber = ?";
-        String sql = "INSERT INTO isandalis_database_dmst.Person (UserID, firstName, lastName, email, PhoneNumber, AgeCategory, Password) VALUES (?, ?, ?, ?, ?, ?, md5(?));";
+        String sql = "INSERT INTO isandalis_database_dmst.Person (UserID, firstName, lastName, email, PhoneNumber, Password) VALUES (?, ?, ?, ?, ?, md5(?));";
         try {
             con = Connect.getConnection();
             stmt = con.prepareStatement(checkSql);
@@ -98,14 +98,8 @@ public class Access {
             stmt.setString(3, person.getLastName());
             stmt.setString(4, person.getEmail());
             stmt.setLong(5, person.getPhoneNumber());
-            stmt.setString(6, person.getAgeCategory().name());
-            stmt.setString(7,  person.getPassword());
+            stmt.setString(6,  person.getPassword());
             stmt.executeUpdate();
-            if (person.isEmployee()) {
-            	stmt.executeQuery("INSERT INTO "
-            			+ "isandalis_database_dmst.Employee (UserID) "
-            			+ "VALUES (" + person.getUserID() + ");");
-            }
             stmt.close();
             con.close();
             System.out.println("REGISTRATION SUCCESSFULL");
@@ -171,7 +165,6 @@ public class Access {
 					rs.getString("Person.lastName"),
 					rs.getString("Person.Email"),
 					rs.getLong("Person.PhoneNumber"),
-					Age.valueOf(rs.getString("Person.AgeCategory")),
 					rs.getString("Person.Password"));
 				users.add(user);
 			}
@@ -216,7 +209,6 @@ public class Access {
 				rs.getString("Person.lastName"),
 				rs.getString("Person.Email"),
 				rs.getLong("Person.PhoneNumber"),
-				Age.valueOf(rs.getString("Person.AgeCategory")),
 				rs.getString("Person.Password"));
             rs.close();
             stmt.close();
@@ -257,7 +249,6 @@ public class Access {
 					rs.getString("Person.lastName"),
 					rs.getString("Person.Email"),
 					rs.getLong("Person.PhoneNumber"),
-					Age.valueOf(rs.getString("Person.AgeCategory")),
 					rs.getString("Person.Password"));
             rs.close();
             stmt.close();
@@ -321,32 +312,6 @@ public class Access {
             e.printStackTrace();
 		}
 	} //End of editUserPhoneNumber
-	
-	/**
-	 * Updates existing User's Age Category with the given one
-	 * 
-	 * @param userID, String
-	 * @param age, Age (Enumeration)
-	 * @throws Exception
-	 */
-	public static void editUserAgeCategory(String userID, Age age) {
-		Connection con = null;
-		PreparedStatement stmt = null;		
-		String updateSql = "UPDATE isandalis_database_dmst.Person SET AgeCategory = ? WHERE UserID = ?;";
-		try {
-			con = Connect.getConnection();
-		    stmt = con.prepareStatement(updateSql);
-		    stmt.setString(1, age.name());
-		    stmt.setString(2,userID);
-		    stmt.executeUpdate();
-		    System.out.println("AGE CATEGORY UPDATED SUCCESSFULLY");
-		    stmt.close();
-		    con.close();
-		} catch (Exception e) {
-			System.out.println("ERROR WHILE UPDATING USER AGE CATEGORY");
-            e.printStackTrace();
-		}
-	} //End of editUserAgeCategory
 	
 	/**
 	 * Updates existing User's Password with the given one

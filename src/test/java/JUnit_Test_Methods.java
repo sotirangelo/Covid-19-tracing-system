@@ -37,7 +37,7 @@ public class JUnit_Test_Methods {
 					+ "5.  custPhoneNum();\n"
 					+ "6.  maskType();\n"
 					+ "7.  exertionType();\n"
-					+ "8.  ageGroup();\n"
+					+ "8.  ~Removed~ ageGroup();\n"
 					+ "9.  findNewUserID();\n"
 					+ "10. inputBusinessType();\n"
 					+ "11. getDate();\n"
@@ -60,7 +60,7 @@ public class JUnit_Test_Methods {
 					+ "26. getRecords(BusinessID);\n\n"
 					+ "27. editUserEmail(String, String);\n"
 					+ "28. editUserPhoneNumber(String, long);\n"
-					+ "29. editUserAgeCategory(String, Age);\n"
+					+ "29. ~Removed~ editUserAgeCategory(String, Age);\n"
 					+ "30. editUserPassword(String, String);\n\n"
 					+ "31. editBusinessEmail(String, String);\n"
 					+ "32. editBusinessPassword(String, String);\n"
@@ -111,8 +111,6 @@ public class JUnit_Test_Methods {
 					System.out.println("Το είδος δραστηριότητας καταστήματος που δώσατε: " + exertionType + "\n");
 					break;
 				case 8:
-					Age ageGroup = Interface.ageGroup();
-					System.out.println("Η κατηγορία ηληκίας που δώσατε: " + ageGroup + "\n");
 					break;
 				case 9:
 					System.out.println("Trying to get new userID:");
@@ -150,7 +148,7 @@ public class JUnit_Test_Methods {
 					System.out.println("First, create a Person object:");
 					Person person = new Person(database.Access.findNewUserID(), Interface.firstNameInput(),
 							Interface.lastNameInput(), Interface.emailInput(), Interface.custPhoneNum(),
-							Interface.ageGroup(), Interface.createPassword());
+							Interface.createPassword());
 					try {
 						database.Access.register(person);
 					} catch (Exception e) {
@@ -311,16 +309,6 @@ public class JUnit_Test_Methods {
 					}
 					break;
 				case 29:
-					userID = Interface.userIDInput(0);
-					Age age = Interface.ageGroup();
-					try {
-						user = database.Access.findUser(userID);
-						System.out.println("Old Age Group: " + user.getAgeCategory());
-						database.Access.editUserAgeCategory(userID, age);
-						user = database.Access.findUser(userID);
-						System.out.println("New Age Group: " + user.getAgeCategory());
-					} catch (Exception e) {
-					}
 					break;
 				case 30:
 					userID = Interface.userIDInput(0);
