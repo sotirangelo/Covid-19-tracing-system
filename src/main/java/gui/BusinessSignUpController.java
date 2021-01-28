@@ -229,7 +229,10 @@ public class BusinessSignUpController implements Initializable {
 	}
 	
 	public void SignUpButtonOnAction1() {
-
+		validateBname();
+		validateBspace();
+		validateHeight();
+		validateEmail();
 		if (validateBname() && validateBspace() && validateHeight() && validateEmail()) {
 			String businessID = database.Access.findNewBusinessID();
 			Business business = new Business(businessID, txt6Email.getText(), pass1Pass.getText(),
