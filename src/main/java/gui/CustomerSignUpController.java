@@ -78,7 +78,6 @@ import javafx.stage.Stage;
 		@FXML
 		private TextField txt2LastName;
 		
-		
 		@FXML
 		private TextField txt4Email;
 		
@@ -91,9 +90,12 @@ import javafx.stage.Stage;
 		public void SignUpButtonOnAction() {
 			String userID = database.Access.findNewUserID();
 			if (validateFirstName() && validateLastName() && validateEmail() && validatePhoneNumber()) {
-				Person user = new Person(userID, txt1FirstName.getText(), txt2LastName.getText(), txt4Email.getText(), Long.parseLong(txt5PhoneNumber.getText()), txtPass.getText());
+				Person user = new Person(userID, txt1FirstName.getText(), txt2LastName.getText(),
+						txt4Email.getText(), Long.parseLong(txt5PhoneNumber.getText()), txtPass.getText());
 				lbl2RegistrationStatus.setTextFill(Color.GREEN);
-				lbl2RegistrationStatus.setText("Registration Succesful. YOUR USER ID IS: " + userID);
+				lbl2RegistrationStatus.setText("Registration Succesffull.");
+				lbl3RegistrationStatus.setTextFill(Color.GREEN);
+				lbl3RegistrationStatus.setText("Your UserID is: " + userID + ".");
 				database.Access.register(user);
 			}
 		}
