@@ -73,7 +73,7 @@
                   </Label>
                   <ImageView fitHeight="103.0" fitWidth="103.0" layoutX="71.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/images/Javavirus%20Logo.png" />
+                        <Image url="@/images/Javavirus Logo.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="lbl5CustomerLogIn" layoutX="72.0" layoutY="194.0" prefHeight="20.0" prefWidth="116.0" text="Customer Record" textFill="WHITE">

@@ -24,7 +24,7 @@
                   </Label>
                   <ImageView fitHeight="103.0" fitWidth="103.0" layoutX="73.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/images/Javavirus%20Logo.png" />
+                        <Image url="@/images/Javavirus Logo.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="lbl5BusinessLogIn" layoutX="71.0" layoutY="200.0" prefHeight="20.0" prefWidth="103.0" text="Business Log In" textFill="WHITE">
@@ -73,7 +73,7 @@
                   </Label>
                   <ImageView fitHeight="24.0" fitWidth="26.0" layoutX="15.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/images/Shop%20Icon.png" />
+                        <Image url="@/images/Shop Icon.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="20.0" fitWidth="18.0" layoutX="19.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true">

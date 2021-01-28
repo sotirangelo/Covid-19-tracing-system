@@ -18,7 +18,7 @@
                <children>
                   <ImageView fitHeight="103.0" fitWidth="103.0" layoutX="78.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/images/Javavirus%20Logo.png" />
+                        <Image url="@/images/Javavirus Logo.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="lbl1CustomerRegistration" layoutX="14.0" layoutY="255.0" prefHeight="20.0" prefWidth="231.0" text="Javavirus® Covid19 Tracing App " textFill="WHITE">
@@ -143,7 +143,7 @@
                   </ImageView>
                   <ImageView fitHeight="28.0" fitWidth="38.0" layoutX="20.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/images/Person%20Icon.png.png" />
+                        <Image url="@/images/Person Icon.png.png" />
                      </image>
                   </ImageView>
                </children>

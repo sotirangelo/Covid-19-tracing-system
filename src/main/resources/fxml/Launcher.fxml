@@ -23,7 +23,7 @@
                   <Label fx:id="lbl2Welcome" layoutX="78.0" layoutY="152.0" prefHeight="17.0" prefWidth="71.0" text="Welcome to" textFill="WHITE" />
                   <ImageView fitHeight="103.0" fitWidth="103.0" layoutX="61.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/images/Javavirus%20Logo.png" />
+                        <Image url="@/images/Javavirus Logo.png" />
                      </image>
                   </ImageView>
                   <Button fx:id="btn4Exit" layoutX="82.0" layoutY="253.0" mnemonicParsing="false" onAction="#exitButtonOnAction" prefHeight="25.0" prefWidth="64.0" style="-fx-background-color: White;" text="Exit" textFill="#e96151">
@@ -46,7 +46,7 @@
                      </font></Button>
                   <ImageView fitHeight="36.0" fitWidth="34.0" layoutX="24.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/images/Shop%20Icon.png" />
+                        <Image url="@/images/Shop Icon.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="30.0" fitWidth="42.0" layoutX="20.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">

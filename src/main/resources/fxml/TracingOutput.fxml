@@ -24,7 +24,7 @@
                   </Label>
                   <ImageView fitHeight="103.0" fitWidth="103.0" layoutX="89.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/images/Javavirus%20Logo.png" />
+                        <Image url="@/images/Javavirus Logo.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="lbl2TracingOutput" layoutX="89.0" layoutY="237.0" prefHeight="20.0" prefWidth="103.0" text="Tracing Output" textFill="WHITE">
