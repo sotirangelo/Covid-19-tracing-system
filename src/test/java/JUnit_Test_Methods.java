@@ -14,10 +14,10 @@ import data.Record;
  * 
  */
 
-class JUnit_Test_Methods {
+public class JUnit_Test_Methods {
 
 	@Test
-	void test() {
+	public void test() {
 		String userID = null;
 		String businessID = null;
 		String email = null;
