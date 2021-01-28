@@ -27,7 +27,7 @@
                         <Image url="@/images/Javavirus Logo.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="lbl2TracingOutput" layoutX="89.0" layoutY="237.0" prefHeight="20.0" prefWidth="103.0" text="Tracing Output" textFill="WHITE">
+                  <Label fx:id="lbl2TracingOutput" layoutX="62.0" layoutY="237.0" prefHeight="20.0" prefWidth="158.0" text="Contact Tracing Results" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
