@@ -1,9 +1,4 @@
-package test;
-/*
- * Interface
- *
- * Copyright (not) 2020 Javavirus
- */
+
 
 import java.util.Scanner;
 

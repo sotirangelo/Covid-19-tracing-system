@@ -1,14 +1,7 @@
-package test;
-/*
- * JUnit_Test_Methods
- *
- * Copyright (not) 2020 Javavirus
- */
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import data.*;
 import data.Record;
