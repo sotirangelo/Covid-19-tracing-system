@@ -82,6 +82,9 @@ public class BusinessSignUpController implements Initializable {
 	@FXML
 	private Label RegStatus;
 	
+	@FXML
+	private Label RegStatus1;
+	
 	/* Buttons */
 	
 	@FXML

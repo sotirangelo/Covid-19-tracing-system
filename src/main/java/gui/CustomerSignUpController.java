@@ -58,6 +58,9 @@ import javafx.stage.Stage;
 		
 		@FXML
 		private Label lbl15AgeStatus;
+		
+		@FXML
+		private Label lbl3RegistrationStatus;
 			
 		/* Buttons */
 		
