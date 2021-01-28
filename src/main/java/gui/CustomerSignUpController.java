@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -86,7 +87,7 @@ import javafx.stage.Stage;
 		private TextField txt5PhoneNumber;
 		
 		@FXML
-		private TextField txt6Age;
+		private PasswordField txtPass;
 		
 		
 		
@@ -95,8 +96,7 @@ import javafx.stage.Stage;
 			validateLastName();
 			validateEmail();
 			validatePhoneNumber();
-			validateAge();
-			if (validateFirstName() && validateLastName() && validateEmail() && validatePhoneNumber() && validateAge()) {
+			if (validateFirstName() && validateLastName() && validateEmail() && validatePhoneNumber()) {
 				lbl2RegistrationStatus.setTextFill(Color.GREEN);
 				lbl2RegistrationStatus.setText("Registration Succesful");
 				/*
@@ -189,28 +189,6 @@ import javafx.stage.Stage;
 				} while(!PhoneNumat.matches());
 			}
 			
-			public boolean validateAge() {
-				Pattern Agepattern = Pattern.compile("^[1-9][0-9]?$|^100$");
-				Matcher Agemat;
-					do {
-						Agemat = Agepattern.matcher(txt6Age.getText());
-			        if(Agemat.matches()){
-			            lbl15AgeStatus.setTextFill(Color.GREEN);
-			            lbl15AgeStatus.setText("Okay");
-			            return true;
-			        } else {
-			        	lbl15AgeStatus.setTextFill(Color.RED);
-			        	lbl15AgeStatus.setText("Incorrect");
-			        	lbl2RegistrationStatus.setTextFill(Color.RED);
-			        	lbl2RegistrationStatus.setText("Registration Failed");
-			        	return false;
-			        }
-				} while(!Agemat.matches());
-				}
-		
-		
-
-		
 		
 		public void closeButtonOnAction(ActionEvent event) {
 			Stage customerSignUpStage = (Stage) btn2Close.getScene().getWindow();
