@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="339.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CertainInfectionController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="339.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CertainInfectionController">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="339.0" prefWidth="552.0">
          <left>
@@ -26,7 +26,7 @@
                         <Image url="@/images/Javavirus Logo.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="lbl2CertainInfection" layoutX="63.0" layoutY="202.0" prefHeight="20.0" prefWidth="119.0" text="Certain Infection " textFill="WHITE">
+                  <Label fx:id="lbl2CertainInfection" layoutX="74.0" layoutY="201.0" prefHeight="20.0" prefWidth="96.0" text="Covid-19 Case" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -47,7 +47,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Label fx:id="lbl4CustomerID" layoutX="32.0" layoutY="161.0" prefHeight="17.0" prefWidth="116.0" text="Infected Person ID">
+                  <Label fx:id="lbl4CustomerID" layoutX="32.0" layoutY="161.0" prefHeight="17.0" prefWidth="116.0" text="Case ID">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>

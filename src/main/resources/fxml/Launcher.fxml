@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LauncherController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LauncherController">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="430.0">
          <left>
@@ -36,7 +36,7 @@
          <right>
             <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="206.0" style="-fx-background-color: White;" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="btn1Customer" layoutX="77.0" layoutY="68.0" mnemonicParsing="false" onAction="#createCustomer" prefHeight="70.0" prefWidth="82.0" style="-fx-background-color: #E96151;" text="Customer" textFill="WHITE">
+                  <Button fx:id="btn1Customer" layoutX="77.0" layoutY="68.0" mnemonicParsing="false" onAction="#createCustomer" prefHeight="70.0" prefWidth="82.0" style="-fx-background-color: #E96151;" text="User" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Button>
