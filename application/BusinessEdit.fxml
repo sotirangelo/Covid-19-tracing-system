@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="482.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.BusinessEdit">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="482.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.BusinessEdit">
    <children>
       <BorderPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="482.0">
          <left>
@@ -20,7 +20,7 @@
                <children>
                   <ImageView fitHeight="103.0" fitWidth="103.0" layoutX="75.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/images/Javavirus Logo.png" />
+                        <Image url="@Javavirus%20GUI%20images/Javavirus%20Logo.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="lbl1Title" layoutX="11.0" layoutY="240.0" prefHeight="20.0" prefWidth="222.0" text="Javavirus® Covid19 Tracing App " textFill="WHITE">
@@ -47,7 +47,7 @@
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Button>
-                  <TextField fx:id="txt1ID" disable="true" editable="false" layoutX="45.0" layoutY="77.0" promptText="XXXXXXXX" />
+                  <TextField fx:id="txt1ID" layoutX="45.0" layoutY="77.0" promptText="XXXXXXXX" />
                   <TextField fx:id="txt2Name" layoutX="45.0" layoutY="136.0" promptText="e.g Jumbo" />
                   <TextField fx:id="txt3Space" layoutX="45.0" layoutY="196.0" promptText="e.g XX" />
                   <TextField fx:id="txt4Height" layoutX="45.0" layoutY="257.0" promptText="e.g X" />
@@ -109,32 +109,32 @@
                   <ComboBox fx:id="comb2" layoutX="45.0" layoutY="507.0" prefWidth="150.0" promptText="Select type of Venttilation" style="-fx-background-color: #E96151;" />
                   <ImageView fitHeight="25.0" fitWidth="28.0" layoutX="13.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/images/Shop Icon.png" />
+                        <Image url="@Javavirus%20GUI%20images/Shop%20Icon.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="32.0" fitWidth="30.0" layoutX="13.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/images/Height.png" />
+                        <Image url="@Javavirus%20GUI%20images/Height.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="31.0" fitWidth="28.0" layoutX="15.0" layoutY="385.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/images/cm2.png" />
+                        <Image url="@Javavirus%20GUI%20images/cm2.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="22.0" fitWidth="20.0" layoutX="20.0" layoutY="450.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/images/Pass.png" />
+                        <Image url="@Javavirus%20GUI%20images/Pass.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="25.0" fitWidth="24.0" layoutX="16.0" layoutY="197.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/images/cm2.png" />
+                        <Image url="@Javavirus%20GUI%20images/cm2.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="35.0" fitWidth="33.0" layoutX="9.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/images/PersonID.png" />
+                        <Image url="@Javavirus%20GUI%20images/PersonID.png" />
                      </image>
                   </ImageView>
                </children>

@@ -33,7 +33,7 @@ Scanner scan = new Scanner(System.in);
 	 
 	 
 	 @FXML
-	 private Button btn3Exit;
+	 private Button btn1Exit;
 	 
 	 
 
@@ -58,9 +58,9 @@ Scanner scan = new Scanner(System.in);
 	 
 	 
 	 public void exitButtonOnAction(ActionEvent event) {
-			Stage OutputStage = (Stage) btn3Exit.getScene().getWindow();
+			Stage tracingOutputStage = (Stage) btn1Exit.getScene().getWindow();
 			((Node)event.getSource()).getScene().getWindow().hide();
-			OutputStage.close();
+			tracingOutputStage.close();
 		}
 	 
 	 private final ObservableList<RowPerson> data = FXCollections.observableArrayList();

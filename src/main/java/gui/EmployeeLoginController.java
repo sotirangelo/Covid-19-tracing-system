@@ -45,7 +45,7 @@ public class EmployeeLoginController {
 	/* Text */
 	
 	@FXML
-	private TextField txt1CustomerID;
+	private TextField txt1Email;
 	
 	/* Password */
 	
@@ -64,12 +64,12 @@ public class EmployeeLoginController {
 	
 	
 			
-	public boolean validateEmployeeID() {
-		Pattern EmployeeIDpattern = Pattern.compile("^[0-9]{8}$");
-		Matcher EmployeeIDmat;
+	public boolean validateEmail() {
+		Pattern Emailpattern = Pattern.compile("^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$");
+		Matcher Emailmat;
 			do {
-				EmployeeIDmat = EmployeeIDpattern.matcher(txt1CustomerID.getText());
-	        if(EmployeeIDmat.matches()){
+				Emailmat = Emailpattern.matcher(txt1Email.getText());
+	        if(Emailmat.matches()){
 	            lbl2Status.setTextFill(Color.GREEN);
 	            lbl2Status.setText("Validation Successful");
 	            return true;
@@ -78,7 +78,7 @@ public class EmployeeLoginController {
 		         lbl2Status.setText("Validation Failed");
 		         return false;
 	        }
-		} while(!EmployeeIDmat.matches());
+		} while(!Emailmat.matches());
 	
 	}
 
@@ -90,7 +90,7 @@ public class EmployeeLoginController {
 
 	public void ValidateOnAction(ActionEvent event) {
 		lbl2Status.setText("Validation Status");
-		if (validateEmployeeID()) {
+		if (validateEmail()) {
 			createOutput();
 		}
 	}
@@ -107,7 +107,7 @@ public class EmployeeLoginController {
 		Parent root = FXMLLoader.load(getClass().getResource("/fxml/EmployeeSignUp.fxml"));
 		Scene scene = new Scene(root,482,600);
 		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
-		createEmployeeSignUpStage.setTitle("Javavirus� Covid19 Tracing App -EODY Employee Sign Up");
+		createEmployeeSignUpStage.setTitle("Javavirus Covid19 Tracing App - EODY User Sign Up");
 		createEmployeeSignUpStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
 		createEmployeeSignUpStage.setScene(scene);
 		createEmployeeSignUpStage.show();
@@ -118,15 +118,15 @@ public class EmployeeLoginController {
 	
 	public void createOutput() {
 		try {
-		Stage createCertainInfectionStage = new Stage();
-		createCertainInfectionStage.initModality(Modality.APPLICATION_MODAL);
+		Stage createcertainInfectionStage = new Stage();
+		createcertainInfectionStage.initModality(Modality.APPLICATION_MODAL);
 		Parent root = FXMLLoader.load(getClass().getResource("/fxml/CertainInfection.fxml"));
 		Scene scene = new Scene(root,552,339);
 		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
-		createCertainInfectionStage.setTitle("Javavirus� Covid19 Tracing App - Tracing Output");
-		createCertainInfectionStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
-		createCertainInfectionStage.setScene(scene);
-		createCertainInfectionStage.show();
+		createcertainInfectionStage.setTitle("Javavirus Covid19 Tracing App - Covid-19 Case");
+		createcertainInfectionStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
+		createcertainInfectionStage.setScene(scene);
+		createcertainInfectionStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
