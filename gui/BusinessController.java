@@ -79,7 +79,9 @@ public class BusinessController {
 		
 		
 		public void btn3SignInOnAction(ActionEvent event) {
-			((Node)event.getSource()).getScene().getWindow().hide();
+			if (validateSignInId()) {
+				((Node)event.getSource()).getScene().getWindow().hide();
+			}
 			label6Status.setText("Login Status");
 			validateSignInId();
 			if (validateSignInId()) {
