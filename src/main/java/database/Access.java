@@ -209,6 +209,7 @@ public class Access {
                 rs.close();
                 stmt.close();
                 System.out.println("Wrong UserID or password");
+                return null;
             }
             user = new Person(rs.getString("Person.UserID"),
 				rs.getString("Person.firstName"),
@@ -220,6 +221,7 @@ public class Access {
             rs.close();
             stmt.close();
             con.close();
+            System.out.println("LOG IN SUCCESSFULL");
         } catch (Exception e) {
         	System.out.println("ERROR WHILE AUTHENTICATING USER");
             e.printStackTrace();

@@ -63,8 +63,8 @@ public class CustomerPasswordEdit {
 		Matcher UserIDmat;
 		boolean match;
 		boolean authenticate = false;
-		String userID = passCustomerPass.getText();
-		String password = txt1CustomerID.getText();
+		String userID = txt1CustomerID.getText();
+		String password = passCustomerPass.getText();
 			do {
 			UserIDmat = UserIDpattern.matcher(txt1CustomerID.getText());
 	        if(UserIDmat.matches()){

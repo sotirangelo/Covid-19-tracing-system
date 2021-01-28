@@ -5,6 +5,9 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import data.AER;
+import data.Business;
+import data.BusinessType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -263,14 +266,13 @@ public class BusinessSignUpController implements Initializable {
 	}
 	
 	public void SignUpButtonOnAction1() {
-		validateBusid();
-		validateBname();
-		validateBspace();
-		validateHeight();
-		validateEmail();
 		if (validateBusid() && validateBname() && validateBspace() && validateHeight() && validateEmail()) {
+			Business business = new Business(database.Access.findNewBusinessID(), txt6Email.getText(), pass1Email.getText(),
+					txt2Name.getText(), Double.parseDouble(txt3Space.getText()), Double.parseDouble(txt4Height.getText()), 
+					BusinessType.valueOf(txt5Type.getText()), AER.valueOf(txt7AER.getText()));
+			database.Access.register(business);
 			RegStatus.setTextFill(Color.GREEN);
-			RegStatus.setText("Registration Succesful");
+			RegStatus.setText("Registration Successfull");
 		}
 		
 	}
