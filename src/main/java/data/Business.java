@@ -110,28 +110,16 @@ public class Business {
 		this.password = password;
 	}
 	/**
-	 *Finds and returns the Exertion of a healthy customer
+	 *Finds and returns the Exertion of a healthy person
 	 */
-	public double getHealthyCustExertion() {
+	public double getHealthyExertion() {
 		return businessType.getCustActivity().getIr();
 	}
 	/**
-	 *Finds and returns the Exertion of an infected customer
+	 *Finds and returns the Exertion of an infected person
 	 */
-	public double getInfectedCustExertion() {
+	public double getInfectedExertion() {
 		return businessType.getCustActivity().getErq();
-	}
-	/**
-	 *Finds and returns the Exertion of a healthy employee
-	 */
-	public double getHealthyEmpExertion() {
-		return businessType.getEmplActivity().getIr();
-	}
-	/**
-	 *Finds and returns the Exertion of an infected employee
-	 */
-	public double getInfectedEmpExertion() {
-		return businessType.getEmplActivity().getErq();
 	}
 	/** 
 	 *Calculates and returns the total viral removal rate 

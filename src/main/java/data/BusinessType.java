@@ -10,22 +10,20 @@ package data;
  */
 public enum BusinessType {
 	//TODO fix restaurant and bar capacity
-	RESTAURANT(Exertion.R_S, Exertion.L_E_S, "Restaurant"),
-	BAR(Exertion.R_L_S, Exertion.S_L_S, "Bar"),
-	OFFICE(Exertion.R_S, Exertion.S_S, "Office"),
-	STORE(Exertion.L_E_S, Exertion.S_S, "Store"),
-	MARKET(Exertion.L_E_S, Exertion.S_S, "Market");
+	RESTAURANT(Exertion.R_S, "Restaurant"),
+	BAR(Exertion.R_L_S, "Bar"),
+	OFFICE(Exertion.R_S, "Office"),
+	STORE(Exertion.L_E_S, "Store"),
+	MARKET(Exertion.L_E_S, "Market");
 
 	private final String type;
 
 	/** Square metres distance per person */
 	private final Exertion customerActivity;
-	private final Exertion employeeActivity;
 
-	private BusinessType(Exertion customerActivity, Exertion employeeActivity, String type) {
+	private BusinessType(Exertion customerActivity, String type) {
 		this.type = type;
 		this.customerActivity = customerActivity;
-		this.employeeActivity = employeeActivity;
 	}
 
 	@Override
@@ -35,10 +33,6 @@ public enum BusinessType {
 
 	public Exertion getCustActivity() {
 		return customerActivity;
-	}
-	
-	public Exertion getEmplActivity() {
-		return employeeActivity;
 	}
 }
 

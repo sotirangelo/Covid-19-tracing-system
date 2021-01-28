@@ -38,17 +38,9 @@ public class DataAnalysis {
 	
 	public static double getActivity(Person p, Business b) {
 		if (p instanceof InfectedPerson) {
-			if (p.isEmployee()) {
-				return b.getInfectedEmpExertion();	
-			} else {
-				return b.getInfectedCustExertion();
-			}
+			return b.getInfectedExertion();
 		} else {
-			if (p.isEmployee()) {
-				return b.getHealthyEmpExertion();
-			} else {
-				return b.getHealthyCustExertion();
-			}
+			return b.getHealthyExertion();
 		}
 	}
 	
