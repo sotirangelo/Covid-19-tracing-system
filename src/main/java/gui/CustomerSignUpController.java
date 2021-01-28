@@ -91,7 +91,7 @@ import javafx.stage.Stage;
 				Person user = new Person(userID, txt1FirstName.getText(), txt2LastName.getText(), txt4Email.getText(), Long.parseLong(txt5PhoneNumber.getText()), txtPass.getText());
 				lbl2RegistrationStatus.setTextFill(Color.GREEN);
 				lbl2RegistrationStatus.setText("Registration Succesful. YOUR USER ID IS: " + userID);
-				
+				database.Access.register(user);
 			}
 		}
 		
