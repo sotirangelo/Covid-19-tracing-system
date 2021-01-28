@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -58,8 +59,6 @@ import javafx.stage.Stage;
 		@FXML
 		private Label lbl15AgeStatus;
 			
-	
-		
 		/* Buttons */
 		
 		@FXML
@@ -67,10 +66,7 @@ import javafx.stage.Stage;
 		
 		@FXML
 		private Button btn2Close;
-		
-		
-		
-		
+			
 		/* Text Fields */
 		
 		@FXML
@@ -87,13 +83,12 @@ import javafx.stage.Stage;
 		private TextField txt5PhoneNumber;
 		
 		@FXML
-		private TextField txt6Age;
-		
+		private PasswordField txtPass;
 		
 		public void SignUpButtonOnAction() {
 			String userID = database.Access.findNewUserID();
 			if (validateFirstName() && validateLastName() && validateEmail() && validatePhoneNumber()) {
-				Person user = new Person(userID, txt1FirstName.getText(), txt2LastName.getText(), txt4Email.getText(), Double.parseDouble(txt5PhoneNumber.getText()), txtPass.getText());
+				Person user = new Person(userID, txt1FirstName.getText(), txt2LastName.getText(), txt4Email.getText(), Long.parseLong(txt5PhoneNumber.getText()), txtPass.getText());
 				lbl2RegistrationStatus.setTextFill(Color.GREEN);
 				lbl2RegistrationStatus.setText("Registration Succesful. YOUR USER ID IS: " + userID);
 				
@@ -158,7 +153,8 @@ import javafx.stage.Stage;
 			        }
 				} while(!Emailmat.matches());
 				}
-	
+
+			
 		public boolean validatePhoneNumber() {
 			Pattern PhoneNumberpattern = Pattern.compile("^[0-9]{10}$");
 			Matcher PhoneNumat;
@@ -173,28 +169,9 @@ import javafx.stage.Stage;
 					lbl14PhoneNumberStatus.setText("Incorrect");
 					lbl2RegistrationStatus.setTextFill(Color.RED);
 					lbl2RegistrationStatus.setText("Registration Failed");
-					return false;				
+					return false;		
 				}
 			} while(!PhoneNumat.matches());
-		}
-			
-		public boolean validateAge() {
-			Pattern Agepattern = Pattern.compile("^[1-9][0-9]?$|^100$");
-			Matcher Agemat;
-				do {
-					Agemat = Agepattern.matcher(txt6Age.getText());
-		        if(Agemat.matches()){
-		            lbl15AgeStatus.setTextFill(Color.GREEN);
-		            lbl15AgeStatus.setText("Okay");
-		            return true;
-		        } else {
-		        	lbl15AgeStatus.setTextFill(Color.RED);
-		        	lbl15AgeStatus.setText("Incorrect");
-		        	lbl2RegistrationStatus.setTextFill(Color.RED);
-		        	lbl2RegistrationStatus.setText("Registration Failed");
-		        	return false;
-		        }
-			} while(!Agemat.matches());
 		}
 		
 		public void closeButtonOnAction(ActionEvent event) {
