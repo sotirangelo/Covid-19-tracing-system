@@ -64,10 +64,10 @@ public class LauncherController {
 		try {
 		Stage customerStage = new Stage();
 		customerStage.initModality(Modality.APPLICATION_MODAL);
-		Parent root = FXMLLoader.load(getClass().getResource("Customer.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/fxml/Customer.fxml"));
 		Scene scene = new Scene(root,552,339);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		customerStage.getIcons().add(new Image("Javavirus GUI images/Javavirus Logo.png"));
+		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
+		customerStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
 		customerStage.setTitle("Javavirus� Covid19 Tracing App - Customer Log In");
 		customerStage.setScene(scene);
 		customerStage.show();
@@ -80,10 +80,10 @@ public class LauncherController {
 		try {
 		Stage businessEditStage = new Stage();
 		businessEditStage.initModality(Modality.APPLICATION_MODAL);
-		Parent root = FXMLLoader.load(getClass().getResource("BusinessEdit.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/fxml/BusinessEdit.fxml"));
 		Scene scene = new Scene(root,482,600);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		businessEditStage.getIcons().add(new Image("Javavirus GUI images/Javavirus Logo.png"));
+		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
+		businessEditStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
 		businessEditStage.setTitle("Javavirus� Covid19 Tracing App - Business Edit");
 		businessEditStage.setScene(scene);
 		businessEditStage.show();

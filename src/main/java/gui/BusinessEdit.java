@@ -237,10 +237,10 @@ public class BusinessEdit implements Initializable {
 
 	public void BusinessEdit(ActionEvent event) throws Exception {
 		Stage businessEditStage = new Stage();
-		Parent root = FXMLLoader.load(getClass().getResource("BusinessEdit.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/fxml/BusinessEdit.fxml"));
 		Scene scene = new Scene(root,384,189);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		businessEditStage.getIcons().add(new Image("Javavirus GUI images/Javavirus Logo.png"));
+		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
+		businessEditStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
 		businessEditStage.setTitle("Javavirus� Covid19 Tracing App - Business Sign Up");
 		businessEditStage.setScene(scene);
 		businessEditStage.show();

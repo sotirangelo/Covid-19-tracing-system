@@ -93,11 +93,11 @@ public class CustomerPasswordEdit {
 		try {
 		Stage customerEditStage = new Stage();
 		customerEditStage.initModality(Modality.APPLICATION_MODAL);
-		Parent root = FXMLLoader.load(getClass().getResource("CustomerEdit.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/fxml/CustomerEdit.fxml"));
 		Scene scene = new Scene(root,482,600);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 		customerEditStage.setTitle("Javavirus� Covid19 Tracing App - Customer Edit Account");
-		customerEditStage.getIcons().add(new Image("Javavirus GUI images/Javavirus Logo.png"));
+		customerEditStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
 		customerEditStage.setScene(scene);
 		customerEditStage.show();
 		} catch(Exception e) {

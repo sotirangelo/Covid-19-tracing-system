@@ -57,10 +57,10 @@ public class CertainInfectionController {
 		try {
 		Stage tracingOutputStage = new Stage();
 		tracingOutputStage.initModality(Modality.APPLICATION_MODAL);
-		Parent root = FXMLLoader.load(getClass().getResource("TracingOutput.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/fxml/TracingOutput.fxml"));
 		Scene scene = new Scene(root,699,472);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		tracingOutputStage.getIcons().add(new Image("Javavirus GUI images/Javavirus Logo.png"));
+		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
+		tracingOutputStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
 		tracingOutputStage.setTitle("Javavirus� Covid19 Tracing App - Customer Edit Account (Validation)");
 		tracingOutputStage.setScene(scene);
 		tracingOutputStage.show();

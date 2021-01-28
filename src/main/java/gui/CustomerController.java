@@ -93,11 +93,11 @@ import javafx.stage.Stage;
 			try {
 			Stage customerPassEditStage = new Stage();
 			customerPassEditStage.initModality(Modality.APPLICATION_MODAL);
-			Parent root = FXMLLoader.load(getClass().getResource("CustomerPasswordEdit.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/fxml/CustomerPasswordEdit.fxml"));
 			Scene scene = new Scene(root,552,339);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 			customerPassEditStage.setTitle("Javavirus� Covid19 Tracing App - Customer Edit Account (Validation)");
-			customerPassEditStage.getIcons().add(new Image("Javavirus GUI images/Javavirus Logo.png"));
+			customerPassEditStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
 			customerPassEditStage.setScene(scene);
 			customerPassEditStage.show();
 			} catch(Exception e) {
@@ -108,11 +108,11 @@ import javafx.stage.Stage;
 		public void createCustomerSignUp() {
 			try {
 			Stage customerSignUpStage = new Stage();
-			Parent root = FXMLLoader.load(getClass().getResource("CustomerSignUp.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/fxml/CustomerSignUp.fxml"));
 			Scene scene = new Scene(root,482,600);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 			customerSignUpStage.setTitle("Javavirus� Covid19 Tracing App - Customer Sign Up");
-			customerSignUpStage.getIcons().add(new Image("Javavirus GUI images/Javavirus Logo.png"));
+			customerSignUpStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
 			customerSignUpStage.setScene(scene);
 			customerSignUpStage.show();
 			} catch(Exception e) {

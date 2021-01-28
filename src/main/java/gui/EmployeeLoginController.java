@@ -104,11 +104,11 @@ public class EmployeeLoginController {
 		try {
 		Stage createEmployeeSignUpStage = new Stage();
 		createEmployeeSignUpStage.initModality(Modality.APPLICATION_MODAL);
-		Parent root = FXMLLoader.load(getClass().getResource("EmployeeSignUp.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/fxml/EmployeeSignUp.fxml"));
 		Scene scene = new Scene(root,482,600);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 		createEmployeeSignUpStage.setTitle("Javavirus� Covid19 Tracing App -EODY Employee Sign Up");
-		createEmployeeSignUpStage.getIcons().add(new Image("Javavirus GUI images/Javavirus Logo.png"));
+		createEmployeeSignUpStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
 		createEmployeeSignUpStage.setScene(scene);
 		createEmployeeSignUpStage.show();
 		} catch(Exception e) {
@@ -120,11 +120,11 @@ public class EmployeeLoginController {
 		try {
 		Stage createCertainInfectionStage = new Stage();
 		createCertainInfectionStage.initModality(Modality.APPLICATION_MODAL);
-		Parent root = FXMLLoader.load(getClass().getResource("CertainInfection.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/fxml/CertainInfection.fxml"));
 		Scene scene = new Scene(root,552,339);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 		createCertainInfectionStage.setTitle("Javavirus� Covid19 Tracing App - Tracing Output");
-		createCertainInfectionStage.getIcons().add(new Image("Javavirus GUI images/Javavirus Logo.png"));
+		createCertainInfectionStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
 		createCertainInfectionStage.setScene(scene);
 		createCertainInfectionStage.show();
 		} catch(Exception e) {

@@ -92,9 +92,9 @@ public class BusinessController {
 					launcherStage.initModality(Modality.APPLICATION_MODAL);
 					Parent root = FXMLLoader.load(getClass().getResource("/fxml/Launcher.fxml"));
 					Scene scene = new Scene(root,430,320);
-					scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+					scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 					launcherStage.setScene(scene);
-					launcherStage.getIcons().add(new Image("Javavirus GUI images/Javavirus Logo.png"));
+					launcherStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
 					launcherStage.setTitle("Javavirus� Covid19 Tracing App");
 					launcherStage.show();
 				} catch(Exception e) {
@@ -141,9 +141,9 @@ public class BusinessController {
 			businessSignUpStage.initModality(Modality.APPLICATION_MODAL);
 			Parent root = FXMLLoader.load(getClass().getResource("/fxml/BusinessSignUp.fxml"));
 			Scene scene = new Scene(root,482,600);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 			businessSignUpStage.setTitle("Javavirus� Covid19 Tracing App - Business Sign Up");
-			businessSignUpStage.getIcons().add(new Image("Javavirus GUI images/Javavirus Logo.png"));
+			businessSignUpStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
 			businessSignUpStage.setScene(scene);
 			businessSignUpStage.show();
 			} catch(Exception e) {
