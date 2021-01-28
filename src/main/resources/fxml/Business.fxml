@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="339.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.BusinessController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="339.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.BusinessController">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="339.0" prefWidth="552.0">
          <left>
@@ -36,7 +36,7 @@
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Button>
-                  <Button fx:id="btn3Output" layoutX="61.0" layoutY="245.0" mnemonicParsing="false" onAction="#OutputButtonOnAction" prefHeight="25.0" prefWidth="120.0" style="-fx-background-color: #287072;" text="Tracing" textFill="WHITE">
+                  <Button fx:id="btn3Output" layoutX="47.0" layoutY="245.0" mnemonicParsing="false" onAction="#OutputButtonOnAction" prefHeight="25.0" prefWidth="148.0" style="-fx-background-color: #287072;" text="Contact Tracing Menu" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -66,7 +66,7 @@
                   <PasswordField fx:id="passBusinessPass" layoutX="129.0" layoutY="175.0" promptText="*****" />
                   <Button fx:id="btn3SignUp" layoutX="191.0" layoutY="303.0" mnemonicParsing="false" onAction="#BusinessSignUpButtonOnAction" style="-fx-background-color: #E96151;" text="Sign Up" textFill="WHITE" />
                   <Label fx:id="labelStatusLogIn1" layoutX="138.0" layoutY="103.0" prefHeight="17.0" prefWidth="65.0" />
-                  <Label fx:id="label6Status" layoutX="109.0" layoutY="59.0" prefHeight="17.0" prefWidth="111.0" text="Registration Status">
+                  <Label fx:id="label6Status" layoutX="109.0" layoutY="59.0" prefHeight="17.0" prefWidth="111.0" text="Log In Status :">
                      <font>
                         <Font name="System Italic" size="12.0" />
                      </font>

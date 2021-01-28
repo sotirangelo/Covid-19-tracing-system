@@ -14,10 +14,36 @@
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="339.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CustomerController">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="339.0" prefWidth="552.0">
-         <right>
+         <left>
+            <AnchorPane prefHeight="399.0" prefWidth="244.0" style="-fx-background-color: #E96151;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="lbl1Title" layoutX="15.0" layoutY="143.0" prefHeight="27.0" prefWidth="230.0" text="Javavirus® Covid19 Tracing App " textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="103.0" fitWidth="103.0" layoutX="71.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/images/Javavirus Logo.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="lbl5CustomerLogIn" layoutX="86.0" layoutY="194.0" prefHeight="20.0" prefWidth="102.0" text="User Record" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btn3Exit" layoutX="100.0" layoutY="273.0" mnemonicParsing="false" onAction="#exitButtonOnAction" style="-fx-background-color: White;" text="Back" textFill="#e96151">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </left>
+         <center>
             <AnchorPane prefHeight="329.0" prefWidth="304.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="btn1LogIn" layoutX="64.0" layoutY="190.0" mnemonicParsing="false" onAction="#LogInButtonOnAction" prefHeight="25.0" prefWidth="215.0" style="-fx-background-color: #E96151;" text="Record In/Out" textFill="WHITE">
+                  <Button fx:id="btn1LogIn" layoutX="62.0" layoutY="190.0" mnemonicParsing="false" onAction="#LogInButtonOnAction" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: #E96151;" text="Check In" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Button>
@@ -44,7 +70,7 @@
                         <Image url="@/images/PersonID.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="btn4Edit" layoutX="63.0" layoutY="239.0" mnemonicParsing="false" onAction="#CustomerEditButtonOnAction" prefHeight="25.0" prefWidth="217.0" style="-fx-background-color: #E96151;" text="Edit Account" textFill="WHITE">
+                  <Button fx:id="btn4Edit" layoutX="63.0" layoutY="239.0" mnemonicParsing="false" onAction="#CustomerEditButtonOnAction" prefHeight="25.0" prefWidth="217.0" style="-fx-background-color: #E96151;" text="Edit User Account" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -60,35 +86,14 @@
                         <Image url="@/images/577778-200.png" />
                      </image>
                   </ImageView>
-               </children>
-            </AnchorPane>
-         </right>
-         <left>
-            <AnchorPane prefHeight="399.0" prefWidth="244.0" style="-fx-background-color: #E96151;" BorderPane.alignment="CENTER">
-               <children>
-                  <Label fx:id="lbl1Title" layoutX="15.0" layoutY="143.0" prefHeight="27.0" prefWidth="230.0" text="Javavirus® Covid19 Tracing App " textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <ImageView fitHeight="103.0" fitWidth="103.0" layoutX="71.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@/images/Javavirus Logo.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="lbl5CustomerLogIn" layoutX="72.0" layoutY="194.0" prefHeight="20.0" prefWidth="116.0" text="Customer Record" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="btn3Exit" layoutX="100.0" layoutY="273.0" mnemonicParsing="false" onAction="#exitButtonOnAction" style="-fx-background-color: White;" text="Back" textFill="#e96151">
+                  <Button fx:id="btn1LogIn1" layoutX="182.0" layoutY="190.0" mnemonicParsing="false" onAction="#LogInButtonOnAction" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: #E96151;" text="Check Out" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
                </children>
             </AnchorPane>
-         </left>
+         </center>
       </BorderPane>
    </children>
 </StackPane>
