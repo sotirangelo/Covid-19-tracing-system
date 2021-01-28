@@ -48,6 +48,11 @@ public class BusinessController {
 		@FXML
 		private Label label6Status;
 		
+		@FXML
+		private Label lbl7Welcome;
+		
+		
+		
 		
 		
 	
@@ -95,7 +100,7 @@ public class BusinessController {
 					scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 					launcherStage.setScene(scene);
 					launcherStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
-					launcherStage.setTitle("Javavirus� Covid19 Tracing App");
+					launcherStage.setTitle("Javavirus Covid19 Tracing App");
 					launcherStage.show();
 				} catch(Exception e) {
 					e.printStackTrace();
@@ -155,7 +160,7 @@ public class BusinessController {
 			Parent root = FXMLLoader.load(getClass().getResource("/fxml/BusinessSignUp.fxml"));
 			Scene scene = new Scene(root,482,600);
 			scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
-			businessSignUpStage.setTitle("Javavirus� Covid19 Tracing App - Business Sign Up");
+			businessSignUpStage.setTitle("Javavirus Covid19 Tracing App - Business Sign Up");
 			businessSignUpStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
 			businessSignUpStage.setScene(scene);
 			businessSignUpStage.show();
@@ -171,7 +176,7 @@ public class BusinessController {
 			Parent root = FXMLLoader.load(getClass().getResource("/fxml/EmployeeLogin.fxml"));
 			Scene scene = new Scene(root,552,339);
 			scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
-			employeeLoginStage.setTitle("Javavirus� Covid19 Tracing App - EODY Employee Login");
+			employeeLoginStage.setTitle("Javavirus Covid19 Tracing App - EODY User Validation");
 			employeeLoginStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
 			employeeLoginStage.setScene(scene);
 			employeeLoginStage.show();

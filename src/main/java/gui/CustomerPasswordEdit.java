@@ -63,8 +63,8 @@ public class CustomerPasswordEdit {
 		Matcher UserIDmat;
 		boolean match;
 		boolean authenticate = false;
-		String userID = passCustomerPass.getText();
-		String password = txt1CustomerID.getText();
+		String userID = txt1CustomerID.getText();
+		String password = passCustomerPass.getText();
 			do {
 			UserIDmat = UserIDpattern.matcher(txt1CustomerID.getText());
 	        if(UserIDmat.matches()){
@@ -110,7 +110,7 @@ public class CustomerPasswordEdit {
 		Parent root = FXMLLoader.load(getClass().getResource("/fxml/CustomerEdit.fxml"));
 		Scene scene = new Scene(root,482,600);
 		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
-		customerEditStage.setTitle("Javavirus� Covid19 Tracing App - Customer Edit Account");
+		customerEditStage.setTitle("Javavirus Covid19 Tracing App - User Account Edit");
 		customerEditStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
 		customerEditStage.setScene(scene);
 		customerEditStage.show();

@@ -5,6 +5,9 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import data.AER;
+import data.Business;
+import data.BusinessType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -174,7 +177,7 @@ public class BusinessSignUpController implements Initializable {
 	}
 	
 	public boolean validateBspace() {
-		Pattern BusSpacepatt = Pattern.compile("^[0-9]{1,6}-{0}$");
+		Pattern BusSpacepatt = Pattern.compile("^[+]?(([1-9]\\d*)|0)(\\.\\d+)?");
 		Matcher BspaceMat;
 		do {
 			BspaceMat = BusSpacepatt.matcher(txt3Space.getText());
@@ -193,7 +196,7 @@ public class BusinessSignUpController implements Initializable {
 	}
 	
 	public boolean validateHeight () {
-		Pattern BHeightPatt = Pattern.compile("^[0-9]{1,4}-{0}$");
+		Pattern BHeightPatt = Pattern.compile("^[+]?(([1-9]\\d*)|0)(\\.\\d+)?");
 		Matcher BHeightMat;
 		do {
 			BHeightMat = BHeightPatt.matcher(txt4Height.getText());
@@ -241,7 +244,7 @@ public class BusinessSignUpController implements Initializable {
 		Scene scene = new Scene(root,384,189);
 		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 		businessSignUpStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
-		businessSignUpStage.setTitle("Javavirus� Covid19 Tracing App - Business Sign Up");
+		businessSignUpStage.setTitle("Javavirus Covid19 Tracing App - Business Sign Up");
 		businessSignUpStage.setScene(scene);
 		businessSignUpStage.show();
 	}
@@ -263,14 +266,13 @@ public class BusinessSignUpController implements Initializable {
 	}
 	
 	public void SignUpButtonOnAction1() {
-		validateBusid();
-		validateBname();
-		validateBspace();
-		validateHeight();
-		validateEmail();
 		if (validateBusid() && validateBname() && validateBspace() && validateHeight() && validateEmail()) {
+			Business business = new Business(database.Access.findNewBusinessID(), txt6Email.getText(), pass1Email.getText(),
+					txt2Name.getText(), Double.parseDouble(txt3Space.getText()), Double.parseDouble(txt4Height.getText()), 
+					BusinessType.valueOf(txt5Type.getText()), AER.valueOf(txt7AER.getText()));
+			database.Access.register(business);
 			RegStatus.setTextFill(Color.GREEN);
-			RegStatus.setText("Registration Succesful");
+			RegStatus.setText("Registration Successfull");
 		}
 		
 	}

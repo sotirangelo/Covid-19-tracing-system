@@ -9,20 +9,21 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LauncherController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LauncherController">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="430.0">
          <left>
             <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="225.0" style="-fx-background-color: #E96151;" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="lbl1AppName" layoutX="3.0" layoutY="151.0" prefHeight="46.0" prefWidth="219.0" text="Javavirus® Covid19 Tracing App " textFill="WHITE">
+                  <Label fx:id="lbl1AppName" layoutX="3.0" layoutY="169.0" prefHeight="46.0" prefWidth="219.0" text="Javavirus® Covid19 Tracing App " textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
+                  <Label fx:id="lbl2Welcome" layoutX="78.0" layoutY="152.0" prefHeight="17.0" prefWidth="71.0" text="Welcome to" textFill="WHITE" />
                   <ImageView fitHeight="103.0" fitWidth="103.0" layoutX="61.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/images/Javavirus Logo.png" />
+                        <Image url="@Javavirus%20GUI%20images/Javavirus%20Logo.png" />
                      </image>
                   </ImageView>
                   <Button fx:id="btn4Exit" layoutX="82.0" layoutY="253.0" mnemonicParsing="false" onAction="#exitButtonOnAction" prefHeight="25.0" prefWidth="64.0" style="-fx-background-color: White;" text="Exit" textFill="#e96151">
@@ -35,7 +36,7 @@
          <right>
             <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="206.0" style="-fx-background-color: White;" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="btn1Customer" layoutX="77.0" layoutY="68.0" mnemonicParsing="false" onAction="#createCustomer" prefHeight="70.0" prefWidth="82.0" style="-fx-background-color: #E96151;" text="User" textFill="WHITE">
+                  <Button fx:id="btn1Customer" layoutX="77.0" layoutY="68.0" mnemonicParsing="false" onAction="#createCustomer" prefHeight="70.0" prefWidth="82.0" style="-fx-background-color: #E96151;" text="Customer" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Button>
@@ -45,12 +46,12 @@
                      </font></Button>
                   <ImageView fitHeight="36.0" fitWidth="34.0" layoutX="24.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/images/Shop Icon.png" />
+                        <Image url="@Javavirus%20GUI%20images/Shop%20Icon.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="30.0" fitWidth="42.0" layoutX="20.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/images/PersonName.png" />
+                        <Image url="@Javavirus%20GUI%20images/PersonName.png" />
                      </image>
                   </ImageView>
                </children>

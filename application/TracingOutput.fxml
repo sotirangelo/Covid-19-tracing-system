@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="472.0" prefWidth="699.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.OutputController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="472.0" prefWidth="699.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.OutputController">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="473.0" prefWidth="699.0">
          <left>
@@ -24,15 +24,15 @@
                   </Label>
                   <ImageView fitHeight="103.0" fitWidth="103.0" layoutX="89.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/images/Javavirus Logo.png" />
+                        <Image url="@Javavirus%20GUI%20images/Javavirus%20Logo.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="lbl2TracingOutput" layoutX="62.0" layoutY="237.0" prefHeight="20.0" prefWidth="158.0" text="Contact Tracing Results" textFill="WHITE">
+                  <Label fx:id="lbl2TracingOutput" layoutX="89.0" layoutY="237.0" prefHeight="20.0" prefWidth="103.0" text="Tracing Output" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btn1Exit" layoutX="119.0" layoutY="386.0" mnemonicParsing="false" onAction="#exitButtonOnAction" style="-fx-background-color: White;" text="Back" textFill="#e96151">
+                  <Button fx:id="btn3Exit" layoutX="122.0" layoutY="386.0" mnemonicParsing="false" onAction="#exitButtonOnAction" style="-fx-background-color: White;" text="Exit" textFill="#e96151">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>

@@ -1,5 +1,8 @@
 package gui;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -41,6 +45,27 @@ public class CertainInfectionController {
 	private TextField txt1CustomerID;
 	
 	
+	
+	public boolean validateCaseID() {
+		Pattern CaseIDpattern = Pattern.compile("^[0-9]{8}$");
+		Matcher CaseIDmat;
+			do {
+				CaseIDmat = CaseIDpattern.matcher(txt1CustomerID.getText());
+	        if(CaseIDmat.matches()){
+	            lbl3Status.setTextFill(Color.GREEN);
+	            lbl3Status.setText("Submission Successful");
+	            createTracingOutput();
+	            return true;
+	        } else {
+	        	lbl3Status.setTextFill(Color.RED);
+	        	lbl3Status.setText("Submission Failed");
+		         return false;
+	        }
+		} while(!CaseIDmat.matches());
+	
+	}
+	
+	
 	public void exitButtonOnAction(ActionEvent event) {
 		Stage certainInfectionStage = (Stage) btn2Exit.getScene().getWindow();
 		((Node)event.getSource()).getScene().getWindow().hide();
@@ -49,8 +74,8 @@ public class CertainInfectionController {
 	
 	
 	public void sumbitOnAction(ActionEvent event) {
-		((Node)event.getSource()).getScene().getWindow().hide();
-		createTracingOutput();
+		lbl3Status.setText("Submission Status");
+		validateCaseID();
 	}
 	
 	public void createTracingOutput() {
@@ -61,7 +86,7 @@ public class CertainInfectionController {
 		Scene scene = new Scene(root,699,472);
 		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 		tracingOutputStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
-		tracingOutputStage.setTitle("Javavirus� Covid19 Tracing App - Customer Edit Account (Validation)");
+		tracingOutputStage.setTitle("Javavirus Covid19 Tracing App - Contact Tracing Results");
 		tracingOutputStage.setScene(scene);
 		tracingOutputStage.show();
 		} catch(Exception e) {

@@ -25,7 +25,7 @@ public class Main extends Application {
 			businessStage.setScene(scene);
 			BufferedImage icon = ImageIO.read(getClass().getResourceAsStream("/images/Javavirus Logo.png"));
 			businessStage.getIcons().add(SwingFXUtils.toFXImage(icon, null));
-			businessStage.setTitle("Javavirus� Covid19 Tracing App - Business Log In");
+			businessStage.setTitle("Javavirus Covid19 Tracing App - Business Log In");
 			businessStage.show();
 	}
 	
