@@ -32,9 +32,6 @@ public class BusinessSignUpController implements Initializable {
 	private Label lbl1Title;
 	
 	@FXML
-	private Label lbl2BusinessID;
-	
-	@FXML
 	private Label lbl3Name;
 	
 	@FXML
@@ -99,9 +96,6 @@ public class BusinessSignUpController implements Initializable {
 	/* Text Fields */
 	
 	@FXML
-	private TextField txt1ID;
-	
-	@FXML
 	private TextField txt2Name;
 	
 	@FXML
@@ -136,25 +130,6 @@ public class BusinessSignUpController implements Initializable {
 	
 	
 	
-	
-	public boolean validateBusid() {
-		Pattern BussIdpattern = Pattern.compile("^[0-9]{8}$");
-		Matcher BussIdMatcher;
-		do {
-			BussIdMatcher = BussIdpattern.matcher(txt1ID.getText());
-			if (BussIdMatcher.matches()) {
-				 labelVer1.setTextFill(Color.GREEN);
-		         labelVer1.setText("Okay");
-		         return true;
-			} else {
-				labelVer1.setTextFill(Color.RED);
-	        	labelVer1.setText("Incorrect");
-	        	RegStatus.setTextFill(Color.RED);
-	        	RegStatus.setText("Registration Failed");
-		         return false;
-			}
-		} while (!BussIdMatcher.matches());
-	}
 	
 	public boolean validateBname() {
 		Pattern Busnamepattern = Pattern.compile("(?i)[a-z]([- ',.a-z]{0,23}[a-z])");
@@ -266,7 +241,11 @@ public class BusinessSignUpController implements Initializable {
 	}
 	
 	public void SignUpButtonOnAction1() {
-		if (validateBusid() && validateBname() && validateBspace() && validateHeight() && validateEmail()) {
+		validateBname();
+		validateBspace(); 
+		validateHeight() ;
+		validateEmail();
+		if (validateBname() && validateBspace() && validateHeight() && validateEmail()) {
 			Business business = new Business(database.Access.findNewBusinessID(), txt6Email.getText(), pass1Email.getText(),
 					txt2Name.getText(), Double.parseDouble(txt3Space.getText()), Double.parseDouble(txt4Height.getText()), 
 					BusinessType.valueOf(txt5Type.getText()), AER.valueOf(txt7AER.getText()));

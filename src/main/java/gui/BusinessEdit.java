@@ -29,9 +29,6 @@ public class BusinessEdit implements Initializable {
 	private Label lbl1Title;
 	
 	@FXML
-	private Label lbl2BusinessID;
-	
-	@FXML
 	private Label lbl3Name;
 	
 	@FXML
@@ -133,25 +130,7 @@ public class BusinessEdit implements Initializable {
 	
 	
 	
-	
-	public boolean validateBusid() {
-		Pattern BussIdpattern = Pattern.compile("^[0-9]{8}$");
-		Matcher BussIdMatcher;
-		do {
-			BussIdMatcher = BussIdpattern.matcher(txt1ID.getText());
-			if (BussIdMatcher.matches()) {
-				 labelVer1.setTextFill(Color.GREEN);
-		         labelVer1.setText("Okay");
-		         return true;
-			} else {
-				labelVer1.setTextFill(Color.RED);
-	        	labelVer1.setText("Incorrect");
-	        	RegStatus.setTextFill(Color.RED);
-	        	RegStatus.setText("Edit Failed");
-		         return false;
-			}
-		} while (!BussIdMatcher.matches());
-	}
+
 	
 	public boolean validateBname() {
 		Pattern Busnamepattern = Pattern.compile("(?i)[a-z]([- ',.a-z]{0,23}[a-z])");
@@ -263,12 +242,11 @@ public class BusinessEdit implements Initializable {
 	}
 	
 	public void SignUpButtonOnAction1() {
-		validateBusid();
 		validateBname();
 		validateBspace();
 		validateHeight();
 		validateEmail();
-		if (validateBusid() && validateBname() && validateBspace() && validateHeight() && validateEmail()) {
+		if (validateBname() && validateBspace() && validateHeight() && validateEmail()) {
 			RegStatus.setTextFill(Color.GREEN);
 			RegStatus.setText("Edit Succesful");
 		}

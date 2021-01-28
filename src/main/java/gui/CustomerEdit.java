@@ -28,8 +28,6 @@ public class CustomerEdit {
 		@FXML
 		private Label lbl4LastName;
 		
-		@FXML
-		private Label lbl5UserID;
 		
 		@FXML
 		private Label lbl6Email;
@@ -81,10 +79,7 @@ public class CustomerEdit {
 		
 		@FXML
 		private TextField txt2LastName;
-		
-		@FXML
-		private TextField txt3UserID;
-		
+			
 		@FXML
 		private TextField txt4Email;
 		
@@ -99,20 +94,14 @@ public class CustomerEdit {
 		public void SignUpButtonOnAction() {	
 			validateFirstName();
 			validateLastName();
-			validateUserID();
 			validateEmail();
 			validatePhoneNumber();
 			validateAge();
-			if (validateFirstName() && validateLastName() && validateUserID() && validateEmail() && validatePhoneNumber() && validateAge()) {
+			if (validateFirstName() && validateLastName() && validateEmail() && validatePhoneNumber() && validateAge()) {
 				lbl2EditStatus.setTextFill(Color.GREEN);
 				lbl2EditStatus.setText("Edit Succesful");
-				/*
-				Stage customerSignUpStage = (Stage) btn1Register.getScene().getWindow();
-				customerSignUpStage.close();
-				*/
 			}
 		}
-		
 			
 			public boolean validateFirstName() {
 			Pattern FirstNamepattern = Pattern.compile("(?i)[a-z]([- ',.a-z]{0,23}[a-z])");
@@ -153,27 +142,7 @@ public class CustomerEdit {
 				} while(!LastNamemat.matches());
 				}
 			
-			
-			public boolean validateUserID() {
-				Pattern UserIDpattern = Pattern.compile("^[0-9]{8}$");
-				Matcher UserIDmat;
-					do {
-						UserIDmat = UserIDpattern.matcher(txt3UserID.getText());
-			        if(UserIDmat.matches()){
-			            lbl12UserIDStatus.setTextFill(Color.GREEN);
-			            lbl12UserIDStatus.setText("Okay");
-			            return true;
-			        } else {
-			        	lbl12UserIDStatus.setTextFill(Color.RED);
-			        	lbl12UserIDStatus.setText("Incorrect");
-			        	lbl2EditStatus.setTextFill(Color.RED);
-			        	lbl2EditStatus.setText("Edit Failed");
-			        	return false;
-			        }
-				} while(!UserIDmat.matches());
-				}
-			
-			
+
 		
 			public boolean validateEmail() {
 				Pattern Emailpattern = Pattern.compile("^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$");
