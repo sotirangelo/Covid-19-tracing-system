@@ -135,7 +135,7 @@
                      </image>
                   </ImageView>
                   <PasswordField fx:id="txtPass" layoutX="64.0" layoutY="493.0" promptText="***********" />
-                  <Label fx:id="lbl3RegistrationStatus" layoutX="58.0" layoutY="113.0" prefHeight="17.0" prefWidth="165.0">
+                  <Label fx:id="lbl3RegistrationStatus" layoutX="58.0" layoutY="113.0" prefHeight="17.0" prefWidth="165.0" text="   ">
                      <font>
                         <Font name="System Italic" size="12.0" />
                      </font>

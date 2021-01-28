@@ -125,7 +125,7 @@
                         <Image url="@/images/cm2.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="RegStatus1" layoutX="34.0" layoutY="77.0" prefHeight="17.0" prefWidth="171.0">
+                  <Label fx:id="RegStatus1" layoutX="34.0" layoutY="77.0" prefHeight="17.0" prefWidth="171.0" text="  ">
                      <font>
                         <Font name="System Italic" size="12.0" />
                      </font>
