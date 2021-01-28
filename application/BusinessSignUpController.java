@@ -237,10 +237,10 @@ public class BusinessSignUpController implements Initializable {
 
 	public void BusinessSignUp(ActionEvent event) throws Exception {
 		Stage businessSignUpStage = new Stage();
-		Parent root = FXMLLoader.load(getClass().getResource("/gui/BusinessSignUp.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/application/BusinessSignUp.fxml"));
 		Scene scene = new Scene(root,384,189);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		businessSignUpStage.getIcons().add(new Image("/gui/Javavirus GUI images/Javavirus Logo.png"));
+		businessSignUpStage.getIcons().add(new Image("/application/Javavirus GUI images/Javavirus Logo.png"));
 		businessSignUpStage.setTitle("Javavirus® Covid19 Tracing App - Business Sign Up");
 		businessSignUpStage.setScene(scene);
 		businessSignUpStage.show();
