@@ -174,7 +174,7 @@ public class BusinessEdit implements Initializable {
 	}
 	
 	public boolean validateBspace() {
-		Pattern BusSpacepatt = Pattern.compile("^[0-9]{1,6}-{0}$");
+		Pattern BusSpacepatt = Pattern.compile("^[+]?(([1-9]\\d*)|0)(\\.\\d+)?");
 		Matcher BspaceMat;
 		do {
 			BspaceMat = BusSpacepatt.matcher(txt3Space.getText());
@@ -193,7 +193,7 @@ public class BusinessEdit implements Initializable {
 	}
 	
 	public boolean validateHeight () {
-		Pattern BHeightPatt = Pattern.compile("^[0-9]{1,4}-{0}$");
+		Pattern BHeightPatt = Pattern.compile("^[+]?(([1-9]\\d*)|0)(\\.\\d+)?");
 		Matcher BHeightMat;
 		do {
 			BHeightMat = BHeightPatt.matcher(txt4Height.getText());
@@ -241,7 +241,7 @@ public class BusinessEdit implements Initializable {
 		Scene scene = new Scene(root,384,189);
 		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 		businessEditStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
-		businessEditStage.setTitle("Javavirus� Covid19 Tracing App - Business Sign Up");
+		businessEditStage.setTitle("Javavirus Covid19 Tracing App - Business Sign Up");
 		businessEditStage.setScene(scene);
 		businessEditStage.show();
 	}

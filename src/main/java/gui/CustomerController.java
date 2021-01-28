@@ -96,7 +96,7 @@ import javafx.stage.Stage;
 			Parent root = FXMLLoader.load(getClass().getResource("/fxml/CustomerPasswordEdit.fxml"));
 			Scene scene = new Scene(root,552,339);
 			scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
-			customerPassEditStage.setTitle("Javavirus� Covid19 Tracing App - Customer Edit Account (Validation)");
+			customerPassEditStage.setTitle("Javavirus Covid19 Tracing App - User Account Edit (Validation)");
 			customerPassEditStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
 			customerPassEditStage.setScene(scene);
 			customerPassEditStage.show();
@@ -111,7 +111,7 @@ import javafx.stage.Stage;
 			Parent root = FXMLLoader.load(getClass().getResource("/fxml/CustomerSignUp.fxml"));
 			Scene scene = new Scene(root,482,600);
 			scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
-			customerSignUpStage.setTitle("Javavirus� Covid19 Tracing App - Customer Sign Up");
+			customerSignUpStage.setTitle("Javavirus Covid19 Tracing App - User Sign Up");
 			customerSignUpStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
 			customerSignUpStage.setScene(scene);
 			customerSignUpStage.show();
@@ -134,11 +134,11 @@ import javafx.stage.Stage;
 			UserIDmat = UserIDpattern.matcher(txt1UserID.getText());
 	        if(UserIDmat.matches()){
 	            lbl6UserLogInStatus.setTextFill(Color.GREEN);
-	            lbl6UserLogInStatus.setText("Record Successful");
+	            lbl6UserLogInStatus.setText("Check-in Successful");
 	            break;
 	        } else {
 	        	 lbl6UserLogInStatus.setTextFill(Color.RED);
-		         lbl6UserLogInStatus.setText("Record Failed");
+		         lbl6UserLogInStatus.setText("Check-in Failed");
 		         break;
 	        }
 		} while(!UserIDmat.matches());

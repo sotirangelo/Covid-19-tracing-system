@@ -47,19 +47,19 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Label fx:id="lbl4CustomerID" layoutX="32.0" layoutY="161.0" prefHeight="17.0" prefWidth="116.0" text="Case ID">
+                  <Label fx:id="lbl4CustomerID" layoutX="58.0" layoutY="161.0" prefHeight="17.0" prefWidth="47.0" text="Case ID">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txt1CustomerID" layoutX="148.0" layoutY="158.0" promptText="XXXXXXXX" />
+                  <TextField fx:id="txt1CustomerID" layoutX="112.0" layoutY="158.0" promptText="XXXXXXXX" />
                   <Label fx:id="labelStatusLogIn1" layoutX="138.0" layoutY="103.0" prefHeight="17.0" prefWidth="65.0" />
-                  <Label fx:id="lbl3Status" layoutX="148.0" layoutY="140.0" prefHeight="17.0" prefWidth="111.0" text="Sumbission Status">
+                  <Label fx:id="lbl3Status" layoutX="131.0" layoutY="140.0" prefHeight="17.0" prefWidth="111.0" text="Submission Status">
                      <font>
                         <Font name="System Italic" size="12.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="24.0" fitWidth="26.0" layoutX="2.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="24.0" fitWidth="26.0" layoutX="25.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@/images/PersonID.png" />
                      </image>

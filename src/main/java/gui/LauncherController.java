@@ -68,7 +68,7 @@ public class LauncherController {
 		Scene scene = new Scene(root,552,339);
 		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 		customerStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
-		customerStage.setTitle("Javavirus� Covid19 Tracing App - Customer Log In");
+		customerStage.setTitle("Javavirus Covid19 Tracing App - User Record");
 		customerStage.setScene(scene);
 		customerStage.show();
 		} catch(Exception e) {
@@ -84,7 +84,7 @@ public class LauncherController {
 		Scene scene = new Scene(root,482,600);
 		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 		businessEditStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
-		businessEditStage.setTitle("Javavirus� Covid19 Tracing App - Business Edit");
+		businessEditStage.setTitle("Javavirus Covid19 Tracing App - Business Account Edit");
 		businessEditStage.setScene(scene);
 		businessEditStage.show();
 		} catch(Exception e) {
