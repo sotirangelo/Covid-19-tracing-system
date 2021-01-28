@@ -1,4 +1,4 @@
-package application;
+package gui;
 
 
 
@@ -10,6 +10,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class LauncherController {
@@ -46,10 +48,7 @@ public class LauncherController {
 		primaryStage.close();
 	}
 	
-	public void OutputButtonOnAction(ActionEvent event) {
-		((Node)event.getSource()).getScene().getWindow().hide();
-		createOutput();
-	}
+	
 	
 	public void CustomerButtonOnAction(ActionEvent event) {
 		((Node)event.getSource()).getScene().getWindow().hide();
@@ -58,17 +57,18 @@ public class LauncherController {
 	
 	public void BusinessButtonOnAction(ActionEvent event) {
 		((Node)event.getSource()).getScene().getWindow().hide();
-		createBusiness();
+		createBusinessSignUp();
 	}
 	
 	public void createCustomer() {
 		try {
 		Stage customerStage = new Stage();
+		customerStage.initModality(Modality.APPLICATION_MODAL);
 		Parent root = FXMLLoader.load(getClass().getResource("/application/Customer.fxml"));
-		Scene scene = new Scene(root,400,400);
+		Scene scene = new Scene(root,552,339);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		customerStage.setTitle("Customer Log In");
-		customerStage.setFullScreen(true);
+		customerStage.getIcons().add(new Image("/application/Javavirus GUI images/Javavirus Logo.png"));
+		customerStage.setTitle("Javavirus® Covid19 Tracing App - Customer Log In");
 		customerStage.setScene(scene);
 		customerStage.show();
 		} catch(Exception e) {
@@ -76,33 +76,21 @@ public class LauncherController {
 		}
 		
 	}
-	public void createBusiness() {
+	public void createBusinessSignUp() {
 		try {
-		Stage businessStage = new Stage();
-		Parent root = FXMLLoader.load(getClass().getResource("/application/Business.fxml"));
-		Scene scene = new Scene(root,400,400);
+		Stage businessEditStage = new Stage();
+		businessEditStage.initModality(Modality.APPLICATION_MODAL);
+		Parent root = FXMLLoader.load(getClass().getResource("/application/BusinessEdit.fxml"));
+		Scene scene = new Scene(root,482,600);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		businessStage.setTitle("Business Log In");
-		businessStage.setFullScreen(true);
-		businessStage.setScene(scene);
-		businessStage.show();
+		businessEditStage.getIcons().add(new Image("/application/Javavirus GUI images/Javavirus Logo.png"));
+		businessEditStage.setTitle("Javavirus® Covid19 Tracing App - Business Edit");
+		businessEditStage.setScene(scene);
+		businessEditStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void createOutput() {
-		try {
-		Stage outputStage = new Stage();
-		Parent root = FXMLLoader.load(getClass().getResource("/application/Output.fxml"));
-		Scene scene = new Scene(root,400,400);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		outputStage.setTitle("Output");
-		outputStage.setFullScreen(true);
-		outputStage.setScene(scene);
-		outputStage.show();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+	
 }
