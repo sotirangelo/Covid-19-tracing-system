@@ -236,6 +236,8 @@ public class BusinessSignUpController implements Initializable {
 			database.Access.register(business);
 			RegStatus.setTextFill(Color.GREEN);
 			RegStatus.setText("Registration Successfull. YOUR BUSINESS ID IS: " + businessID);
+			RegStatus1.setTextFill(Color.GREEN);
+			RegStatus1.setText("Your BusinessID is: " + businessID + ".");
 		}
 		
 	}

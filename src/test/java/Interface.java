@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.regex.Pattern;
 
 import data.AER;
-import data.Age;
 import data.BusinessType;
 import data.Exertion;
 import data.Mask;
@@ -413,52 +412,7 @@ public class Interface {
 		} else {
             return AER.OPEN;
 		}
-	}
-
-
-	/**
-         * Customer age group input.
-         * Static method, that prompts the user to input the customer's age group.
-         *
-         * @return Customer's age group.
-         */
-	public static Age ageGroup() {
-		System.out.println("Εισάγετε την ηλικιακή ομάδα στην οποία ανήκει ο πελάτης: ");
-		System.out.println("Αν ανήκει στην ηλικιακή ομάδα 1-18, εισάγετε 0.");
-		System.out.println("Αν ανήκει στην ηλικιακή ομάδα 19-30, εισάγετε 1.");
-		System.out.println("Αν ανήκει στην ηλικιακή ομάδα 31-60, εισάγετε 2.");
-		System.out.println("Αν ανήκει στην ηλικιακή ομάδα 61-100, εισάγετε 3.");
-		int custage = 0;
-		boolean sechecker = false;
-		while (sechecker == false) {
-			if (SCNR.hasNextInt()) { // checks if the given value is an integer (0-3)
-				custage = SCNR.nextInt();
-				if (custage >= 0 && custage <= 3) {
-					sechecker = true;
-				} else {
-					System.out.println("Η ηλικιακή ομάδα που εισήχθη ήταν λανθασμένη . Προσπαθήστε ξανά : ");
-					System.out.println("Αν ανήκει στην ηλικιακή ομάδα 1-18, εισάγετε 0.");
-					System.out.println("Αν ανήκει στην ηλικιακή ομάδα 19-30, εισάγετε 1.");
-					System.out.println("Αν ανήκει στην ηλικιακή ομάδα 31-60, εισάγετε 2.");
-					System.out.println("Αν ανήκει στην ηλικιακή ομάδα 61-100, εισάγετε 3.");
-				}
-			}
-	      }
-		
-		SCNR.nextLine();
-		switch (custage) {
-			case 0:
-				return Age.UNDERAGE;
-			case 1:
-				return Age.EIGHTEEN;
-			case 2:
-				return Age.THIRTY;
-			default:
-				return Age.SIXTY;
-		}
-		
-	}
-	
+	}	
 
 	/**
 	 * Business name input.

@@ -55,9 +55,7 @@ public class EmployeeSignUpController {
 	
 	@FXML
 	private Label lbl14PhoneNumberStatus;
-		
 
-	
 	/* Buttons */
 	
 	@FXML
@@ -65,9 +63,6 @@ public class EmployeeSignUpController {
 	
 	@FXML
 	private Button btn2Close;
-	
-	
-	
 	
 	/* Text Fields */
 	
@@ -85,9 +80,7 @@ public class EmployeeSignUpController {
 	
 	@FXML
 	private TextField txt5PhoneNumber;
-	
-	
-	
+
 	public void SignUpButtonOnAction() {	
 		validateFirstName();
 		validateLastName();
