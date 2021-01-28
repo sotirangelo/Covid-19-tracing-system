@@ -2,37 +2,99 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>Javavirus</groupId>
   <artifactId>Covid-19-tracing-system</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0-SNAPSHOT</version>
+  <!--  <packaging>jar</packaging>-->
+  
   <properties>
-      <maven.compiler.release>11</maven.compiler.release>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	  <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+      <javafx.version>15.0.1</javafx.version>
+      <maven.compiler.release>11</maven.compiler.release>
   </properties>
+  
   <build>
-        <pluginManagement>
+
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.1</version>
+                    <configuration>
+                    	<release>${maven.compiler.release}</release>
+                    </configuration>
                 </plugin>
                 <plugin>
         			 <groupId>org.apache.maven.plugins</groupId>
          		     <artifactId>maven-surefire-plugin</artifactId>
         			 <version>3.0.0-M5</version>
         		</plugin>
-        		<plugin>
-        			<groupId>org.openjfx</groupId>
-        			<artifactId>javafx-maven-plugin</artifactId>
-        			<version>0.0.5</version>
+				<plugin>
+    				<groupId>org.openjfx</groupId>
+    				<artifactId>javafx-maven-plugin</artifactId>
+    				<version>0.0.5</version>
         			<configuration>
-            			<mainClass>gui.NewMain</mainClass>
-        			</configuration>
-    			</plugin>
+            	<mainClass>gui.Main</mainClass>
+        </configuration>
+    </plugin>
+
+    	<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <version>3.2.0</version>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>shade</goal>
+                    </goals>
+                    <configuration>
+                        <shadedArtifactAttached>true</shadedArtifactAttached>
+                        <shadedClassifierName>project-classifier</shadedClassifierName>
+                        <outputFile>shade\${project.artifactId}.jar</outputFile>
+                        <transformers>
+                            <transformer implementation=
+                                                 "org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                	<mainClass>gui.NewMain</mainClass>
+                            </transformer>
+                        </transformers>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+        
+				<plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>1.6.0</version>
+                    <configuration>
+                        <classpathScope>test</classpathScope>
+                        <mainClass>gui.NewMain</mainClass>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>run-selenium</id>
+                            <phase>integration-test</phase>
+                            <goals>
+                            	<goal>java</goal>
+                            	<goal>exec</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+      
         	</plugins>
-        </pluginManagement>
     </build>
+
+    
+    
+    
   <dependencies>
+      <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
+	<dependency>
+    	<groupId>org.codehaus.mojo</groupId>
+    	<artifactId>exec-maven-plugin</artifactId>
+    	<version>3.0.0</version>
+	</dependency>
   	<dependency>
   		<groupId>mysql</groupId>
   		<artifactId>mysql-connector-java</artifactId>
@@ -44,21 +106,31 @@
   		<version>4.8.1</version>
         <scope>test</scope>
   	</dependency>
+    <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-base</artifactId>
+        <version>${javafx.version}</version>
+    </dependency>  	
+  	<dependency>
+  		<groupId>org.openjfx</groupId>
+  		<artifactId>javafx-graphics</artifactId>
+  		<version>${javafx.version}</version>
+  	</dependency>
   	<dependency>
   		<groupId>org.openjfx</groupId>
   		<artifactId>javafx-controls</artifactId>
-  		<version>15.0.1</version>
+  		<version>${javafx.version}</version>
   	</dependency>
   	<dependency>
   		<groupId>org.openjfx</groupId>
   		<artifactId>javafx-fxml</artifactId>
-  		<version>11.0.1</version>
+  		<version>${javafx.version}</version>
   	</dependency>
-  	<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-swing -->
+  	<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-swing 
 	<dependency>
     	<groupId>org.openjfx</groupId>
     	<artifactId>javafx-swing</artifactId>
     	<version>16-ea+6</version>
-	</dependency>
+	</dependency>-->
   </dependencies>
 </project>
