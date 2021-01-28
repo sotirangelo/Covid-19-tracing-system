@@ -126,6 +126,11 @@ import javafx.stage.Stage;
 		validateUserID();
 		}
 		
+		public void CheckOutButtonOnAction(ActionEvent event) {
+			lbl6UserLogInStatus.setText("Record Status");
+			validateUserID();
+		}
+		
 		
 		public void validateUserID() {
 		Pattern UserIDpattern = Pattern.compile("^[0-9]{8}$");
