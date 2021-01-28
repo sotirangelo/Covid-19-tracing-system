@@ -75,9 +75,7 @@ public class CertainInfectionController {
 	
 	public void sumbitOnAction(ActionEvent event) {
 		lbl3Status.setText("Submission Status");
-		if (validateCaseID()) {
-			((Node)event.getSource()).getScene().getWindow().hide();
-		}
+		validateCaseID();
 	}
 	
 	public void createTracingOutput() {

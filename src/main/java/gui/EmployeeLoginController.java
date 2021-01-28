@@ -118,15 +118,15 @@ public class EmployeeLoginController {
 	
 	public void createOutput() {
 		try {
-		Stage createCertainInfectionStage = new Stage();
-		createCertainInfectionStage.initModality(Modality.APPLICATION_MODAL);
+		Stage createcertainInfectionStage = new Stage();
+		createcertainInfectionStage.initModality(Modality.APPLICATION_MODAL);
 		Parent root = FXMLLoader.load(getClass().getResource("/fxml/CertainInfection.fxml"));
 		Scene scene = new Scene(root,552,339);
 		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
-		createCertainInfectionStage.setTitle("Javavirus Covid19 Tracing App - Covid-19 Case");
-		createCertainInfectionStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
-		createCertainInfectionStage.setScene(scene);
-		createCertainInfectionStage.show();
+		createcertainInfectionStage.setTitle("Javavirus Covid19 Tracing App - Covid-19 Case");
+		createcertainInfectionStage.getIcons().add(new Image("/images/Javavirus Logo.png"));
+		createcertainInfectionStage.setScene(scene);
+		createcertainInfectionStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

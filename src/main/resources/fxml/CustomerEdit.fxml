@@ -79,7 +79,7 @@
                   </Label>
                   <TextField fx:id="txt1FirstName" layoutX="65.0" layoutY="144.0" promptText="e.g Georgios" />
                   <TextField fx:id="txt2LastName" layoutX="64.0" layoutY="216.0" promptText="e.g Papadopoulos" />
-                  <TextField fx:id="txt3UserID" layoutX="64.0" layoutY="288.0" promptText="XXXXXXXX" />
+                  <TextField fx:id="txt3UserID" disable="true" editable="false" layoutX="64.0" layoutY="288.0" promptText="XXXXXXXX" />
                   <TextField fx:id="txt4Email" layoutX="65.0" layoutY="356.0" promptText="e.g geopap@gmail.com" />
                   <TextField fx:id="txt5PhoneNumber" layoutX="64.0" layoutY="425.0" promptText="XXXXXXXXXX" />
                   <TextField fx:id="txt6Age" layoutX="64.0" layoutY="494.0" promptText="0-100" />
