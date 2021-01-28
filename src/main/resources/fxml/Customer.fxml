@@ -43,7 +43,7 @@
          <center>
             <AnchorPane prefHeight="329.0" prefWidth="304.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="btn1LogIn" layoutX="62.0" layoutY="190.0" mnemonicParsing="false" onAction="#LogInButtonOnAction" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: #E96151;" text="Check In" textFill="WHITE">
+                  <Button fx:id="btnCheckIn" layoutX="62.0" layoutY="190.0" mnemonicParsing="false" onAction="#CheckInButtonOnAction" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: #E96151;" text="Check In" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Button>
@@ -86,7 +86,7 @@
                         <Image url="@/images/577778-200.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="btn1LogIn1" layoutX="182.0" layoutY="190.0" mnemonicParsing="false" onAction="#LogInButtonOnAction" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: #E96151;" text="Check Out" textFill="WHITE">
+                  <Button fx:id="btnCheckOut" layoutX="182.0" layoutY="190.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: #E96151;" text="Check Out" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>

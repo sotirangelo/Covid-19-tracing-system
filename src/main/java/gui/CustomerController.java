@@ -49,10 +49,10 @@ import javafx.stage.Stage;
 		/* Buttons */
 		
 		@FXML
-		private Button btn1LogIn;
+		private Button btnCheckIn;
 		
 		@FXML
-		private Button btn2SignUp;
+		private Button btnCheckOut;
 		
 		@FXML
 		private Button btn3Exit;
@@ -121,7 +121,7 @@ import javafx.stage.Stage;
 		}	
 		
 		
-		public void LogInButtonOnAction(ActionEvent event) {
+		public void CheckInButtonOnAction(ActionEvent event) {
 		lbl6UserLogInStatus.setText("Record Status");
 		validateUserID();
 		}
