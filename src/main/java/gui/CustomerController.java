@@ -122,12 +122,12 @@ import javafx.stage.Stage;
 		
 		
 		public void CheckInButtonOnAction(ActionEvent event) {
-		lbl6UserLogInStatus.setText("Record Status");
+		lbl6UserLogInStatus.setText("Record Status ");
 		validateUserID();
 		}
 		
 		public void CheckOutButtonOnAction(ActionEvent event) {
-			lbl6UserLogInStatus.setText("Record Status");
+			lbl6UserLogInStatus.setText("Record Status ");
 			validateUserID();
 		}
 		

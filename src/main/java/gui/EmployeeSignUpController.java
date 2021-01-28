@@ -84,10 +84,9 @@ public class EmployeeSignUpController {
 	public void SignUpButtonOnAction() {	
 		validateFirstName();
 		validateLastName();
-		validateUserID();
 		validateEmail();
 		validatePhoneNumber();
-		if (validateFirstName() && validateLastName() && validateUserID() && validateEmail() 
+		if (validateFirstName() && validateLastName() && validateEmail() 
 			&& validatePhoneNumber()) {
 			lbl2RegistrationStatus.setTextFill(Color.GREEN);
 			lbl2RegistrationStatus.setText("Registration Succesful");
@@ -137,27 +136,6 @@ public class EmployeeSignUpController {
 		        }
 			} while(!LastNamemat.matches());
 			}
-		
-		
-		public boolean validateUserID() {
-			Pattern UserIDpattern = Pattern.compile("^[0-9]{8}$");
-			Matcher UserIDmat;
-				do {
-					UserIDmat = UserIDpattern.matcher(txt3UserID.getText());
-		        if(UserIDmat.matches()){
-		            lbl12UserIDStatus.setTextFill(Color.GREEN);
-		            lbl12UserIDStatus.setText("Okay");
-		            return true;
-		        } else {
-		        	lbl12UserIDStatus.setTextFill(Color.RED);
-		        	lbl12UserIDStatus.setText("Incorrect");
-		        	lbl2RegistrationStatus.setTextFill(Color.RED);
-		        	lbl2RegistrationStatus.setText("Registration Failed");
-		        	return false;
-		        }
-			} while(!UserIDmat.matches());
-			}
-		
 		
 	
 		public boolean validateEmail() {
