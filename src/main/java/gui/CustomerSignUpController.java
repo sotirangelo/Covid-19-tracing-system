@@ -88,6 +88,10 @@ import javafx.stage.Stage;
 		private PasswordField txtPass;
 		
 		public void SignUpButtonOnAction() {
+			validateFirstName();
+			validateLastName();
+			validateEmail();
+			validatePhoneNumber();
 			String userID = database.Access.findNewUserID();
 			if (validateFirstName() && validateLastName() && validateEmail() && validatePhoneNumber()) {
 				Person user = new Person(userID, txt1FirstName.getText(), txt2LastName.getText(),
