@@ -3,6 +3,7 @@ package gui;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import data.Person;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -54,25 +55,38 @@ public class CustomerPasswordEdit {
 	@FXML
 	private Button btn2Exit;
 	
-	
+	/* Person Object */
+	private Person user = null;
 			
 	public boolean validateUserID() {
 		Pattern UserIDpattern = Pattern.compile("^[0-9]{8}$");
 		Matcher UserIDmat;
+		boolean match;
+		boolean authenticate = false;
+		String userID = passCustomerPass.getText();
+		String password = txt1CustomerID.getText();
 			do {
 			UserIDmat = UserIDpattern.matcher(txt1CustomerID.getText());
 	        if(UserIDmat.matches()){
 	            lbl2Status.setTextFill(Color.GREEN);
 	            lbl2Status.setText("Validation Successful");
 	            createCustomerEdit();
-	            return true;
+	            match = true;
+	            break;
 	        } else {
 	        	 lbl2Status.setTextFill(Color.RED);
 		         lbl2Status.setText("Validation Failed");
-		         return false;
+		         match = false;
+		         break;
 	        }
 		} while(!UserIDmat.matches());
-	
+		if (match) {
+			user = database.Access.authenticateUser(userID, password);
+			if (!(user == null)) {
+				authenticate = true;
+			}
+		}
+		return (match && authenticate);
 	}
 
 	public void exitButtonOnAction(ActionEvent event) {

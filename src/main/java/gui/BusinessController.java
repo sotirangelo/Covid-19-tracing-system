@@ -4,6 +4,7 @@ import java.awt.Desktop.Action;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import data.Business;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -76,15 +77,14 @@ public class BusinessController {
 		@FXML
 		private PasswordField passBusinessPass;
 		
+		/* Business Object */ 
 		
+		private Business business = null;
 		
 		public void btn3SignInOnAction(ActionEvent event) {
+			label6Status.setText("Login Status");
 			if (validateSignInId()) {
 				((Node)event.getSource()).getScene().getWindow().hide();
-			}
-			label6Status.setText("Login Status");
-			validateSignInId();
-			if (validateSignInId()) {
 				label6Status.setTextFill(Color.GREEN);
 				label6Status.setText("Login Successful");
 				try {
@@ -109,18 +109,31 @@ public class BusinessController {
 		public boolean validateSignInId() {
 			Pattern BusIDPatt = Pattern.compile("^[0-9]{8}$");
 			Matcher BusIDmat;
+			boolean match;
+			boolean authenticate = false;
+			String businessID = txt1BusinessID.getText();
+			String password = passBusinessPass.getText();
 			do {
 				BusIDmat = BusIDPatt.matcher(txt1BusinessID.getText());
 				if (BusIDmat.matches()) {
 					labelStatusLogIn1.setTextFill(Color.GREEN);
 					labelStatusLogIn1.setText("Okay");
-					return true;
+					match = true;
+					break;
 				} else {
 					labelStatusLogIn1.setTextFill(Color.RED);
 					labelStatusLogIn1.setText("Incorrect");
-					return false;
+					match = false;
+					break;
 				}
-			} while (!BusIDmat.matches());	
+			} while (!BusIDmat.matches());
+			if (match) {
+				business = database.Access.authenticateBusiness(businessID, password);
+				if (!(business == null)) {
+					authenticate = true;
+				}
+			}
+			return (match && authenticate);
 		}
 		
 		

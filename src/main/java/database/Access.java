@@ -532,9 +532,9 @@ public class Access {
             rs.close();
             stmt.close();
             con.close();
+            System.out.println("LOG IN SUCCESSFULL");
         } catch (Exception e) {
         	System.out.println("ERROR WHILE AUTHENTICATING BUSINESS");
-            e.printStackTrace();
         }
         return business;
 	} //End of authenticateBusiness
