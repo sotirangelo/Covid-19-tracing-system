@@ -94,8 +94,6 @@ public class BusinessSignUpController implements Initializable {
 	private Button btn2Close;
 	
 	
-	
-	
 	/* Text Fields */
 	
 	@FXML
@@ -111,19 +109,13 @@ public class BusinessSignUpController implements Initializable {
 	private TextField txt4Height;
 	
 	@FXML
-	private TextField txt5Type;
-	
-	@FXML
 	private TextField txt6Email;
-	
-	@FXML
-	private TextField txt7AER;
 	
 	
 	/* Password Fields */
 	
 	@FXML
-	private PasswordField pass1Email;
+	private PasswordField pass1Pass;
 	
 	
 	/* ComboBoxes */
@@ -133,28 +125,6 @@ public class BusinessSignUpController implements Initializable {
 	
 	@FXML
 	private ComboBox<String> comb2;
-	
-	
-	
-	
-	public boolean validateBusid() {
-		Pattern BussIdpattern = Pattern.compile("^[0-9]{8}$");
-		Matcher BussIdMatcher;
-		do {
-			BussIdMatcher = BussIdpattern.matcher(txt1ID.getText());
-			if (BussIdMatcher.matches()) {
-				 labelVer1.setTextFill(Color.GREEN);
-		         labelVer1.setText("Okay");
-		         return true;
-			} else {
-				labelVer1.setTextFill(Color.RED);
-	        	labelVer1.setText("Incorrect");
-	        	RegStatus.setTextFill(Color.RED);
-	        	RegStatus.setText("Registration Failed");
-		         return false;
-			}
-		} while (!BussIdMatcher.matches());
-	}
 	
 	public boolean validateBname() {
 		Pattern Busnamepattern = Pattern.compile("(?i)[a-z]([- ',.a-z]{0,23}[a-z])");
@@ -233,10 +203,6 @@ public class BusinessSignUpController implements Initializable {
 		} while(!EmailMat.matches());
 		
 	}
-	
-	
-	
-	
 
 	public void BusinessSignUp(ActionEvent event) throws Exception {
 		Stage businessSignUpStage = new Stage();
@@ -259,17 +225,18 @@ public class BusinessSignUpController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		ObservableList<String> list = FXCollections.observableArrayList("Restaurant", "Bar" , "Office", "Store", "Market");
+		ObservableList<String> list = FXCollections.observableArrayList("RESTAURANT", "BAR" , "OFFICE", "STORE", "MARKET");
 		comb1.setItems(list);
-		ObservableList<String> list1 = FXCollections.observableArrayList("Natural", "Open");
+		ObservableList<String> list1 = FXCollections.observableArrayList("NATURAL", "OPEN");
 		comb2.setItems(list1);
 	}
 	
 	public void SignUpButtonOnAction1() {
-		if (validateBusid() && validateBname() && validateBspace() && validateHeight() && validateEmail()) {
-			Business business = new Business(database.Access.findNewBusinessID(), txt6Email.getText(), pass1Email.getText(),
+		if (validateBname() && validateBspace() && validateHeight() && validateEmail()) {
+			Business business = new Business(database.Access.findNewBusinessID(), txt6Email.getText(), pass1Pass.getText(),
 					txt2Name.getText(), Double.parseDouble(txt3Space.getText()), Double.parseDouble(txt4Height.getText()), 
-					BusinessType.valueOf(txt5Type.getText()), AER.valueOf(txt7AER.getText()));
+					BusinessType.valueOf(comb1.getSelectionModel().getSelectedItem().toString()), 
+					AER.valueOf(comb2.getSelectionModel().getSelectedItem().toString()));
 			database.Access.register(business);
 			RegStatus.setTextFill(Color.GREEN);
 			RegStatus.setText("Registration Successfull");
