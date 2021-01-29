@@ -16,7 +16,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage splashScreenStage) throws Exception {
 			Parent root = FXMLLoader.load(getClass().getResource("/fxml/SplashScreen.fxml"));
-			Scene scene = new Scene(root,200,200);
+			Scene scene = new Scene(root,180,180);
 			splashScreenStage.initStyle(StageStyle.UNDECORATED);
 			scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 			splashScreenStage.setScene(scene);

@@ -1,12 +1,15 @@
 package gui;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import data.Person;
 import data.DataAnalysis;
 import data.InfectedPerson;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,7 +38,7 @@ public class CertainInfectionController {
 	
 	@FXML
 	private Label lbl4CustomerID;
-	
+
 	
 	/* Button */
 	@FXML
@@ -79,9 +82,8 @@ public class CertainInfectionController {
 	public void sumbitOnAction(ActionEvent event) {
 		lbl3Status.setText("Submission Status");
 		if (validateCaseID()) {
-            lbl3Status.setTextFill(Color.GREEN);
-            lbl3Status.setText("Successful Covid Case Registration");
-			//TODO: Search if userid exists
+			lbl3Status.setTextFill(Color.GREEN);
+	        lbl3Status.setText("Successful Covid Case Registration");
 			String infectedid = txt1CustomerID.getText();
 			Person p = database.Access.findUser(infectedid);
 			if (p != null) {
@@ -96,10 +98,7 @@ public class CertainInfectionController {
 	        	lbl3Status.setText("User not found");
 	        	return;
 			}
-			
 		}
-		
-		
 	}
 	
 	public void createTracingOutput() {

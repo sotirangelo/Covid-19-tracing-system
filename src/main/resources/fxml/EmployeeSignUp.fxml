@@ -121,7 +121,7 @@
                   </Label>
                   <ImageView fitHeight="29.0" fitWidth="46.0" layoutX="23.0" layoutY="429.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../application/Javavirus%20GUI%20images/Pass.png" />
+                        <Image url="@/images/Pass.png" />
                      </image>
                   </ImageView>
                </children>

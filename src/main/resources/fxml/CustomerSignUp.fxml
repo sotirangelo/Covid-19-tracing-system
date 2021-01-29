@@ -121,7 +121,7 @@
                   </ImageView>
                   <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="23.0" layoutY="491.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/images/Date.png" />
+                        <Image url="@/images/Pass.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="20.0" fitWidth="21.0" layoutX="27.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
