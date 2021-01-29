@@ -718,22 +718,26 @@ public class Access {
 		boolean success = false;
 		String sql = "INSERT INTO isandalis_database_dmst.Record (UserID, MaskType,"
 				+ " EntryDate, ExitDate, BusinessID) VALUES (?, ?, ?, ?, ?);";
-		try {
-			con = Connect.getConnection();
-			stmt = con.prepareStatement(sql);
-            stmt.setString(1, userID);
-            stmt.setString(2, maskType.name());
-            stmt.setTimestamp(3, new Timestamp(date.getTime()));
-            stmt.setDate(4, null);
-            stmt.setString(5, businessID);
-            stmt.executeUpdate();
-            stmt.close();
-            con.close();
-            success = true;
-            System.out.println("CHECK IN SUCCESSFULL\n");
-		} catch (Exception e) {
-			System.out.println("ERROR WHILE CHECKING IN");
-            e.printStackTrace();
+		if (findUser(userID) != null) {
+			try {
+				con = Connect.getConnection();
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, userID);
+				stmt.setString(2, maskType.name());
+				stmt.setTimestamp(3, new Timestamp(date.getTime()));
+				stmt.setDate(4, null);
+				stmt.setString(5, businessID);
+				stmt.executeUpdate();
+				stmt.close();
+				con.close();
+				success = true;
+				System.out.println("CHECK IN SUCCESSFULL\n");
+			} catch (Exception e) {
+				System.out.println("ERROR WHILE CHECKING IN");
+				e.printStackTrace();
+			}
+		} else {
+			success = false;
 		}
 		return success;
 	} //End of checkIn
@@ -750,9 +754,17 @@ public class Access {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		boolean success = false;
+		String searchSql = "SELECT * FROM Record WHERE BusinessID = ? AND UserID = ? AND ExitDate IS NULL;";
 		String updateSql = "UPDATE isandalis_database_dmst.Record SET ExitDate = ? WHERE BusinessID = ? AND UserID = ? AND ExitDate IS NULL;";
-		try {
-			con = Connect.getConnection();
+		if (findUser(userID) != null) {
+			try {
+				con = Connect.getConnection();
+            	ResultSet rs = null;
+            	stmt = con.prepareStatement(searchSql);
+            	stmt.setString(1, businessID);
+            	stmt.setString(2, userID);
+            	rs = stmt.executeQuery();
+            	if (rs.next()) {
             		stmt = con.prepareStatement(updateSql);
             		stmt.setTimestamp(1, new Timestamp(date.getTime()));
             		stmt.setString(2, businessID);
@@ -762,9 +774,15 @@ public class Access {
             		stmt.close();
             		con.close();
             		success = true;
-		} catch (Exception e) {
-			System.out.println("ERROR WHILE CHECKING OUT");
-            e.printStackTrace();
+            	} else {
+            		success = false;
+            	}
+			} catch (Exception e) {
+				System.out.println("ERROR WHILE CHECKING OUT");
+				e.printStackTrace();
+			}
+		} else {
+			success = false;
 		}
 		return success;
 	} //End of checkOut

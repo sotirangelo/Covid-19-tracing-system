@@ -79,14 +79,23 @@ public class CertainInfectionController {
 	public void sumbitOnAction(ActionEvent event) {
 		lbl3Status.setText("Submission Status");
 		if (validateCaseID()) {
+            lbl3Status.setTextFill(Color.GREEN);
+            lbl3Status.setText("Successful Covid Case Registration");
 			//TODO: Search if userid exists
 			String infectedid = txt1CustomerID.getText();
-			InfectedPerson case0 = new InfectedPerson(database.Access.findUser(infectedid), 100);
-			database.Access.addInfected(case0);
-			ArrayList<InfectedPerson> list = DataAnalysis.contactTracing(case0);
-			System.out.println("Stopped contact tracing");
-			OutputController.addRows(list);
-			createTracingOutput();
+			Person p = database.Access.findUser(infectedid);
+			if (p != null) {
+				InfectedPerson case0 = new InfectedPerson(p, 100);
+				database.Access.addInfected(case0);
+				ArrayList<InfectedPerson> list = DataAnalysis.contactTracing(case0);
+				System.out.println("Stopped contact tracing");
+				OutputController.addRows(list);
+				createTracingOutput();
+			} else {
+	        	lbl3Status.setTextFill(Color.RED);
+	        	lbl3Status.setText("User not found");
+	        	return;
+			}
 			
 		}
 		
