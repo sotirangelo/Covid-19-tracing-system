@@ -29,9 +29,11 @@ public class DataAnalysis {
 		ArrayList<InfectedPerson> allInfected = new ArrayList<InfectedPerson>();
 		ArrayList<Business> covidstores = removeDuplicateBusinesses(database.Access.businessesVisited(infected.getUserID()));
 		for (Business b : covidstores) {
-			System.out.println(infected.getFirstName() + " has been to: " + b.getName());
 			ArrayList<InfectedPerson> temp = calculatePI(infected, b);
 			allInfected.addAll(temp);
+		}
+		for (InfectedPerson i : allInfected) {
+			System.out.println("INFECTED: " + i.getFirstName());
 		}
 		return allInfected;
 	}
@@ -76,9 +78,9 @@ public class DataAnalysis {
 				System.out.println("End p: " + p[p.length - 1]);
 				double percentage = p[p.length - 1] * 100;
 				System.out.println(temp.getFirstName() + ": " + String.format("%.2f", percentage) + "%\n");
-				if (p[p.length - 1] * 100 > 0.05) {
+				if (p[p.length - 1] * 100 > 0) {
 					
-					infectedPeople.add(new InfectedPerson(temp, p[erq.length - 1] * 100));//XXX: ADDING INFECTED ONE BY ONE IS SLOW
+					infectedPeople.add(new InfectedPerson(temp, p[p.length - 1] * 100));//XXX: ADDING INFECTED ONE BY ONE IS SLOW
 					System.out.println("Adding: " + temp.getFirstName());
 				}		
 			}

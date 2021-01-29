@@ -58,14 +58,15 @@ Scanner scan = new Scanner(System.in);
 	 
 	 
 	 public void exitButtonOnAction(ActionEvent event) {
+		 	rows.clear();
 			Stage tracingOutputStage = (Stage) btn1Exit.getScene().getWindow();
 			((Node)event.getSource()).getScene().getWindow().hide();
 			tracingOutputStage.close();
 		}
 	 
-	 private final ObservableList<RowPerson> data = FXCollections.observableArrayList();
+	 //private static ObservableList<RowPerson> data;
 	 
-	 private ArrayList<RowPerson> rows = new ArrayList<RowPerson>();
+	 private static ArrayList<RowPerson> rows = new ArrayList<RowPerson>();
 	 
 	 
 	
@@ -82,18 +83,20 @@ Scanner scan = new Scanner(System.in);
 			    new PropertyValueFactory<RowPerson,String>("Email"));
 			columnProbability.setCellValueFactory(
 				new PropertyValueFactory<RowPerson,String>("Probability"));
-			tableView.setItems(data);
+			tableView.getItems().addAll(rows);
+			//tableView.setItems(data);
 			// TODO FIX NULL
 			// tableInserts(null);
 			
 	}
 	
-	public void tableInserts(ArrayList<InfectedPerson> infected) {
-		ArrayList<RowPerson> rows = new ArrayList<RowPerson>();
+	public static void addRows(ArrayList<InfectedPerson> infected) {
+		System.out.println("Called addRows()");
 		for (InfectedPerson i : infected) {
+			System.out.println("Infected name: " + i.getFirstName());
 			rows.add(new RowPerson(i.getFirstName(), i.getLastName(), i.getPhoneNumber(), i.getEmail(), i.getPropability()));
 		}
-		tableView.getItems().addAll(rows);
+		//tableView.getItems().addAll(rows);
 	}
 	
 }

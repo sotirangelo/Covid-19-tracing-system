@@ -1,8 +1,12 @@
 package gui;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import data.Person;
+import data.DataAnalysis;
+import data.InfectedPerson;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -54,7 +58,6 @@ public class CertainInfectionController {
 	        if(CaseIDmat.matches()){
 	            lbl3Status.setTextFill(Color.GREEN);
 	            lbl3Status.setText("Submission Successful");
-	            createTracingOutput();
 	            return true;
 	        } else {
 	        	lbl3Status.setTextFill(Color.RED);
@@ -65,7 +68,7 @@ public class CertainInfectionController {
 	
 	}
 	
-	
+
 	public void exitButtonOnAction(ActionEvent event) {
 		Stage certainInfectionStage = (Stage) btn2Exit.getScene().getWindow();
 		((Node)event.getSource()).getScene().getWindow().hide();
@@ -75,7 +78,19 @@ public class CertainInfectionController {
 	
 	public void sumbitOnAction(ActionEvent event) {
 		lbl3Status.setText("Submission Status");
-		validateCaseID();
+		if (validateCaseID()) {
+			//TODO: Search if userid exists
+			String infectedid = txt1CustomerID.getText();
+			InfectedPerson case0 = new InfectedPerson(database.Access.findUser(infectedid), 100);
+			database.Access.addInfected(case0);
+			ArrayList<InfectedPerson> list = DataAnalysis.contactTracing(case0);
+			System.out.println("Stopped contact tracing");
+			OutputController.addRows(list);
+			createTracingOutput();
+			
+		}
+		
+		
 	}
 	
 	public void createTracingOutput() {
@@ -92,6 +107,7 @@ public class CertainInfectionController {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 }
