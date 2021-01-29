@@ -81,7 +81,7 @@ public class CustomerEdit {
 				database.Access.editUserEmail(user.getUserID(), txt4Email.getText());
 				database.Access.editUserPhoneNumber(user.getUserID(), Long.parseLong(txt5PhoneNumber.getText()));
 				if (pass1UserPassword != null && !pass1UserPassword.getText().trim().isEmpty()) {
-					database.Access.editBusinessPassword(user.getUserID(), pass1UserPassword.getText());				
+					database.Access.editUserPassword(user.getUserID(), pass1UserPassword.getText());				
 				}
 				lbl2EditStatus.setTextFill(Color.GREEN);
 				lbl2EditStatus.setText("Edit Succesful");

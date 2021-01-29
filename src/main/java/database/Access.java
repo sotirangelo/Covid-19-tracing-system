@@ -913,11 +913,11 @@ public class Access {
 	 *
 	 * @param email, String
 	 * @param password, String
-	 * @return ver, boolean
+	 * @return ver, boolean [] , {true, true} if Valid & Verified, {false, X} if Not Valid, {X, false} if Not Verified
 	 * @throws Exception, if encounter any error
 	 */
-	public static boolean authenticateTracingUser(String email, String password) {
-		boolean ver = false;
+	public static boolean[] authenticateTracingUser(String email, String password) {
+		boolean [] ver = {true, true};
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -933,23 +933,23 @@ public class Access {
                 rs.close();
                 stmt.close();
                 con.close();
-                System.out.println("Wrong UserID or password");
-                return false;
+                System.out.println("Wrong Email or Password");
+                ver [0] = false;
             } else {
             	isVerified = rs.getBoolean("TracingUser.Verified");
+            	if (!isVerified) {
+                	rs.close();
+                	stmt.close();
+                	con.close();
+                	System.out.println("USER NOT VERIFIED YET");
+                	ver [1] = false;
+            	} else {
+            		System.out.println("USER IS VERIFIED");
+                    rs.close();
+                    stmt.close();
+                    con.close();
+            	}
             }
-            if (!isVerified) {
-            	rs.close();
-            	stmt.close();
-            	con.close();
-            	System.out.println("USER NOT VERIFIED YET");
-            	return false;
-            }
-            System.out.println("USER IS VERIFIED");
-            rs.close();
-            stmt.close();
-            con.close();
-            ver = true;
         } catch (Exception e) {
         	System.out.println("ERROR WHILE AUTHENTICATING USER");
             e.printStackTrace();

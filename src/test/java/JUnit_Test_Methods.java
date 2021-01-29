@@ -431,8 +431,8 @@ public class JUnit_Test_Methods {
 					email = Interface.emailInput();
 					password = SCNR.next();
 					try {
-						boolean isVer = database.Access.authenticateTracingUser(email, password);
-						System.out.println("User Verified Status: " + isVer);
+						boolean isVer [] = database.Access.authenticateTracingUser(email, password);
+						System.out.println("User Verified Status: " + isVer[1]);
 					} catch (Exception e) { }
 			}
 			System.out.println("Do you want to try another method?\n"
