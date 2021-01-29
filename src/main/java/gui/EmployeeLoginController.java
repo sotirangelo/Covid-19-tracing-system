@@ -40,7 +40,8 @@ public class EmployeeLoginController {
 	@FXML
 	private Label lbl6SignUp;
 	
-	
+	@FXML
+	private Label labelStatusLogIn1;
 	
 	/* Text */
 	
@@ -69,15 +70,15 @@ public class EmployeeLoginController {
 		Matcher Emailmat;
 			do {
 				Emailmat = Emailpattern.matcher(txt1Email.getText());
-	        if(Emailmat.matches()){
-	            lbl2Status.setTextFill(Color.GREEN);
-	            lbl2Status.setText("Validation Successful");
-	            return true;
-	        } else {
-	        	 lbl2Status.setTextFill(Color.RED);
-		         lbl2Status.setText("Validation Failed");
-		         return false;
-	        }
+				if(Emailmat.matches()){
+					labelStatusLogIn1.setTextFill(Color.GREEN);
+					labelStatusLogIn1.setText("Okay");
+					return true;
+				} else {
+					labelStatusLogIn1.setTextFill(Color.RED);
+					labelStatusLogIn1.setText("Incorrect");
+					return false;
+				}
 		} while(!Emailmat.matches());
 	
 	}
@@ -91,7 +92,18 @@ public class EmployeeLoginController {
 	public void ValidateOnAction(ActionEvent event) {
 		lbl2Status.setText("Validation Status");
 		if (validateEmail()) {
-			createOutput();
+			boolean [] ver = database.Access.authenticateTracingUser(txt1Email.getText(), passCustomerPass.getText());
+			if (ver [0] == true && ver [1] == true) {
+				lbl2Status.setTextFill(Color.GREEN);
+		         lbl2Status.setText("Login Successful");
+				createOutput();
+			} else if (ver [0] == false) {
+				lbl2Status.setTextFill(Color.RED);
+		        lbl2Status.setText("Wrong Email or Password");
+			} else {
+				lbl2Status.setTextFill(Color.RED);
+		        lbl2Status.setText("User not Verified");
+			}
 		}
 	}
 	

@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -55,6 +56,9 @@ public class EmployeeSignUpController {
 	
 	@FXML
 	private Label lbl14PhoneNumberStatus;
+	
+	@FXML
+	private Label lblPass;
 
 	/* Buttons */
 	
@@ -80,6 +84,11 @@ public class EmployeeSignUpController {
 	
 	@FXML
 	private TextField txt5PhoneNumber;
+	
+	/* Password Fields */
+	
+	@FXML
+	private PasswordField passEmployeePassword;
 
 	public void SignUpButtonOnAction() {	
 		validateFirstName();
@@ -87,6 +96,7 @@ public class EmployeeSignUpController {
 		validateEmail();
 		validatePhoneNumber();
 		if (validateFirstName() && validateLastName() && validateEmail() && validatePhoneNumber()) {
+			database.Access.registerTracingUser(passEmployeePassword.getText(), txt1FirstName.getText(), txt2LastName.getText(), txt4Email.getText(), Long.parseLong(txt5PhoneNumber.getText()));
 			lbl2RegistrationStatus.setTextFill(Color.GREEN);
 			lbl2RegistrationStatus.setText("Registration Succesful");
 		}
