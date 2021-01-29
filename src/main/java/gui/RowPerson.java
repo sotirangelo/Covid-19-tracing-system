@@ -9,14 +9,14 @@ public class RowPerson {
 	private final SimpleStringProperty LastName;
    private final SimpleLongProperty PhoneNumber;
    private final SimpleStringProperty Email;
-   private final SimpleDoubleProperty Probability;
+   private final SimpleStringProperty Probability;
 
 public RowPerson(String FirstName, String LastName, long PhoneNumber, String Email, double Probability) {
 	this.FirstName = new SimpleStringProperty(FirstName);
 	this.LastName = new SimpleStringProperty(LastName);
     this.Email = new SimpleStringProperty(Email);
     this.PhoneNumber = new SimpleLongProperty(PhoneNumber);
-    this.Probability = new SimpleDoubleProperty(Probability);
+    this.Probability = new SimpleStringProperty(String.format("%.2f%%", Probability));
     }
  
    
@@ -53,11 +53,11 @@ public RowPerson(String FirstName, String LastName, long PhoneNumber, String Ema
         Email.set(email);
     }
     
-    public double getProbability() {
+    public String getProbability() {
         return Probability.get();
     }
     
-    public void setProbability(double prob) {
+    public void setProbability(String prob) {
         Probability.set(prob);
     }
 }
