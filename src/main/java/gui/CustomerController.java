@@ -127,17 +127,22 @@ import javafx.stage.Stage;
 			lbl6UserLogInStatus.setText("Record Status");
 			if (validateUserID()) {
 				java.util.Date utilDate = getDate();
-				if (database.Access.checkIn(businessID, userID, utilDate, maskType)) {
-					lbl6UserLogInStatus.setTextFill(Color.GREEN);
-					lbl6UserLogInStatus.setText("Check-in Successful");
+				if (maskType != null) {
+					if (database.Access.checkIn(businessID, userID, utilDate, maskType)) {
+						lbl6UserLogInStatus.setTextFill(Color.GREEN);
+						lbl6UserLogInStatus.setText("Check-in Successful");
+					} else {
+						lbl6UserLogInStatus.setTextFill(Color.RED);
+						lbl6UserLogInStatus.setText("Check-in Failed");
+					}
 				} else {
-					lbl6UserLogInStatus.setTextFill(Color.RED);
-	        		lbl6UserLogInStatus.setText("Check-in Failed");
+	        			lbl6UserLogInStatus.setTextFill(Color.RED);
+	        			lbl6UserLogInStatus.setText("Check-in Failed");
 				}
-	        } else {
-	        		lbl6UserLogInStatus.setTextFill(Color.RED);
-	        		lbl6UserLogInStatus.setText("Check-in Failed");
-	       	}
+			} else {
+				lbl6UserLogInStatus.setTextFill(Color.RED);
+        		lbl6UserLogInStatus.setText("Check-in Failed");
+			}
 		}
 		
 		public void CheckOutButtonOnAction(ActionEvent event) {
@@ -164,7 +169,9 @@ import javafx.stage.Stage;
 			boolean match;
 			boolean authenticate = false;
 			userID = txt1UserID.getText();
-			maskType = Mask.valueOf(comb1.getSelectionModel().getSelectedItem().toString());
+			if (comb1.getValue() != null) {
+				maskType = Mask.valueOf(comb1.getSelectionModel().getSelectedItem().toString());
+			}
 			do {
 				UserIDmat = UserIDpattern.matcher(txt1UserID.getText());
 	        	if(UserIDmat.matches()){
