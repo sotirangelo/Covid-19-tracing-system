@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="482.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.EmployeeSignUpController">
+   <children>
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="482.0">
+         <left>
+            <AnchorPane prefHeight="495.0" prefWidth="245.0" style="-fx-background-color: #E96151;" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="103.0" fitWidth="103.0" layoutX="78.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/images/Javavirus Logo.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="lbl1CustomerRegistration" layoutX="14.0" layoutY="255.0" prefHeight="20.0" prefWidth="231.0" text="Javavirus® Covid19 Tracing App " textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbl9CustomerSignUp" layoutX="66.0" layoutY="327.0" prefHeight="20.0" prefWidth="127.0" text="EODY User Sign Up" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btn2Close" layoutX="108.0" layoutY="529.0" minWidth="37.0" mnemonicParsing="false" onAction="#closeButtonOnAction" prefHeight="25.0" prefWidth="43.0" style="-fx-background-color: White;" text="Back" textAlignment="CENTER" textFill="#e96151">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </left>
+         <right>
+            <AnchorPane prefHeight="495.0" prefWidth="247.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="lbl3FirstName" layoutX="60.0" layoutY="157.0" prefHeight="18.0" prefWidth="62.0" text="First Name">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbl4LastName" layoutX="61.0" layoutY="229.0" text="Last Name">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbl6Email" layoutX="66.0" layoutY="297.0" text="E-mail">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbl7PhoneNumber" layoutX="62.0" layoutY="366.0" text="Phone Number">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbl2RegistrationStatus" layoutX="72.0" layoutY="100.0" prefHeight="17.0" prefWidth="133.0" text="Registration Status">
+                     <font>
+                        <Font name="System Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txt1FirstName" layoutX="61.0" layoutY="174.0" promptText="e.g Georgios" />
+                  <TextField fx:id="txt2LastName" layoutX="60.0" layoutY="246.0" promptText="e.g Papadopoulos" />
+                  <TextField fx:id="txt4Email" layoutX="61.0" layoutY="314.0" promptText="e.g geopap@gmail.com" />
+                  <TextField fx:id="txt5PhoneNumber" layoutX="60.0" layoutY="383.0" promptText="XXXXXXXXXX" />
+                  <Button fx:id="btn1Register" layoutX="76.0" layoutY="525.0" mnemonicParsing="false" onAction="#SignUpButtonOnAction" style="-fx-background-color: #E96151;" text="Sign Up" textFill="WHITE" />
+                  <Label fx:id="lbl10FirstNameStatus" layoutX="136.0" layoutY="156.0" prefHeight="17.0" prefWidth="73.0">
+                     <font>
+                        <Font name="System Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbl11LastNameStatus" layoutX="135.0" layoutY="229.0" prefHeight="17.0" prefWidth="74.0">
+                     <font>
+                        <Font name="System Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbl13EmailStatus" layoutX="117.0" layoutY="297.0" prefHeight="17.0" prefWidth="80.0">
+                     <font>
+                        <Font name="System Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbl14PhoneNumberStatus" layoutX="157.0" layoutY="366.0" prefHeight="17.0" prefWidth="64.0">
+                     <font>
+                        <Font name="System Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="28.0" fitWidth="29.0" layoutX="20.0" layoutY="313.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/images/Email.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="21.0" fitWidth="18.0" layoutX="25.0" layoutY="387.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/images/Phone.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="20.0" fitWidth="21.0" layoutX="23.0" layoutY="173.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/images/PersonName.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="28.0" fitWidth="38.0" layoutX="16.0" layoutY="244.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/images/Person Icon.png.png" />
+                     </image>
+                  </ImageView>
+                  <PasswordField fx:id="passEmployeePassword" layoutX="61.0" layoutY="443.0" promptText="********" />
+                  <Label fx:id="lblPass" layoutX="62.0" layoutY="426.0" prefHeight="17.0" prefWidth="83.0" text="Password">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="29.0" fitWidth="46.0" layoutX="23.0" layoutY="429.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../application/Javavirus%20GUI%20images/Pass.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </right>
+      </BorderPane>
+   </children>
+</StackPane>
