@@ -5,6 +5,9 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import data.AER;
+import data.Business;
+import data.BusinessType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -87,17 +90,8 @@ public class BusinessEdit implements Initializable {
 	@FXML
 	private Button btn2Close;
 	
-	
-	
-	
 	/* Text Fields */
-	
-	@FXML
-	private TextField txt1ID;
-	
-	@FXML
-	private TextField txt2Name;
-	
+
 	@FXML
 	private TextField txt3Space;
 	
@@ -113,12 +107,10 @@ public class BusinessEdit implements Initializable {
 	@FXML
 	private TextField txt7AER;
 	
-	
 	/* Password Fields */
 	
 	@FXML
-	private PasswordField pass1Email;
-	
+	private PasswordField pass1Pass;
 	
 	/* ComboBoxes */
 	
@@ -128,29 +120,8 @@ public class BusinessEdit implements Initializable {
 	@FXML
 	private ComboBox<String> comb2;
 	
-	
-	
-
-	
-	public boolean validateBname() {
-		Pattern Busnamepattern = Pattern.compile("(?i)[a-z]([- ',.a-z]{0,23}[a-z])");
-		Matcher BusNameMat;
-		do {
-			BusNameMat = Busnamepattern.matcher(txt2Name.getText());
-			if (BusNameMat.matches()) {
-				labelVer2.setTextFill(Color.GREEN);
-				labelVer2.setText("Okay");
-				return true;
-			} else {
-				labelVer2.setTextFill(Color.RED);
-				labelVer2.setText("Incorrect");
-				RegStatus.setTextFill(Color.RED);
-				RegStatus.setText("Edit Failed");
-				return false;
-			}
-		} while (!BusNameMat.matches());
-		
-	}
+	/* Logged-in Business */
+	private Business business = BusinessController.business;
 	
 	public boolean validateBspace() {
 		Pattern BusSpacepatt = Pattern.compile("^[+]?(([1-9]\\d*)|0)(\\.\\d+)?");
@@ -210,10 +181,6 @@ public class BusinessEdit implements Initializable {
 		
 	}
 	
-	
-	
-	
-
 	public void BusinessEdit(ActionEvent event) throws Exception {
 		Stage businessEditStage = new Stage();
 		Parent root = FXMLLoader.load(getClass().getResource("/fxml/BusinessEdit.fxml"));
@@ -225,34 +192,40 @@ public class BusinessEdit implements Initializable {
 		businessEditStage.show();
 	}
 
-	
 	public void closeButtonOnAction(ActionEvent event) {
 		Stage businessSignUpStage = (Stage) btn2Close.getScene().getWindow();
 		businessSignUpStage.close();
 	}
 
-
-
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		ObservableList<String> list = FXCollections.observableArrayList("Restaurant", "Bar" , "Office", "Store", "Market");
+		ObservableList<String> list = FXCollections.observableArrayList("RESTAURANT", "BAR" , "OFFICE", "STORE", "MARKET");
 		comb1.setItems(list);
-		ObservableList<String> list1 = FXCollections.observableArrayList("Natural", "Open");
+		ObservableList<String> list1 = FXCollections.observableArrayList("NATURAL", "OPEN");
 		comb2.setItems(list1);
 	}
 	
 	public void SignUpButtonOnAction1() {
-		validateBname();
 		validateBspace();
 		validateHeight();
 		validateEmail();
-		if (validateBname() && validateBspace() && validateHeight() && validateEmail()) {
+		if (validateBspace() && validateHeight() && validateEmail()) {
+			database.Access.editBusinessEmail(business.getBusinessID(), txt6Email.getText());
+			database.Access.editBusinessSpace(business.getBusinessID(), Double.parseDouble(txt3Space.getText()));
+			database.Access.editBusinessHeight(business.getBusinessID(), Double.parseDouble(txt4Height.getText()));
+			if (pass1Pass != null && !pass1Pass.getText().trim().isEmpty()) {
+				database.Access.editBusinessPassword(business.getBusinessID(), pass1Pass.getText());				
+			}
+			if (!comb1.getSelectionModel().isEmpty()) {
+				database.Access.editBusinessType(business.getBusinessID(), BusinessType.valueOf(
+						comb1.getSelectionModel().getSelectedItem().toString()));
+			}
+			if (!comb2.getSelectionModel().isEmpty()) {
+				database.Access.editBusinessVentilationType(business.getBusinessID(), AER.valueOf(
+						comb2.getSelectionModel().getSelectedItem().toString()));
+			}
 			RegStatus.setTextFill(Color.GREEN);
 			RegStatus.setText("Edit Succesful");
-		}
-		
+		}		
 	}
-	
-	
-
 }

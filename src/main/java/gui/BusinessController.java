@@ -77,7 +77,7 @@ public class BusinessController {
 		
 		/* Business Object */ 
 		
-		private Business business = null;
+		public static Business business = null;
 		
 		public static String businessID;
 		

@@ -626,6 +626,32 @@ public class Access {
 	} //End of editBusinesssSpace
 	
 	/**
+	 * Updates existing Business Ceiling Height with the given one
+	 * 
+	 * @param businesID, String
+	 * @param height, double
+	 * @throws Exception
+	 */
+	public static void editBusinessHeight(String businessID, double height) {
+		Connection con = null;
+		PreparedStatement stmt = null;
+		String updateSql = "UPDATE isandalis_database_dmst.Business SET Height = ? WHERE BusinessID = ?;";
+		try {
+			con = Connect.getConnection();
+		    stmt = con.prepareStatement(updateSql);
+		    stmt.setDouble(1, height);
+		    stmt.setString(2, businessID);
+		    stmt.executeUpdate();
+		    System.out.println("CEILING HEIGHT UPDATED SUCCESSFULLY");
+		    stmt.close();
+		    con.close();
+		} catch (Exception e) {
+			System.out.println("ERROR WHILE UPDATING BUSINESS CEILING HEIGHT");
+            e.printStackTrace();
+		}
+	} //End of editBusinesssHeight
+	
+	/**
 	 * Updates existing Business Type with the given one
 	 * 
 	 * @param businesID, String

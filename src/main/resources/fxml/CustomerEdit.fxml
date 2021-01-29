@@ -40,30 +40,20 @@
                </children>
             </AnchorPane>
          </left>
-         <right>
+         <center>
             <AnchorPane prefHeight="495.0" prefWidth="247.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="lbl3FirstName" layoutX="68.0" layoutY="196.0" prefHeight="18.0" prefWidth="62.0" text="First Name">
+                  <Label fx:id="lbl6Email" layoutX="68.0" layoutY="201.0" text="E-mail">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lbl4LastName" layoutX="69.0" layoutY="266.0" text="Last Name">
+                  <Label fx:id="lbl7PhoneNumber" layoutX="64.0" layoutY="270.0" text="Phone Number">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lbl6Email" layoutX="70.0" layoutY="339.0" text="E-mail">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lbl7PhoneNumber" layoutX="66.0" layoutY="408.0" text="Phone Number">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lbl8Password" layoutX="69.0" layoutY="477.0" text="Password">
+                  <Label fx:id="lbl8Password" layoutX="67.0" layoutY="339.0" text="Password">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -73,66 +63,43 @@
                         <Font name="System Italic" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txt1FirstName" layoutX="65.0" layoutY="221.0" promptText="e.g Georgios" />
-                  <TextField fx:id="txt2LastName" layoutX="64.0" layoutY="288.0" promptText="e.g Papadopoulos" />
-                  <TextField fx:id="txt4Email" layoutX="65.0" layoutY="356.0" promptText="e.g geopap@gmail.com" />
-                  <TextField fx:id="txt5PhoneNumber" layoutX="64.0" layoutY="425.0" promptText="XXXXXXXXXX" />
-                  <Button fx:id="btn1Register" layoutX="80.0" layoutY="548.0" mnemonicParsing="false" onAction="#SignUpButtonOnAction" style="-fx-background-color: #E96151;" text="Edit" textFill="WHITE" />
-                  <Label fx:id="lbl10FirstNameStatus" layoutX="140.0" layoutY="197.0" prefHeight="4.0" prefWidth="73.0">
+                  <TextField fx:id="txt4Email" layoutX="63.0" layoutY="218.0" promptText="e.g geopap@gmail.com" />
+                  <TextField fx:id="txt5PhoneNumber" layoutX="62.0" layoutY="287.0" promptText="XXXXXXXXXX" />
+                  <Button fx:id="btn1Register" layoutX="100.0" layoutY="455.0" mnemonicParsing="false" onAction="#SignUpButtonOnAction" style="-fx-background-color: #E96151;" text="Edit" textFill="WHITE" />
+                  <Label fx:id="lbl11LastNameStatus" layoutX="137.0" layoutY="128.0" prefHeight="17.0" prefWidth="74.0">
                      <font>
                         <Font name="System Italic" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lbl11LastNameStatus" layoutX="139.0" layoutY="266.0" prefHeight="17.0" prefWidth="74.0">
+                  <Label fx:id="lbl13EmailStatus" layoutX="119.0" layoutY="201.0" prefHeight="17.0" prefWidth="80.0">
                      <font>
                         <Font name="System Italic" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lbl12UserIDStatus" layoutX="125.0" layoutY="274.0" prefHeight="17.0" prefWidth="73.0">
+                  <Label fx:id="lbl14PhoneNumberStatus" layoutX="159.0" layoutY="270.0" prefHeight="17.0" prefWidth="64.0">
                      <font>
                         <Font name="System Italic" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lbl13EmailStatus" layoutX="121.0" layoutY="339.0" prefHeight="17.0" prefWidth="80.0">
-                     <font>
-                        <Font name="System Italic" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lbl14PhoneNumberStatus" layoutX="161.0" layoutY="408.0" prefHeight="17.0" prefWidth="64.0">
-                     <font>
-                        <Font name="System Italic" size="12.0" />
-                     </font>
-                  </Label>
-                  <ImageView fitHeight="29.0" fitWidth="47.0" layoutX="14.0" layoutY="127.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="28.0" fitWidth="29.0" layoutX="24.0" layoutY="355.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="28.0" fitWidth="29.0" layoutX="22.0" layoutY="217.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@/images/Email.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="21.0" fitWidth="18.0" layoutX="29.0" layoutY="429.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="21.0" fitWidth="18.0" layoutX="27.0" layoutY="291.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@/images/Phone.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="23.0" layoutY="491.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="21.0" layoutY="353.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/Pass.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="20.0" fitWidth="21.0" layoutX="27.0" layoutY="225.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@/images/PersonName.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="28.0" fitWidth="38.0" layoutX="20.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@/images/Person Icon.png.png" />
-                     </image>
-                  </ImageView>
-                  <PasswordField fx:id="pass1UserPassword" layoutX="64.0" layoutY="494.0" promptText="*******" />
+                  <PasswordField fx:id="pass1UserPassword" layoutX="62.0" layoutY="356.0" promptText="*******" />
                </children>
             </AnchorPane>
-         </right>
+         </center>
       </BorderPane>
    </children>
 </StackPane>

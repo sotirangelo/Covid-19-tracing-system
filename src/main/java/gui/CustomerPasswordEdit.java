@@ -56,23 +56,28 @@ public class CustomerPasswordEdit {
 	private Button btn2Exit;
 	
 	/* Person Object */
-	private Person user = null;
+	public static Person user = null;
 			
 	public boolean validateUserID() {
 		Pattern UserIDpattern = Pattern.compile("^[0-9]{8}$");
 		Matcher UserIDmat;
 		boolean match;
-		boolean authenticate = false;
-		String userID = txt1CustomerID.getText();
-		String password = passCustomerPass.getText();
 			do {
 			UserIDmat = UserIDpattern.matcher(txt1CustomerID.getText());
 	        if(UserIDmat.matches()){
-	            lbl2Status.setTextFill(Color.GREEN);
-	            lbl2Status.setText("Validation Successfull");
-	            createCustomerEdit();
-	            match = true;
-	            break;
+	        	user = database.Access.authenticateUser(txt1CustomerID.getText(), passCustomerPass.getText());
+	        	if (user != null) {
+	        		lbl2Status.setTextFill(Color.GREEN);
+	        		lbl2Status.setText("Validation Successfull");
+	        		createCustomerEdit();
+	        		match = true;
+	        		break;
+	        	} else {
+	        		lbl2Status.setTextFill(Color.RED);
+			        lbl2Status.setText("Validation Failed");
+			        match = false;
+			        break;
+	        	}
 	        } else {
 	        	 lbl2Status.setTextFill(Color.RED);
 		         lbl2Status.setText("Validation Failed");
@@ -80,13 +85,7 @@ public class CustomerPasswordEdit {
 		         break;
 	        }
 		} while(!UserIDmat.matches());
-		if (match) {
-			user = database.Access.authenticateUser(userID, password);
-			if (!(user == null)) {
-				authenticate = true;
-			}
-		}
-		return (match && authenticate);
+		return (match);
 	}
 
 	public void exitButtonOnAction(ActionEvent event) {
@@ -96,6 +95,7 @@ public class CustomerPasswordEdit {
 	}
 
 	public void ValidateOnAction(ActionEvent event) {
+		
 		lbl2Status.setText("Validation Status");
 		if (validateUserID()) {
 			((Node)event.getSource()).getScene().getWindow().hide();

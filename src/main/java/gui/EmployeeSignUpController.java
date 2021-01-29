@@ -89,10 +89,6 @@ public class EmployeeSignUpController {
 		if (validateFirstName() && validateLastName() && validateEmail() && validatePhoneNumber()) {
 			lbl2RegistrationStatus.setTextFill(Color.GREEN);
 			lbl2RegistrationStatus.setText("Registration Succesful");
-			/*
-			Stage customerSignUpStage = (Stage) btn1Register.getScene().getWindow();
-			customerSignUpStage.close();
-			*/
 		}
 	}
 	

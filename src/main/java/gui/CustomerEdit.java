@@ -3,6 +3,7 @@ package gui;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import data.Person;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -22,13 +23,6 @@ public class CustomerEdit {
 		
 		@FXML
 		private Label lbl2EditStatus;
-		
-		@FXML
-		private Label lbl3FirstName;
-		
-		@FXML
-		private Label lbl4LastName;
-		
 		
 		@FXML
 		private Label lbl6Email;
@@ -56,10 +50,7 @@ public class CustomerEdit {
 		
 		@FXML
 		private Label lbl14PhoneNumberStatus;
-		
-			
 	
-		
 		/* Buttons */
 		
 		@FXML
@@ -67,85 +58,36 @@ public class CustomerEdit {
 		
 		@FXML
 		private Button btn2Close;
-		
-		
-		
-		
+
 		/* Text Fields */
-		
-		@FXML
-		private TextField txt1FirstName;
-		
-		@FXML
-		private TextField txt2LastName;
 			
 		@FXML
 		private TextField txt4Email;
 		
 		@FXML
 		private TextField txt5PhoneNumber;
-		
-	
-		
+
 		/* Password Field */
 		
 		@FXML
 		private PasswordField pass1UserPassword;
 		
+		private Person user = CustomerPasswordEdit.user;
 		
-		
-		public void SignUpButtonOnAction() {	
-			validateFirstName();
-			validateLastName();
+		public void SignUpButtonOnAction() {
 			validateEmail();
 			validatePhoneNumber();
-			if (validateFirstName() && validateLastName() && validateEmail() && validatePhoneNumber()) {
+			if (validateEmail() && validatePhoneNumber()) {
+				database.Access.editUserEmail(user.getUserID(), txt4Email.getText());
+				database.Access.editUserPhoneNumber(user.getUserID(), Long.parseLong(txt5PhoneNumber.getText()));
+				if (pass1UserPassword != null && !pass1UserPassword.getText().trim().isEmpty()) {
+					database.Access.editBusinessPassword(user.getUserID(), pass1UserPassword.getText());				
+				}
 				lbl2EditStatus.setTextFill(Color.GREEN);
 				lbl2EditStatus.setText("Edit Succesful");
 			}
-		}
+		}			
 			
-			public boolean validateFirstName() {
-			Pattern FirstNamepattern = Pattern.compile("(?i)[a-z]([- ',.a-z]{0,23}[a-z])");
-			Matcher FirstNamemat;
-				do {
-				FirstNamemat = FirstNamepattern.matcher(txt1FirstName.getText());
-		        if(FirstNamemat.matches()){
-		            lbl10FirstNameStatus.setTextFill(Color.GREEN);
-		            lbl10FirstNameStatus.setText("Okay");
-		            return true;
-		        } else {
-		        	lbl10FirstNameStatus.setTextFill(Color.RED);
-		        	lbl10FirstNameStatus.setText("Incorrect");
-		        	lbl2EditStatus.setTextFill(Color.RED);
-		        	lbl2EditStatus.setText("Edit Failed");
-		        	return false;
-		        }
-			} while(!FirstNamemat.matches());
-			}
-			
-			
-			public boolean validateLastName() {
-				Pattern LastNamepattern = Pattern.compile("(?i)[a-z]([- ',.a-z]{0,23}[a-z])");
-				Matcher LastNamemat;
-					do {
-					LastNamemat = LastNamepattern.matcher(txt2LastName.getText());
-			        if(LastNamemat.matches()){
-			            lbl11LastNameStatus.setTextFill(Color.GREEN);
-			            lbl11LastNameStatus.setText("Okay");
-			            return true;
-			        } else {
-			        	lbl11LastNameStatus.setTextFill(Color.RED);
-			        	lbl11LastNameStatus.setText("Incorrect");
-			        	lbl2EditStatus.setTextFill(Color.RED);
-			        	lbl2EditStatus.setText("Edit Failed");
-			        	return false;
-			        }
-				} while(!LastNamemat.matches());
-				}
-			
-
-		
 			public boolean validateEmail() {
 				Pattern Emailpattern = Pattern.compile("^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$");
 				Matcher Emailmat;
